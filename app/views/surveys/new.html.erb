@@ -1,0 +1,37 @@
+<!-- notice Notification -->
+<%= render 'home/notification' %>
+<!-- タイトル & セッション関係-->
+<%= render 'home/header' %>
+
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <b>アンケート</b>
+        </h3>
+      </div>
+      <div class="panel-body">
+        <p>動画再生中に突然お邪魔して、<b>申し訳ございません。</b><br>
+          これはFC*FC Playを改善するためにユーザーの皆様に意見を聞くものです</p>
+        <p>約200回の動画再生につき1回このページが表示されます。<br>
+          簡単なアンケートですので、よろしければお答えください。</p>
+        <p>よろしくお願いします。</p><br>
+        <h4><p class="text-danger">
+          Q.一番改善して欲しい部分は何ですか?
+        </p></h4>
+        <%= form_for(@survey) do |f| %>
+          <%= f.radio_button :result, '1', {:tabindex => 1} %> 動画数を増やす<br>
+          <%= f.radio_button :result, '2', {:tabindex => 2} %> 動画レコメンド機能<br>
+          <%= f.radio_button :result, '3', {:tabindex => 3} %> より細かい検索条件の追加<br>
+          <%= f.radio_button :result, '4', {:tabindex => 4} %> 再生できない動画へのスマートな対応<br>
+          <%= f.radio_button :result, '5', {:tabindex => 5} %> 現状で満足<br><br>
+          <div class="actions">
+            <%= f.submit "送信", :class => "btn btn-outline btn-danger" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

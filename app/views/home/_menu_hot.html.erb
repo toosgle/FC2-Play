@@ -1,0 +1,61 @@
+<h4>人気の動画</h4>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover" id="videostable">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>週間ランキング</th>
+						<th>時間</th>
+						<th>月間ランキング</th>
+						<th>時間</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for i in 0..49 do%>
+						<tr>
+							<td><%= i+1 %></td>
+							<td>
+								<div class="col-md-120px">
+									<%= link_to image_tag(@week[i].video.image_url, width: 108, height: 81), play_path(title: @week[i].video.title) %>
+								</div>
+								<%= @week[i].video.adult ? (link_to @week[i].video.title, play_path(title: @week[i].video.title), class: "text-danger") : (link_to @week[i].video.title, play_path(title: @week[i].video.title)) %>
+							</td>
+							<td>
+								<% if @week[i].video.duration %>
+									<%= @week[i].video.duration %>
+								<% else %>
+									<%= "\s" %>
+								<% end %>
+							</td>
+							<td>
+								<div class="col-md-120px">
+									<%= link_to image_tag(@month[i].video.image_url, width: 108, height: 81), play_path(title: @month[i].video.title) %>
+								</div>
+								<%= @month[i].video.adult ? (link_to @month[i].video.title, play_path(title: @month[i].video.title), class: "text-danger") : (link_to @month[i].video.title, play_path(title: @month[i].video.title)) %>
+							</td>
+							<td>
+								<% if @month[i].video.duration %>
+									<%= @month[i].video.duration %>
+								<% else %>
+									<%= "\s" %>
+								<% end %>
+							</td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#videostable').dataTable({
+			"bLengthChange": false,
+			"bInfo": false,
+			"bSort": false,
+			"bFilter": false
+		});
+	});
+</script>

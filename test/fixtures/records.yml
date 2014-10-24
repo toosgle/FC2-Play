@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kind: MyString
+  day: 2014-04-20
+  value: 1
+
+two:
+  kind: MyString
+  day: 2014-04-20
+  value: 1

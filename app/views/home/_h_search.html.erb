@@ -1,0 +1,52 @@
+<!-- 動画検索部分 start -->
+<% if @url || @results %>
+	<%= form_tag({action: "search", controller: "home"}, {method: "get"}) do %>
+		<div class="row">
+			<div class="col-md-12 well well-sm">
+			<div class="col-md-4 col-md-offset-1 form-group">
+				<div align="left"><label>キーワード</label></div>
+				<%= text_field_tag :keyword, params[:keyword], :class => "form-control", :value => "#{session[:keyword_pre]}", :placeholder => "キーワード （and検索）" %>
+			</div>
+			<div class="col-md-2 form-group">
+				<div align="left"><label>お気に入り</label></div>
+				<%= select_tag(:bookmarks, options_for_select([["条件なし", "no"], ["いい感じ(30~500)", "s"], ["すごい(500~2000)", "m"], ["これはヤバい(2000~)", "l"]], session[:bookmarks_pre]), :class => "form-control  btn-sm") %>
+			</div>
+			<div class="col-md-2 form-group">
+				<div align="left"><label>動画時間</label></div>
+				<%= select_tag(:duration, options_for_select([["条件なし", "no"], ["短め(0~10分)", "s"], ["少し短め(10~30分)", "m"], ["少し長め(30~60分)", "l"], ["長め(60分~)", "xl"]], session[:duration_pre]), :class => "form-control btn-sm") %>
+			</div>
+			<div class="col-md-2 form-group">
+				<label>　</label>
+				<%= submit_tag "検　　索", :class => "btn btn-info btn-block" %>
+			</div>
+			</div>
+		</div>
+	<% end %>
+<% else %>
+	<!-- TOP画面 ↓ -->
+	<%= form_tag({action: "search", controller: "home"}, {method: "get"}) do %>
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 form-group">
+				<div align="left"><label>キーワード</label></div>
+				<%= text_field_tag :keyword, params[:keyword], :class => "form-control", :value => "#{session[:keyword_pre]}", :placeholder => "キーワード （and検索）" %>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 col-md-offset-3 form-group">
+				<div align="left"><label>お気に入り</label></div>
+				<%= select_tag(:bookmarks, options_for_select([["条件なし", "no"], ["少し人気(30~500)", "s"], ["人気(500~2000)", "m"], ["かなり人気(2000~)", "l"]], session[:bookmarks_pre]), :class => "form-control") %>
+			</div>
+			<div class="col-md-3 form-group">
+				<div align="left"><label>動画時間</label></div>
+				<%= select_tag(:duration, options_for_select([["条件なし", "no"], ["短め(0~10分)", "s"], ["少し短め(10~30分)", "m"], ["少し長め(30~60分)", "l"], ["長め(60分~)", "xl"]], session[:duration_pre]), :class => "form-control") %>
+			</div>
+		</div>
+		<div class="row">
+			<p></p>
+			<div class="col-md-6 col-md-offset-3 form-group">
+				<%= submit_tag "　検　索　", :class => "btn btn-info btn-lg btn-block" %>
+			</div>
+		</div>
+	<% end %>
+<% end %>
+<!-- 動画検索部分 end-->

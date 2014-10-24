@@ -1,0 +1,213 @@
+<!-- notice Notification -->
+<%= render 'home/notification' %>
+<!-- タイトル & セッション関係-->
+<%= render 'home/header' %>
+<div class="row">
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				再生回数
+			</div>
+			<div class="panel-body">
+				<div id="play-week-his" style="height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				総再生回数
+			</div>
+			<div class="panel-body">
+				<div id="play-all-his" style="height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				ユーザー数
+			</div>
+			<div class="panel-body">
+				<div id="user-no" style="height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				お気に入り数
+			</div>
+			<div class="panel-body">
+				<div id="fav-no" style="height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				動画追加数
+			</div>
+			<div class="panel-body">
+				<div id="add-no" style="height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				動画更新数
+			</div>
+			<div class="panel-body">
+				<div id="update-no" style="height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				アンケート結果
+			</div>
+			<div class="panel-body">
+				<div id="survey" style="height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		バグ報告
+	</div>
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover" id="bug_report">
+				<thead>
+					<tr>
+						<th>内容</th>
+						<th>日付</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @bugreports.each do |report|%>
+						<tr>
+							<td><%= report.content %></td>
+							<td><%= report.created_at %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<script>
+new Morris.Line({
+  element: 'play-week-his',
+
+  data: [
+    { year: '0', last0: <%=@playweek[14]%>, last1: <%=@playweek[7]%>, last2: <%=@playweek[0]%>},
+    { year: '1', last0: <%=@playweek[15]%>, last1: <%=@playweek[8]%>, last2: <%=@playweek[1]%>},
+    { year: '2', last0: <%=@playweek[16]%>, last1: <%=@playweek[9]%>, last2: <%=@playweek[2]%>},
+    { year: '3', last0: <%=@playweek[17]%>, last1: <%=@playweek[10]%>, last2: <%=@playweek[3]%>},
+    { year: '4', last0: <%=@playweek[18]%>, last1: <%=@playweek[11]%>, last2: <%=@playweek[4]%>},
+    { year: '5', last0: <%=@playweek[19]%>, last1: <%=@playweek[12]%>, last2: <%=@playweek[5]%>},
+    { year: '6', last0: <%=@playweek[20]%>, last1: <%=@playweek[13]%>, last2: <%=@playweek[6]%>}
+  ],
+
+  xkey: 'year',
+  ykeys: ['last0', 'last1', 'last2'],
+  labels: ['今週', '先週', '先々週'],
+	lineColors: ['#FF0000', '#FF7777', '#FFBBBB'],
+	hideHover: true
+});
+new Morris.Area({
+  element: 'play-all-his',
+
+  data: [
+		<% (@days-1).times do |i| %>
+    	{ year: '<%=i%>', value: <%=@playall[i]%>, value_a: <%=@playall_adult[i]%> },
+		<% end %>
+    { year: '<%=@days-1%>', value: <%=@playall[@days-1]%>, value_a: <%=@playall_adult[@days-1]%> }
+  ],
+  xkey: 'year',
+  ykeys: ['value', 'value_a'],
+  labels: ['normal', 'adult'],
+	lineColors: ['#3333FF','#FF3333'],
+	hideHover: true
+});
+new Morris.Area({
+  element: 'user-no',
+
+  data: [
+		<% (@days-1).times do |i| %>
+    	{ year: '<%=i%>', value: <%=@users[i]%> },
+		<% end %>
+    { year: '<%=@days-1%>', value: <%=@users[@days-1]%> }
+  ],
+  xkey: 'year',
+  ykeys: ['value'],
+  labels: ['users'],
+	hideHover: true
+});
+new Morris.Area({
+  element: 'fav-no',
+
+  data: [
+		<% (@days-1).times do |i| %>
+    	{ year: '<%=i%>', value: <%=@favs[i]%> },
+		<% end %>
+    { year: '<%=@days-1%>', value: <%=@favs[@days-1]%> }
+  ],
+  xkey: 'year',
+  ykeys: ['value'],
+  labels: ['favs'],
+	lineColors: ['#22FF22'],
+	hideHover: true
+});
+new Morris.Area({
+  element: 'add-no',
+
+  data: [
+		<% (@days-1).times do |i| %>
+    	{ year: '<%=i%>', value: <%=@videos[i]%> },
+		<% end %>
+    { year: '<%=@days-1%>', value: <%=@videos[@days-1]%> }
+  ],
+  xkey: 'year',
+  ykeys: ['value'],
+  labels: ['adds'],
+	lineColors: ['#FF6600'],
+	hideHover: true
+});
+new Morris.Area({
+  element: 'update-no',
+
+  data: [
+		<% (@days-1).times do |i| %>
+    	{ year: '<%=i%>', value: <%=@updated_videos[i]%> },
+		<% end %>
+    { year: '<%=@days-1%>', value: <%=@updated_videos[@days-1]%> }
+  ],
+  xkey: 'year',
+  ykeys: ['value'],
+  labels: ['updates'],
+	lineColors: ['#660066'],
+	hideHover: true
+});
+new Morris.Donut({
+	element: 'survey',
+	data: [
+		{label: "動画数を増やす", value: <%=@survey_result[1]%>},
+		{label: "動画レコメンド機能", value: <%=@survey_result[2]%>},
+		{label: "より細かい検索条件の追加", value: <%=@survey_result[3]%>},
+		{label: "再生できない動画へのスマートな対応", value: <%=@survey_result[4]%>},
+		{label: "現状で満足", value: <%=@survey_result[5]%>}
+	],
+	hideHover: true
+});
+$(document).ready(function() {
+	$('#bug_report').dataTable({
+		"order": [[ 1, "desc" ]]
+	});
+});
+</script>

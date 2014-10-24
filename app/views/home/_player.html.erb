@@ -1,0 +1,38 @@
+<!--   広告    -->
+<% if @url %>
+<!-- admax -->
+<center><script type="text/javascript" src="http://adm.shinobi.jp/s/f053b83edf43368be7f6d1377bc3e3fe"></script></center>
+<% end %>
+
+<!--  プレイヤー  -->
+<% if @url %>
+	<center>
+		<div id="player" style="width: 100%; height: <%= @height %>px; max-width: <%= @width %>px; max-height: <%= @height %>px;">
+			<embed src="http://video.fc2.com/flv2.swf?t=201407280507" flashvars="i=<%= @shorten_url %>&amp;d=<%= @duration %>otag=1&amp;sj=0&amp;rel=1&amp;lang=en&amp;tk=TXpVM01EWTJOa9&amp;tl=<%= @title %>&amp;loop=0&amp;t=201407280507" quality="high" bgcolor="#000000" wmode="direct" width="100%" height="100%" name="flv2" align="middle" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" allowfullscreen="true">
+		</div>
+	</center>
+<% end %>
+<p></p>
+
+<!-- お気に入り登録 -->
+<% if current_user && @fav %>
+<center>
+	<%= form_for(@fav, remote: true) do |f| %>
+		<%= f.hidden_field :video_id, value: @video.id %>
+		<%= f.text_field :comment, :placeholder => "お気に入りのコメントを入力　46文字以内", :class => "form-control-url", :maxlength => 46 %>
+		<%= f.submit 'お気に入り登録', :class => "btn btn-outline btn-default" %>
+	<% end %>
+</center><br>
+<% end %>
+
+<!-- 動画見れない報告-->
+<% if @url %>
+<div class="row">
+	<div class="col-md-4 col-md-offset-4">
+	<%= form_tag report_path, method: :delete do %>
+		<%= hidden_field_tag :title, @video.title %>
+		<%= submit_tag 'この動画が再生できない事を報告', :class => "btn btn-outline btn-danger btn-block" %>
+	<% end %>
+	</div>
+</div><br>
+<% end %>

@@ -1,0 +1,11 @@
+<!-- remove modal-->
+$('#bugreportModal').modal('hide')
+$('body').removeClass('modal-open');
+$('.modal-backdrop').remove();
+
+<!-- notification -->
+<% if flash[:toastr] %>
+  <% flash[:toastr].each do |type, message| %>
+    toastr.<%= type %>("<%= message %>")
+  <% end %>
+<% end %>

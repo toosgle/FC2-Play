@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta Contet-Type: application/json; charset="UTF-8" />
+	<meta name="keywords" content="fc2play,FCFCPlay,プレイヤー,再生,FC2動画" />
+	<meta name="description" content="FC2の人気動画を見よう!" />
+
+	<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+
+	<title>FC*FC Play - FC2の人気動画を見よう!</title>
+	<%= javascript_include_tag "application" %>
+	<%= stylesheet_link_tag "application", media: "all" %>
+
+	<%= csrf_meta_tags %>
+
+	<!-- for Google Analytics -->
+	<%= analytics_init if Rails.env.production? %>
+
+</head>
+<body>
+	<div id="wrapper">
+
+		<%= yield %>
+
+		<div class="col-lg-12">　</div>
+		<div class="col-lg-12">　</div>
+		<center><font size="2"><p>FC*FC Play: Version 3.1.2<br>Created by Anonymous. Except Videos and Images, All Rights Reserved.</p></font></center>
+	</div>
+</body>
+</html>

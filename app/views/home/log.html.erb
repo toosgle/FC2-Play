@@ -1,0 +1,778 @@
+<!-- notice Notification -->
+<%= render 'home/notification' %>
+<!-- タイトル & セッション関係-->
+<%= render 'home/header' %>
+
+<div class="panel-body">
+	<h2>開発記録</h2>
+	<ul class="timeline">
+		<li class="timeline-inverted">
+			<div class="timeline-badge warning"><i class="fa fa-credit-card"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						今後の実装予定機能
+					</h4>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>検索機能の強化</li>
+						<li>レコメンド機能</li>
+						<li>再生できない動画へのスマートな対応</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.1.2
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/10/22</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>お気に入りの 編集/削除 ができないバグ修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.1.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/10/12</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>ログイン後に動画再生ができないバグを修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.1.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/10/11</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>動画を再生したまま、お気に入りの追加/削除/コメント変更 ができるように変更</li>
+						<li>動画を再生したまま、再生画面の大きさ変更ができるように変更</li>
+						<li>サイト全体のパフォーマンス改善</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.9
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/10/05</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>お気に入り動画のコメント編集後に動画が正常に再生できないバグを修正</li>
+						<li>お気に入り動画の動画時間が正常に表示されないバグを修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.8
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/09/24</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>検索速度の高速化</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.7
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/09/17</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>/playページの表示高速化</li>
+						<li>再生できない動画の自動削除強化</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.6
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/09/16</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>ブラウザバックで404エラーが出る問題を解決</li>
+						<li>検索速度の向上</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.5
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/09/08</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>再生できない動画を「お気に入り」から自動削除するように変更</li>
+						<li>再生できない動画が「人気」に入らないように調整</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.4
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/08/26</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>サイト説明を最新の状態に更新</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.3
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/08/24</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>FC2動画のランキングを削除</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.2
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/07/29</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>しばしば500エラーでサイトが見れなくなる問題を改善</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/07/24</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>人気動画が再生できないバグを修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-badge success"><i class="fa fa-thumbs-up"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 3.0.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/07/24</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>動画のサムネイル追加</li>
+						※サムネイル画像の著作権は<%= link_to "FC2", "http://video.fc2.com", target: "_blank" %>に帰属します
+						<li>検索対象動画の追加(1.4倍)</li>
+						<li>登録しなくても一定期間分の再生履歴を表示</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.6.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/07/10</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>TOPページにも直前の検索キーワードを表示</li>
+						<li>検索結果を「お気に入り」の多い順に変更</li>
+						<li>500エラーで表示できなかった動画の自動削除</li>
+						<li>再生できない動画の対策強化</li>
+						<li>動画を再生したままお気に入り登録できるように改善</li>
+						<li>お気に入り最大件数を50から100に変更</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.5.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/06/10</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>バグ修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.5.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/05/29</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>アンケートで希望の多かった「動画数を増やす」を実現</li>
+						お気に入り数を30以上の動画を対象にしました
+						<li>アンケートの内容を更新</li>
+						<li>実装予定機能を更新</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.4.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/04/22</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>サイト名をVideos PlayからFC*FC Playに変更</li>
+						Googlabilityの低さに気づいたためです<br>
+						<br>
+						最近アップデートできていませんが、そろそろ新しい機能を追加しようかなとは思っています
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.3.5
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/04/08</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>募金機能を削除</li>
+						<li>アンケートの内容を変更</li>
+						期間限定で出現頻度も変更しています
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.3.4
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/04/01</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>再生できない動画報告の検証アルゴリズム改善</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.3.3
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/04/01</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>検索結果表示の高速化(最大400%以上高速化)</li>
+						<li>実装予定機能の更新</li>
+					</ul>
+					【注意】4月1日の更新だからって400%の数字は嘘ではありませんよ！！！
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.3.2
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/30</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>バグ修正</li>
+						3時間程度アクセスできない状態が続いていました すみません
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.3.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/30</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>検索結果に重複が生じる問題を解決</li>
+						<li>デザイン微調整</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.3.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/30</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>検索対象範囲の拡大(一般動画を検索できるようにしました)</li>
+						<li>検索結果の表示方法を変更(青:一般 赤:アダルト)</li>
+						<li>長さが99:99以上の動画が正常に検索されない問題を解決</li>
+						<li>実装予定機能を更新</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.2.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/27</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>検索対象範囲の拡大(お気に入り50以上の動画を検索できるようにしました)</li>
+						<li>利用者減少のため、個人の再生回数制限を30回/日に変更</li>
+						<li>FC2の人気動画ランキングを追加(アダルトのみ)</li>
+						<li>一般動画のランキングを削除</li>
+						<li>バグ修正</li>
+						<p>比較的大きな問題でした。ご迷惑をおかけしました。</p>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.1.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/19</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>バグ報告機能を追加(画面右上)</li>
+					</ul><br>
+					<p><b>【通知】</b>FC2にブツブツ言われてやる気がなくなってきたので、開発スピードを落とします。<br>
+						バグがあれば修正はしますので、ぜひ報告してください。</p>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge danger"><i class="fa fa-times"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.1.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/18</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>URLを指定しての再生機能を削除</li>
+						<li>レイアウト変更</li>
+						<li>使い方の更新</li>
+						<li>再生回数の上限を設定</li>
+						<p>- サイト全体：1000回/1時間<br>
+							- 個人：10回/1日</p>
+					</ul><br>
+					<p><b>【通知】</b>FC2に再び怒られたためサイトの方針を<br>「再生回数制限回避プレイヤー」から「管理人がオススメするFC2動画で楽しむサイト」へと変更しました<br>
+						　それに伴い不便をおかけする事が多々あると思いますが、<br>ご了承ください<br> ご理解ありがとうございます</p>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.0.3
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/17</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>検索ができない深刻なバグを修正しました</li>
+						 - Ver 2.0.2から発生したバグです<br>
+						 - ご迷惑をおかけしました
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.0.2
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/16</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>再生できない動画への対応を強化</li>
+						<li>バグ修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.0.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/14</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>[人気]部分の深刻なバグ修正</li>
+						<li>アンケート内容更新</li>
+						<li>デザイン微調整</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge success"><i class="fa fa-thumbs-up"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 2.0.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/14</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>動画検索機能を追加</li>
+						<li>お気に入りや履歴に動画の時間を表示</li>
+						<li>メニューの配置変更</li>
+						<li>説明文を追加</li>
+						<li>実装予定機能の更新</li>
+						<li>デザイン修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 1.1.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/12</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>再生できない動画の報告機能を追加</li>
+						<p>- 報告された動画が再生できないと認められた場合<br>ランキングや履歴からその動画が削除されます</p>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 1.0.3
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/12</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>バグ修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 1.0.2
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/12</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>アンケート内容の更新</li>
+						<li>実装予定機能の更新</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 1.0.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/08</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>使い方の説明追加</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-badge success"><i class="fa fa-thumbs-up"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 1.0.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/08</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>FC2に怒られたため、タイトルをVideos Playに変更</li>
+						<li>人気の動画を表示</li>
+						<li>ログインしていない場合は全員の再生履歴を表示</li>
+						<li>ユーザー登録しなくてもウィンドウサイズ変更可能</li>
+						<li>お気に入り,履歴のデザイン修正</li>
+						<li>アンケートの表示頻度を200回に1度に変更</li>
+						<li>深刻なバグを修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 0.4.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/07</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>募金機能の追加(一部)</li>
+						<li>デザイン修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 0.4.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/05</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>再生ウィンドウの大きさ設定(登録ユーザーのみ)</li>
+						<li>バグ修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 0.3.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/04</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>アンケートの追加</li>
+						<p>- アンケートは約100回の動画再生につき1回表示されます<br>- サービス改善のためご協力よろしくお願いします</p>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 0.2.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/03</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>実装予定機能を更新</li>
+						<li>デザイン微調整</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge info"><i class="fa fa-check"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 0.2.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/03</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>お気に入りと履歴の動画タイトルを表示</li>
+						<li>再生画面内の動画タイトルを表示</li>
+						<li>再生画面内の動画の長さを表示</li>
+						<li>デザイン微調整</li>
+					</ul><br>
+					<p><b>【注意】</b>管理の都合上データベースをリセットしました<br>すでにユーザー登録していた方はもう一度登録お願いします<br>(以降DBリセットの予定はありませんので、安心してください)</p>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 0.1.2
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/01</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li>お気に入りの上限を設定(50件)</li>
+						<li>UXの改善</li>
+						<li>バグ修正</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 0.1.1
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/03/01</small>
+				</div>
+				<div class="timeline-body">
+					<ul>
+						<li><%= link_to "開発記録", log_path %>の追加</li>
+						<li>デザイン微調整</li>
+					</ul>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-inverted">
+			<div class="timeline-badge success"><i class="fa fa-thumbs-up"></i></div>
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						Version 0.1.0
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/02/28</small>
+				</div>
+				<div class="timeline-body">
+					<p>
+					<%= link_to "http://fc2play.com", "http://fc2play.com"%>でサイトを公開！
+				</p>
+				<p>
+					まだまだ未完成の部分がたくさんあるけど、その辺はみんなの使い方を観察しつつ、後々作っていく事にします
+				</p>
+				</div>
+			</div>
+		</li>
+		<li class="timeline-badge">
+			<div class="timeline-panel">
+				<div class="timeline-heading">
+					<h4 class="timeline-title">
+						開発開始
+					</h4>
+					<small class="text-muted"><i class="fa fa-time"></i>　2014/02/23</small>
+				</div>
+				<div class="timeline-body">
+					<p>
+					<%= link_to "FC2プレイヤー", "http://fc2player.com"%>が閉鎖してしまったな〜と思いつつネットを徘徊していたら、みんな意外と残念がっていて、需要ありそうだったから作ってみることにしました
+					</p>
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+<!-- /.panel-body -->

@@ -1,0 +1,47 @@
+<h4>履歴</h4>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover" id="hisTable">
+				<thead>
+					<tr>
+						<th>タイトル</th>
+						<th>時間</th>
+						<th>視聴日時</th>
+					</tr>
+				</thead>
+				<tbody>
+				<% @histories.each do |his| %>
+					<tr>
+						<td>
+							<div class="col-md-120px">
+								<%= link_to image_tag(his.video.image_url, width: 108, height: 81), play_path(title: his.video.title) %>
+							</div>
+							<%= his.video.adult ? (link_to his.video.title, play_path(title: his.video.title), class: "text-danger") : (link_to his.video.title, play_path(title: his.video.title)) %>
+						</td>
+						<td>
+							<% if his.video.duration %>
+								<%= his.video.duration %>
+							<% else %>
+								<%= "\s" %>
+							<% end %>
+						</td>
+						<td><%= his.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+					</tr>
+				<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		$('#hisTable').dataTable({
+			"bDeferRender": true,
+			"bLengthChange": false,
+			"bInfo": false,
+			"bSort": false,
+			"bFilter": false
+		});
+	});
+</script>

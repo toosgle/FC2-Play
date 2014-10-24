@@ -1,0 +1,8 @@
+<!-- update table -->
+$("#menu_fav").html("<%= escape_javascript( render 'home/menu_fav' ) %>");
+
+<% if flash[:toastr] %>
+	<% flash[:toastr].each do |type, message| %>
+		toastr.<%= type %>("<%= message %>")
+	<% end %>
+<% end %>

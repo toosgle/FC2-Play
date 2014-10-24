@@ -1,0 +1,53 @@
+<!-- notice Notification -->
+<%= render 'home/notification' %>
+<!-- タイトル & セッション関係-->
+<%= render 'home/header' %>
+<!-- 検索 -->
+<%= render 'home/h_search'%>
+
+<h3>検索結果</h3>
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover" id="dataTables-search">
+				<thead>
+					<tr>
+						<th>タイトル</th>
+						<th>時間</th>
+						<th>再生回数</th>
+						<th>お気に入り</th>
+						<th>fav/回数(‱)</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @results.each do |video|%>
+						<tr>
+							<td>
+								<div class="col-md-120px">
+									<%= link_to image_tag(video.image_url, width: 108, height: 81), play_path(title: video.title) %>
+								</div>
+								<%= video.adult ? (link_to video.title, play_path(title: video.title), class: "text-danger") : (link_to video.title, play_path(title: video.title)) %>
+							</td>
+							<td><%= video.duration %></td>
+							<td><%= video.views %></td>
+							<td><%= video.bookmarks %></td>
+							<td><%= video.bookmarks*10000/(video.views+1) if video.bookmarks %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<!-- admax -->
+<center><script type="text/javascript" src="http://adm.shinobi.jp/s/2c62be2beb3c2033bc99e7acbba1fa16"></script></center>
+<!-- admax -->
+<script>
+	$(document).ready(function() {
+		$('#dataTables-search').dataTable({
+			"bDeferRender": true,
+			"bProcessing": true,
+			"order": [[ 3, "desc" ]]
+		});
+	});
+</script>

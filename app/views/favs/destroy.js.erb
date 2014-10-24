@@ -1,0 +1,14 @@
+<!-- remove modal-->
+$('#favDelete<%= @fav.id %>Modal').modal('hide')
+$('body').removeClass('modal-open');
+$('.modal-backdrop').remove();
+
+<!-- update table -->
+$("#menu_fav").html("<%= escape_javascript( render 'home/menu_fav' ) %>");
+
+<!-- notification -->
+<% if flash[:toastr] %>
+  <% flash[:toastr].each do |type, message| %>
+    toastr.<%= type %>("<%= message %>")
+  <% end %>
+<% end %>

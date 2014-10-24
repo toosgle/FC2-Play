@@ -1,0 +1,14 @@
+<!-- update player size -->
+var $player = $("#player");
+$player.css('width', "<%= @width %>");
+$player.css('height', "<%= @height %>");
+var $player = document.getElementById("player");
+$player.style.maxWidth="<%= @width %>px";
+$player.style.maxHeight="<%= @height %>px";
+
+<!-- notification -->
+<% if flash[:toastr] %>
+  <% flash[:toastr].each do |type, message| %>
+    toastr.<%= type %>("<%= message %>")
+  <% end %>
+<% end %>

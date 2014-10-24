@@ -1,0 +1,242 @@
+<% if current_user %>
+	<h4>設定</h4>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						画面サイズ
+					</div>
+					<div class="panel-body">
+						<div class="col-md-50px">
+							<%= form_for(current_user, remote: true) do |f| %>
+								<%= f.hidden_field :size, value: 590 %>
+								<%= f.submit "小", :class => "btn btn-outline btn-default"%>
+							<% end %>
+						</div>
+						<div class="col-md-50px">
+							<%= form_for(current_user, remote: true) do |f| %>
+								<%= f.hidden_field :size, value: 750 %>
+								<%= f.submit "中", :class => "btn btn-outline btn-default"%>
+							<% end %>
+						</div>
+						<div class="col-md-50px">
+							<%= form_for(current_user, remote: true) do |f| %>
+								<%= f.hidden_field :size, value: 900 %>
+								<%= f.submit "大", :class => "btn btn-outline btn-default"%>
+							<% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						本日の視聴回数
+					</div>
+					<div class="panel-body">
+						視聴回数：<%= session[:today] && session[:pcount] && session[:today] == Date.today ? session[:pcount] : 0%><br>
+						残り：<%= session[:today] && session[:pcount] && session[:today] == Date.today ? 30-session[:pcount] : 30%>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						アカウント管理
+					</div>
+					<div class="panel-body">
+						<button class="btn btn-outline btn-danger" data-toggle="modal" data-target="#user_delete">アカウント削除</button>
+						<div class="modal fade" id="user_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h4 class="modal-title" id="myModalLabel">アカウント削除</h4>
+									</div>
+									<div class="modal-body">
+										<p>アカウントを削除するとお気に入りや<br>視聴履歴が消えてしまいます。</p><br>
+										<p>これらの情報は復元できませんので<br>ご注意ください。<p>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">キャンセル</button>
+										<%= link_to '削除', user_path(current_user), method: :delete, :class => "btn btn-outline btn-danger" %>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<% else %>
+	<h4>設定</h4>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						画面サイズ
+					</div>
+					<div class="panel-body">
+						<div class="col-md-50px">
+							<%= form_tag(change_player_size_path, remote: true) do %>
+								<%= hidden_field_tag :size, 590 %>
+								<%= submit_tag "小", :class => "btn btn-outline btn-default"%>
+							<% end %>
+						</div>
+						<div class="col-md-50px">
+							<%= form_tag(change_player_size_path, remote: true) do %>
+								<%= hidden_field_tag :size, 750 %>
+								<%= submit_tag "中", :class => "btn btn-outline btn-default"%>
+							<% end %>
+						</div>
+						<div class="col-md-50px">
+							<%= form_tag(change_player_size_path, remote: true) do %>
+								<%= hidden_field_tag :size, 900 %>
+								<%= submit_tag "大", :class => "btn btn-outline btn-default"%>
+							<% end %>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						本日の視聴回数
+					</div>
+					<div class="panel-body">
+						視聴回数：<%= session[:pdate] && session[:ptimes] && session[:pdate] == Date.today ? session[:ptimes] : 0%><br>
+						残り：<%= session[:pdate] && session[:ptimes] && session[:pdate] == Date.today ? 30-session[:ptimes] : 30%>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<br><br><br><br><br><br><br>
+			</div>
+		</div>
+	</div>
+<% end %>
+<h4>機能説明</h4>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					FC*FC Play
+				</div>
+				<div class="panel-body">
+					<p>管理人がおすすめするFC2動画を見て楽しむサイトです<br>
+						会員動画など外部埋め込みができない動画は<b>ここでは再生できません</b></p>
+					<a href="#" data-toggle="modal" data-target="#myModal1">ユーザー登録</a>をすると右の機能が使えます
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					検索
+				</div>
+				<div class="panel-body">
+					<p>キーワード、お気に入り登録数、動画時間の3つの要素で検索ができます</p>
+					<p>検索対象の動画は管理人がおすすめするFC2の動画です<br>
+						毎日15万件の動画情報を更新しています</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					お気に入り
+				</div>
+				<div class="panel-body">
+					<p><b><a href="#" data-toggle="modal" data-target="#myModal1">ユーザー登録</a></b>する事で使用できます</p>
+					<p>お気に入りに登録すると同時にコメントを付けられるので、動画の特徴を忘れることもありません</b><br>
+						最大100件の動画を登録する事ができます</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					登録しなくてもできる事
+				</div>
+				<div class="panel-body">
+					<ul>
+						<li>動画の検索ができる</li>
+						<li>人気の動画を探せる</li>
+						<li>一定期間の視聴履歴が見れる</li>
+						<li>再生ウィンドウの大きさが変更できる</li>
+					</ul><p</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					登録するとできる事
+				</div>
+				<div class="panel-body">
+					<ul>
+						<li>お気に入り管理ができる</li>
+						<li>自分の視聴履歴がすべて見れる</li>
+						<li>ログアウトしても変更したウィンドウサイズを維持できる</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					履歴
+				</div>
+				<div class="panel-body">
+					<p>登録をすることですべての期間の履歴がみれます</p>
+					<p>登録なしの場合には一定期間内の再生履歴が表示されます</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					人気
+				</div>
+				<div class="panel-body">
+					<p>FC*FC Playで多く再生されている動画を知ることができます</p>
+					<p>週間ランキングと月間ランキングの２つのランキングがあります</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					再生できない動画報告
+				</div>
+				<div class="panel-body">
+					<p>プレイヤー下に報告ボタンが表示されます</p>
+					<p>報告された動画が再生できないと認められた場合は、検索結果や人気動画からその動画が削除されます</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					開発記録
+				</div>
+				<div class="panel-body">
+					<p><b><%= link_to '開発記録', log_path %></b>からご覧頂けます</p>
+					<p>追加した機能,実装予定機能などの情報を(意外と真面目に)更新しているので、見て頂けると管理人が喜びます</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
