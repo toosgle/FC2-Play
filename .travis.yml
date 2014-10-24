@@ -1,5 +1,5 @@
 language: ruby
-bundler_args: --without development --deployment --jobs=3 --retry=3
+bundler_args: "--without development --deployment --jobs=3 --retry=3"
 cache: bundler
 
 rvm:
@@ -9,7 +9,6 @@ branches:
   only:
   - master
   - production
-  - deploy-test
 
 gemfile:
 - Gemfile
@@ -33,4 +32,4 @@ after_success:
 notifications:
   hipchat:
     rooms:
-      secure: cKSbEwO8iRTcdDTVdLLYtEQRdohNEQeARBUP5WMvQUEGzVoNCRMPmjF51S+R+uXKCzT5/p+dZG1mKOaa8M8yhzyZFviziInMWyvByxCJydq6QJ6RrijIJ8f1eLmmVurSVoaHEmQv7YK6wMLlFr2V8ZiBAQncwIKmtIDSN1sDKqM=
+      secure: YJt/sO0Roi6VhmdTOVu740zrRYLcaTij42/H5OLM1NQ84SmgQ5SWYdH6q2TZtMcmE/0xncS1wpapPwxXy6hb60XhDWzHu/l76FDSKLWBGWeIk3+YPQE+tW8ayeO1hufFemQ0V7fgRGxzqVsrVirZ8ttcVBjV1QnVtpSvGCxuecc=
