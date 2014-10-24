@@ -9,6 +9,7 @@ branches:
   only:
   - master
   - production
+  - deploy-test
 
 gemfile:
 - Gemfile
