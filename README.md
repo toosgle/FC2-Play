@@ -6,6 +6,7 @@ FC*FC Play (+18)
 [![Code Climate](https://codeclimate.com/github/showwin/FC2-Play/badges/gpa.svg)](https://codeclimate.com/github/showwin/FC2-Play)
 
 This is a unlimited video player of [FC2 Video](http://video.fc2.com/).
+URL: [http://fc2play.com](http://fc2play.com/)
 
 # Feature
 ##  Unlimited Times Play for Free
