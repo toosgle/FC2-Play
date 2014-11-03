@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe History do
 
-  before(:all) do
-    150.times { create(:video4his) }
-    150.times { create(:history) }
-  end
-
   describe 'Association' do
     it { should belong_to(:user) }
     it { should belong_to(:video) }
@@ -22,8 +17,16 @@ describe History do
   end
 
   describe '#rank_update' do
+    before(:each) do
+      150.times { create(:video4his) }
+      150.times { create(:history) }
+    end
     it 'should update weekly rank' do
+      p "History size="+History.all.size.to_s
+      p "WeeklyRank size="+WeeklyRank.all.size.to_s
+      p "WeeklyRank update"
       WeeklyRank.update
+      p "WeeklyRank size="+WeeklyRank.all.size.to_s
       sleep 1
       w_last = WeeklyRank.order(:updated_at).last.updated_at
       sleep 1
@@ -32,8 +35,14 @@ describe History do
     end
 
     it 'should update monthly rank' do
+      p "History size="+History.all.size.to_s
+      p "MonthlyRank size="+MonthlyRank.all.size.to_s
+      p "MonthlyRank update"
       MonthlyRank.update
+      p "MonthlyRank size="+MonthlyRank.all.size.to_s
+      p "sleep 1"
       sleep 1
+      p "MonthlyRank size="+MonthlyRank.all.size.to_s
       m_last = MonthlyRank.order(:updated_at).last.updated_at
       sleep 1
       History.rank_update

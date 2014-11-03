@@ -26,7 +26,7 @@ FactoryGirl.define do
 
   factory :video4his, class: Video do
     sequence(:id) { |n| n+10002000 }
-    title "f*ckingosh"
+    sequence(:title) { |n| "f*ckingosh_#{n}" }
     url "http://video.fc2.com/hogehogehu"
     views 3456
     duration "10:23"
