@@ -23,6 +23,7 @@ describe History do
     end
     it 'should update weekly rank' do
       WeeklyRank.update
+      sleep 1
       w_last = WeeklyRank.order(:updated_at).last.updated_at
       sleep 1
       History.rank_update
@@ -31,6 +32,7 @@ describe History do
 
     it 'should update monthly rank' do
       MonthlyRank.update
+      sleep 1
       m_last = MonthlyRank.order(:updated_at).last.updated_at
       sleep 1
       History.rank_update
