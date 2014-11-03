@@ -42,7 +42,7 @@ describe Video do
       Video.start_scrape("update", 10000, 10001, 1, 0)
     expect(
       Video.where("updated_at > ?", Time.now-60).count
-    ).to be_between(1, 150)
+    ).to be_between(1, 250)
     end
   end
 

@@ -2,6 +2,11 @@ require 'spec_helper'
 
 describe History do
 
+  before(:all) do
+    150.times { create(:video4his) }
+    150.times { create(:history) }
+  end
+
   describe 'Association' do
     it { should belong_to(:user) }
     it { should belong_to(:video) }
@@ -17,10 +22,6 @@ describe History do
   end
 
   describe '#rank_update' do
-    before(:each) do
-      150.times { create(:history) }
-      150.times { create(:video4his) }
-    end
     it 'should update weekly rank' do
       WeeklyRank.update
       sleep 1
