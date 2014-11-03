@@ -25,11 +25,11 @@ describe History do
       p "History size="+History.all.size.to_s
       p "Video size="+Video.all.size.to_s
       p "video ids"
-      Video.limit(10).each do |v|
+      Video.all.each do |v|
         p v.id
       end
       p "history video.ids"
-      History.limit(10).each do |h|
+      History.all.each do |h|
         p h.video_id
       end
       p "Video.join(his) size="+Video.joins(:histories).size.to_s
