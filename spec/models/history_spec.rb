@@ -23,10 +23,23 @@ describe History do
     end
     it 'should update weekly rank' do
       p "History size="+History.all.size.to_s
+      p "Video.hot size="+(Video.hot).length.to_s
+      p "Video.hot.weekly size="+(Video.hot.weekly).length.to_s
       p "WeeklyRank size="+WeeklyRank.all.size.to_s
       p "WeeklyRank update"
       WeeklyRank.update
       p "WeeklyRank size="+WeeklyRank.all.size.to_s
+      p "==== manual update ===="
+      p "Video.hot.weekly.each do |video|"
+      Video.hot.weekly.each do |video|
+        p "video_id = "+video.id.to_s
+        p "video_title = "+video.title
+        record = WeeklyRank.new(video_id: video.id)
+        p record
+        record.save
+        p record
+      end
+      p "==== end ===="
       sleep 1
       w_last = WeeklyRank.order(:updated_at).last.updated_at
       sleep 1
