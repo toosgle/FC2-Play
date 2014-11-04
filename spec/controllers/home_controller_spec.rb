@@ -51,7 +51,7 @@ describe HomeController, :type => :controller do
 
     context "limited by hourly" do
       it "should redirect to root_path" do
-        1010.times { create(:history) }
+        1010.times { create(:history4limit) }
         get :play, { title: @video.title }
         expect(response).to redirect_to root_path
       end
