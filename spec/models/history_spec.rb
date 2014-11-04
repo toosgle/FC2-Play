@@ -50,6 +50,14 @@ describe History do
 
     it 'should update monthly rank' do
       p "History size="+History.all.size.to_s
+      p "video ids"
+      Video.all.each do |v|
+        p v.id
+      end
+      p "history video.ids"
+      History.all.each do |h|
+        p h.video_id
+      end
       p "MonthlyRank size="+MonthlyRank.all.size.to_s
       p "MonthlyRank update"
       MonthlyRank.update
