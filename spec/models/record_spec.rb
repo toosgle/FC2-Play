@@ -5,7 +5,7 @@ describe Record do
   describe '#create_all_his' do
     it 'create many records' do
       start = Date::new(2014, 10, 8)
-      days = (Date.today-start).to_i
+      days = (Date.today-start+1).to_i
       Record.create_all_his
       expect(Record.all.size).to eq days*6
     end
