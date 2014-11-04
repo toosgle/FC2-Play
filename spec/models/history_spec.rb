@@ -22,26 +22,7 @@ describe History do
       150.times { create(:history) }
     end
     it 'should update weekly rank' do
-      p "History size="+History.all.size.to_s
-      p "Video size="+Video.all.size.to_s
-      p "video ids"
-      Video.all.each do |v|
-        p v.id
-      end
-      p "history video.ids"
-      History.all.each do |h|
-        p h.video_id
-      end
-      p "Video.join(his) size="+Video.joins(:histories).size.to_s
-      p "add where title.length > 5 size="+Video.joins(:histories).where{ length(videos.title) > 5 }.size.to_s
-      #"Video.hot size=0"
-      p "Video.hot size="+(Video.hot).length.to_s
-      p "Video.hot.weekly size="+(Video.hot.weekly).length.to_s
-      p "WeeklyRank size="+WeeklyRank.all.size.to_s
-      p "WeeklyRank update"
       WeeklyRank.update
-      p "WeeklyRank size="+WeeklyRank.all.size.to_s
-      sleep 1
       w_last = WeeklyRank.order(:updated_at).last.updated_at
       sleep 1
       History.rank_update
@@ -49,22 +30,7 @@ describe History do
     end
 
     it 'should update monthly rank' do
-      p "History size="+History.all.size.to_s
-      p "video ids"
-      Video.all.each do |v|
-        p v.id
-      end
-      p "history video.ids"
-      History.all.each do |h|
-        p h.video_id
-      end
-      p "MonthlyRank size="+MonthlyRank.all.size.to_s
-      p "MonthlyRank update"
       MonthlyRank.update
-      p "MonthlyRank size="+MonthlyRank.all.size.to_s
-      p "sleep 1"
-      sleep 1
-      p "MonthlyRank size="+MonthlyRank.all.size.to_s
       m_last = MonthlyRank.order(:updated_at).last.updated_at
       sleep 1
       History.rank_update

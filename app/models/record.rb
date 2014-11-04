@@ -9,9 +9,9 @@ class Record < ActiveRecord::Base
   def self.create_all_his
     Record.delete_all
     start = Date::new(2014, 10, 8)
-    days = (Date.today-start).to_i
+    days = (Date.today-start+1).to_i
     days.times do |i|
-      day = (Date.today+i-days).strftime('%Y-%m-%d')
+      day = (start+i).strftime('%Y-%m-%d')
       create_a_record_of(day)
     end
   end
