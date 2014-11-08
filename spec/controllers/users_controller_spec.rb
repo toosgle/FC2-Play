@@ -10,22 +10,32 @@ describe UsersController, :type => :controller  do
     let(:params) {
       {
         user: {
-          name: "testRspec1",
+          name: name,
           password: "password",
           password_confirmation: "password"
         }
       }
     }
 
-    it "should create new user " do
-      expect{
+    context "valid params" do
+      let(:name) { "testRspec1" }
+
+      it "should create new user " do
+        expect{
+          post :create, params
+        }.to change(User, :count).by(1)
+      end
+
+      it "should redirect to root" do
         post :create, params
-      }.to change(User, :count).by(1)
+        expect(response).to redirect_to root_path
+      end
     end
 
     context 'username is already exist' do
+      let(:name) { "testRspec" }
+
       it "should fail to create new user" do
-        params[:user][:name] = "testRspec"
         expect{
           post :create, params
         }.to change(User, :count).by(0)
@@ -33,8 +43,9 @@ describe UsersController, :type => :controller  do
     end
 
     context 'bad params of confirmation' do
+      let(:name) { "testRspec2" }
+
       it "should fail to create new user" do
-        params[:user][:name] = "testRspec2"
         params[:user][:password_confirmation] = "passwor111d"
         expect{
           post :create, params
@@ -43,17 +54,13 @@ describe UsersController, :type => :controller  do
     end
 
     context 'no username' do
+      let(:name) { nil }
+
       it "should fail to create new user" do
-        params[:user][:name] = nil
         expect{
           post :create, params
         }.to change(User, :count).by(0)
       end
-    end
-
-    it "should redirect to root" do
-      post :create, params
-      expect(response).to redirect_to root_path
     end
   end
 
@@ -61,13 +68,15 @@ describe UsersController, :type => :controller  do
     let(:params) {
       {
         user: {
-          size: "900"
+          size: size
         },
         id: @user.id,
         format: 'js'
       }
     }
     context "valid params" do
+      let(:size) { "900" }
+
       it "should update successfully" do
         put :update, params
         expect(User.order(:updated_at).last.size).to eq 900
@@ -75,8 +84,9 @@ describe UsersController, :type => :controller  do
     end
 
     context "invalid params" do
+      let(:size) { "899" }
+
       it "should not update" do
-        params[:user][:size] = "899"
         last_update = User.order(:updated_at).last.updated_at
         sleep 1
         put :update, params
@@ -101,6 +111,5 @@ describe UsersController, :type => :controller  do
       #I don't know how to write test
     end
   end
-
 
 end

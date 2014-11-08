@@ -4,33 +4,47 @@ describe SessionsController, :type => :controller do
 
   let(:user) { create(:user) }
 
-  let(:params) {
-    {
-      name: "testRspec",
-      password: "password"
-    }
-  }
-
   describe "#create" do
-    it "should login successfully " do
-      user #create_user
-      post :create, params
-      expect(User.find(session[:user_id]).name).to eq "testRspec"
+    let(:params) {
+      {
+        name: "testRspec",
+        password: password
+      }
+    }
+
+    context "valid params" do
+      let(:password) { "password" }
+
+      it "should login successfully " do
+        user #create_user
+        post :create, params
+        expect(User.find(session[:user_id]).name).to eq "testRspec"
+      end
+
+      it "should redirect to root" do
+        post :create, params
+        expect(response).to redirect_to root_path
+      end
     end
 
-    it "should fail to login" do
-      params[:password] = "password1"
-      post :create, params
-      expect(session[:user_id]).to eq nil
-    end
+    context "invalid params" do
+      let(:password) { "password1" }
 
-    it "should redirect to root" do
-      post :create, params
-      expect(response).to redirect_to root_path
+      it "should fail to login" do
+        post :create, params
+        expect(session[:user_id]).to eq nil
+      end
     end
   end
 
   describe "#destroy" do
+    let(:params) {
+      {
+        name: "testRspec",
+        password: "password"
+      }
+    }
+
     before(:each) do
       post :create, params
     end

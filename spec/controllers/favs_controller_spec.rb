@@ -14,13 +14,15 @@ describe FavsController, :type => :controller do
     let(:params) {
       {
         fav: {
-          video_id: "10001001",
+          video_id: video_id,
           comment: "abcde"
         },
         format: 'js'
       }
     }
     context "valid params" do
+      let(:video_id) { "10001001" }
+
       it "should create new fav" do
         expect{
           post :create, params
@@ -34,8 +36,9 @@ describe FavsController, :type => :controller do
     end
 
     context "already has 100 favs" do
+      let(:video_id) { "99999999" }
+
       it "should fail to create new fav" do
-        params[:fav][:video_id] = "99999999"
         100.times { create(:fav, user_id: user.id) }
         expect{
           post :create, params
@@ -44,8 +47,9 @@ describe FavsController, :type => :controller do
     end
 
     context "bad_params" do
+      let(:video_id) { nil }
+
       it "should fail to create new fav" do
-        params[:fav][:video_id] = nil
         100.times { create(:fav, user_id: user.id) }
         expect{
           post :create, params
@@ -54,8 +58,9 @@ describe FavsController, :type => :controller do
     end
 
     context "the bookmark has already exist" do
+      let(:video_id) { "10001000" }
+
       it "should fail to create new fav" do
-        params[:fav][:video_id] = "10001000"
         expect{
           post :create, params
         }.to change(Fav, :count).by(0)
@@ -67,7 +72,7 @@ describe FavsController, :type => :controller do
     let (:params) {
       {
         fav: {
-          video_id: "10001000",
+          video_id: video_id,
           comment: "updated"
         },
         id: fav.id,
@@ -75,6 +80,8 @@ describe FavsController, :type => :controller do
       }
     }
     context "valid params" do
+      let(:video_id) { "10001000" }
+
       it "should update successfully" do
         put :update, params
         expect(Fav.order(:updated_at).last.comment).to eq "updated"
@@ -87,8 +94,9 @@ describe FavsController, :type => :controller do
     end
 
     context "invalid params" do
+      let(:video_id) { nil }
+
       it "should not update" do
-        params[:fav][:video_id] = nil
         last_update = Fav.order(:updated_at).last.updated_at
         sleep 1
         put :update, params
