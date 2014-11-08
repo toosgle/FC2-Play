@@ -4,97 +4,84 @@ describe UsersController, :type => :controller  do
 
   before(:each) do
     @user = create(:user)
-    @params = {
-      user: {
-        name: "testRspec1",
-        password: "password",
-        password_confirmation: "password"
-      }
-    }
   end
 
   describe "#create" do
+    let(:params) {
+      {
+        user: {
+          name: "testRspec1",
+          password: "password",
+          password_confirmation: "password"
+        }
+      }
+    }
+
     it "should create new user " do
       expect{
-        post :create, @params
+        post :create, params
       }.to change(User, :count).by(1)
     end
 
     context 'username is already exist' do
       it "should fail to create new user" do
-        @bad_params = {
-          user: {
-            name: "testRspec",
-            password: "password",
-            password_confirmation: "password"
-          }
-        }
+        params[:user][:name] = "testRspec"
         expect{
-          post :create, @bad_params
+          post :create, params
         }.to change(User, :count).by(0)
       end
     end
 
     context 'bad params of confirmation' do
       it "should fail to create new user" do
-        @bad_params = {
-          user: {
-            name: "testRspec2",
-            password: "password",
-            password_confirmation: "passwor111d"
-          }
-        }
+        params[:user][:name] = "testRspec2"
+        params[:user][:password_confirmation] = "passwor111d"
         expect{
-          post :create, @bad_params
+          post :create, params
         }.to change(User, :count).by(0)
       end
     end
 
     context 'no username' do
       it "should fail to create new user" do
-        @bad_params = {
-          user: {
-            password: "password",
-            password_confirmation: "password"
-          }
-        }
+        params[:user][:name] = nil
         expect{
-          post :create, @bad_params
+          post :create, params
         }.to change(User, :count).by(0)
       end
     end
 
     it "should redirect to root" do
-      post :create, @params
+      post :create, params
       expect(response).to redirect_to root_path
     end
   end
 
   describe "#update" do
-    it "should update successfully" do
-      @update_params = {
+    let(:params) {
+      {
         user: {
           size: "900"
         },
         id: @user.id,
         format: 'js'
       }
-      put :update, @update_params
-      expect(User.order(:updated_at).last.size).to eq 900
+    }
+    context "valid params" do
+      it "should update successfully" do
+        put :update, params
+        expect(User.order(:updated_at).last.size).to eq 900
+      end
     end
 
-    it "should not update" do
-      last_update = User.order(:updated_at).last.updated_at
-      sleep 1
-      @bad_params = {
-        user: {
-          size: "899"
-        },
-        id: @user.id,
-        format: 'js'
-      }
-      put :update, @bad_params
-      expect(User.order(:updated_at).last.updated_at).to eq last_update
+    context "invalid params" do
+      it "should not update" do
+        params[:user][:size] = "899"
+        last_update = User.order(:updated_at).last.updated_at
+        sleep 1
+        put :update, params
+        expect(User.order(:updated_at).last.updated_at).to eq last_update
+      end
     end
   end
 

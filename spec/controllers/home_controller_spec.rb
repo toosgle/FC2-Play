@@ -3,14 +3,15 @@ require 'spec_helper'
 describe HomeController, :type => :controller do
   include AuthHelper
 
+  let(:video) { Video.order(:updated_at).last }
+  let(:user) { create(:user) }
+
   before(:all) do
     Video.start_scrape("update", 10000, 10001, 1, 0)
-    @video = Video.order(:updated_at).last
   end
 
   before(:each) do
-    @user = create(:user)
-    session[:user_id] = @user.id
+    session[:user_id] = user.id
   end
 
   describe '#render_404' do
@@ -44,7 +45,7 @@ describe HomeController, :type => :controller do
   describe '#play' do
     context "no problem" do
       it "has a 200 status code" do
-        get :play, { title: @video.title }
+        get :play, { title: video.title }
         expect(response.code).to eq("200")
       end
     end
@@ -52,7 +53,7 @@ describe HomeController, :type => :controller do
     context "limited by hourly" do
       it "should redirect to root_path" do
         1010.times { create(:history4limit) }
-        get :play, { title: @video.title }
+        get :play, { title: video.title }
         expect(response).to redirect_to root_path
       end
     end
@@ -107,7 +108,7 @@ describe HomeController, :type => :controller do
   describe '#report' do
     it "should delete successfully" do
       expect{
-        delete :report, { title: @video.title }
+        delete :report, { title: video.title }
       }.to change(Video, :count).by(-1)
     end
 
