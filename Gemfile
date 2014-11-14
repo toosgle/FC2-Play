@@ -25,7 +25,7 @@ gem 'toastr-rails'
 gem 'mysql2', '>= 0.3.12b4'
 
 ### adopter from SQLite3 to MySQL
-gem 'yaml_db'
+#gem 'yaml_db'
 
 ### for scraping
 gem 'nokogiri'
