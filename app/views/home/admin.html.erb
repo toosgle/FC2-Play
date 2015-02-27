@@ -125,9 +125,9 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=format("%04d", i)%>', value: <%=@playall[i]%>, value_a: <%=@playall_adult[i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@playall[i]%>, value_a: <%=@playall_adult[i]%> },
 		<% end %>
-    { year: '<%=@days-1%>', value: <%=@playall[@days-1]%>, value_a: <%=@playall_adult[@days-1]%> }
+    { year: '<%= @days-1+10000 %>', value: <%=@playall[@days-1]%>, value_a: <%=@playall_adult[@days-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value', 'value_a'],
@@ -140,9 +140,9 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=format("%04d", i)%>', value: <%=@users[i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@users[i]%> },
 		<% end %>
-    { year: '<%=@days-1%>', value: <%=@users[@days-1]%> }
+    { year: '<%= @days-1+10000 %>', value: <%=@users[@days-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -154,9 +154,9 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=format("%04d", i)%>', value: <%=@favs[i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@favs[i]%> },
 		<% end %>
-    { year: '<%=@days-1%>', value: <%=@favs[@days-1]%> }
+    { year: '<%= @days-1+10000 %>', value: <%=@favs[@days-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -169,9 +169,9 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=format("%04d", i)%>', value: <%=@videos[i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@videos[i]%> },
 		<% end %>
-    { year: '<%=@days-1%>', value: <%=@videos[@days-1]%> }
+    { year: '<%= @days-1+10000 %>', value: <%=@videos[@days-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -184,9 +184,9 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=format("%04d", i)%>', value: <%=@updated_videos[i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@updated_videos[i]%> },
 		<% end %>
-    { year: '<%=@days-1%>', value: <%=@updated_videos[@days-1]%> }
+    { year: '<%= @days-1+10000 %>', value: <%=@updated_videos[@days-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
