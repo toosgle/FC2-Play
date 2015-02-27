@@ -65,6 +65,11 @@ class Video < ActiveRecord::Base
     .limit(200)
   }
 
+  def self.check_available
+    Video.all.each do |video|
+      video.destroy if !video.available?
+    end
+  end
 
   def available?
     begin
@@ -73,12 +78,6 @@ class Video < ActiveRecord::Base
       title.include?("Removed") ? false : true
     rescue
       false
-    end
-  end
-
-  def self.check_available
-    Video.all.each do |video|
-      video.destroy if !video.available?
     end
   end
 

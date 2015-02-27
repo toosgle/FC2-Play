@@ -125,7 +125,7 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=i%>', value: <%=@playall[i]%>, value_a: <%=@playall_adult[i]%> },
+    	{ year: '<%=format("%04d", i)%>', value: <%=@playall[i]%>, value_a: <%=@playall_adult[i]%> },
 		<% end %>
     { year: '<%=@days-1%>', value: <%=@playall[@days-1]%>, value_a: <%=@playall_adult[@days-1]%> }
   ],
@@ -140,7 +140,7 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=i%>', value: <%=@users[i]%> },
+    	{ year: '<%=format("%04d", i)%>', value: <%=@users[i]%> },
 		<% end %>
     { year: '<%=@days-1%>', value: <%=@users[@days-1]%> }
   ],
@@ -154,7 +154,7 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=i%>', value: <%=@favs[i]%> },
+    	{ year: '<%=format("%04d", i)%>', value: <%=@favs[i]%> },
 		<% end %>
     { year: '<%=@days-1%>', value: <%=@favs[@days-1]%> }
   ],
@@ -169,7 +169,7 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=i%>', value: <%=@videos[i]%> },
+    	{ year: '<%=format("%04d", i)%>', value: <%=@videos[i]%> },
 		<% end %>
     { year: '<%=@days-1%>', value: <%=@videos[@days-1]%> }
   ],
@@ -184,7 +184,7 @@ new Morris.Area({
 
   data: [
 		<% (@days-1).times do |i| %>
-    	{ year: '<%=i%>', value: <%=@updated_videos[i]%> },
+    	{ year: '<%=format("%04d", i)%>', value: <%=@updated_videos[i]%> },
 		<% end %>
     { year: '<%=@days-1%>', value: <%=@updated_videos[@days-1]%> }
   ],
