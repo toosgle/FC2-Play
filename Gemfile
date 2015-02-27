@@ -39,6 +39,9 @@ gem "squeel"
 ### for using helper-method in js.erb
 gem 'sprockets'
 
+### for bulk insert
+gem 'activerecord-import'
+
 group :deployment do
   ### for preloader
   gem 'spring'
