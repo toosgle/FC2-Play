@@ -50,8 +50,8 @@ class ApplicationController < ActionController::Base
       @user = User.new
       @histories = History.list(session[:temp_id])
     end
-    @week = WeeklyRank.all
-    @month = MonthlyRank.all
+    @week = WeeklyRank.all.limit(50)
+    @month = MonthlyRank.all.limit(50)
   end
 
   def set_play_info

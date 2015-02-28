@@ -25,11 +25,11 @@ class Video < ActiveRecord::Base
   }
   scope :weekly, -> {
     week_ago = DateTime.now-7
-    where{ histories.created_at > week_ago }.limit(100)
+    where{ histories.created_at > week_ago }.limit(500)
   }
   scope :monthly, -> {
     month_ago = DateTime.now-30
-    where{ histories.created_at > month_ago }.limit(100)
+    where{ histories.created_at > month_ago }.limit(500)
   }
   scope :title_is, ->(keywords) {
     sql = keywords.inject("") { |sql, keywords| sql += "(title LIKE '%#{keywords}%') AND " } + "(1=1"

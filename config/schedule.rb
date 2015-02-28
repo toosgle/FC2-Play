@@ -9,7 +9,7 @@ set :output, {:error => 'log/error.log', :standard => 'log/cron.log'}
 set :environment, :production
 
 #人気の更新
-every 1.hours do
+every 6.hours do
   runner "History.rank_update"
 end
 
