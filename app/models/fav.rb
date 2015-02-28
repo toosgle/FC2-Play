@@ -7,8 +7,8 @@ class Fav < ActiveRecord::Base
 
   scope :list, ->(uid) {
     joins(:video) \
-   .where(user_id: uid) \
-   .order("created_at desc")
+    .where(user_id: uid) \
+    .order("created_at desc")
   }
 
   def exist?

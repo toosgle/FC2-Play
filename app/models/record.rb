@@ -2,8 +2,8 @@ class Record < ActiveRecord::Base
 
   scope :of, ->(type, day) {
     where("kind LIKE ?", type) \
-   .where(day: day) \
-   .first
+    .where(day: day) \
+    .first
   }
 
   def self.create_all_his
