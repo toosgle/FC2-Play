@@ -18,18 +18,18 @@ class Video < ActiveRecord::Base
 
   scope :hot, -> {
     joins(:histories) \
-    .where{ length(videos.title) > 5 }
-    .where{ videos.title !~ '%Removed%' } \
+    .where { length(videos.title) > 5 }
+    .where { videos.title !~ '%Removed%' } \
     .group("videos.title") \
     .order("count(videos.title) DESC")
   }
   scope :weekly, -> {
     week_ago = DateTime.now-7
-    where{ histories.created_at > week_ago }.limit(500)
+    where { histories.created_at > week_ago }.limit(500)
   }
   scope :monthly, -> {
     month_ago = DateTime.now-30
-    where{ histories.created_at > month_ago }.limit(500)
+    where { histories.created_at > month_ago }.limit(500)
   }
   scope :title_is, ->(keywords) {
     sql = keywords.inject("") { |sql, keywords| sql += "(title LIKE '%#{keywords}%') AND " } + "(1=1"
@@ -42,7 +42,7 @@ class Video < ActiveRecord::Base
     when "m"
       where(bookmarks: 500..2000)
     when "l"
-      where{ bookmarks >= 2000 }
+      where { bookmarks >= 2000 }
     end
   }
   scope :duration_is, ->(condition) {
