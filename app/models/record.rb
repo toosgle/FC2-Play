@@ -8,7 +8,7 @@ class Record < ActiveRecord::Base
 
   def self.create_all_his
     Record.delete_all
-    start = Date::new(2014, 10, 8)
+    start = Date.new(2014, 10, 8)
     days = (Date.today-start+1).to_i
     days.times do |i|
       day = (start+i).strftime('%Y-%m-%d')
