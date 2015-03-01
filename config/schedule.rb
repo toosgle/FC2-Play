@@ -23,6 +23,10 @@ every 2.day, :at => '8:30 am' do
   runner "Video.daily_update"
 end
 
+every 7.day, at => '2:00 am' do
+  runner "Video.check_available"
+end
+
 #開発中のみ
 #every 2.minutes do
 #  runner "History.rank_update"
