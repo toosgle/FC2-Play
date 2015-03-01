@@ -4,15 +4,15 @@ class History < ActiveRecord::Base
 
   scope :list, ->(uid) {
     joins(:video) \
-   .where(user_id: uid) \
-   .order("created_at DESC") \
-   .limit(100)
+    .where(user_id: uid) \
+    .order("created_at DESC") \
+    .limit(100)
   }
 
   scope :play_count, ->(day) {
     joins(:video) \
-   .where("histories.created_at < ?", day) \
-   .size
+    .where("histories.created_at < ?", day) \
+    .size
   }
 
   scope :adult, ->{
