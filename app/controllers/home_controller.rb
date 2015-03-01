@@ -41,9 +41,9 @@ class HomeController < ApplicationController
     end
     if !set_fc2_info
       # handle 404 error
+      MonthlyRank.find_by_video_id(@video.id).delete if MonthlyRank.find_by_video_id(@video.id)
+      WeeklyRank.find_by_video_id(@video.id).delete if WeeklyRank.find_by_video_id(@video.id)
       @video.destroy
-      MonthlyRank.find_by_video_id(@video.id).delete
-      WeeklyRank.find_by_video_id(@video.id).delete
       toast :error, "この動画はFC2で既に削除されているようです　FC*FC Playからも削除しました"
       redirect_to root_url
       return
@@ -84,8 +84,8 @@ class HomeController < ApplicationController
     else
       toast :error, "報告に失敗しました。もう一度試してみてください。"
     end
-    MonthlyRank.find_by_video_id(video.id).delete
-    WeeklyRank.find_by_video_id(video.id).delete
+    MonthlyRank.find_by_video_id(video.id).delete if MonthlyRank.find_by_video_id(video.id)
+    WeeklyRank.find_by_video_id(video.id).delete if MonthlyRank.find_by_video_id(video.id)
     redirect_to session[:referer_url]
   end
 
