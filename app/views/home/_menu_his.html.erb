@@ -7,26 +7,24 @@
 					<tr>
 						<th>タイトル</th>
 						<th>時間</th>
-						<th>視聴日時</th>
 					</tr>
 				</thead>
 				<tbody>
-				<% @histories.each do |his| %>
+				<% @histories.each do |video| %>
 					<tr>
 						<td>
 							<div class="col-md-120px">
-								<%= link_to image_tag(his.video.image_url, width: 108, height: 81), play_path(title: his.video.title) %>
+								<%= link_to image_tag(video.image_url, width: 108, height: 81), play_path(title: video.title) %>
 							</div>
-							<%= his.video.adult ? (link_to his.video.title, play_path(title: his.video.title), class: "text-danger") : (link_to his.video.title, play_path(title: his.video.title)) %>
+							<%= video.adult ? (link_to video.title, play_path(title: video.title), class: "text-danger") : (link_to video.title, play_path(title: video.title)) %>
 						</td>
 						<td>
-							<% if his.video.duration %>
-								<%= his.video.duration %>
+							<% if video.duration %>
+								<%= video.duration %>
 							<% else %>
 								<%= "\s" %>
 							<% end %>
 						</td>
-						<td><%= his.created_at.strftime("%Y/%m/%d %H:%M") %></td>
 					</tr>
 				<% end %>
 				</tbody>

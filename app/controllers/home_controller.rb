@@ -20,10 +20,10 @@ class HomeController < ApplicationController
   end
 
   def play
-    if out_of_limit?
-      redirect_to root_url
-      return
-    end
+    #if out_of_limit?
+    #  redirect_to root_url
+    #  return
+    #end
 
     #if got_to_survey?
     #  @survey = Survey.new
@@ -100,8 +100,8 @@ class HomeController < ApplicationController
     case cause_of_limit
     when "hourly"
       toast :error, "只今、サイト全体で視聴制限をしています　もうしばらくしてから再度アクセスしてみてください"
-    #when "personal"
-    #  toast :error, "本日30回視聴したため制限を行っています　24時を過ぎてから再びお楽しみください"
+    when "personal"
+      toast :error, "本日30回視聴したため制限を行っています　24時を過ぎてから再びお楽しみください"
     else
       add_play_count
       false

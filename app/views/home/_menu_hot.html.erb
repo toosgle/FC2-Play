@@ -18,26 +18,26 @@
 							<td><%= i+1 %></td>
 							<td>
 								<div class="col-md-120px">
-									<%= link_to image_tag(@week[i].video.image_url, width: 108, height: 81), play_path(title: @week[i].video.title) %>
+									<%= link_to image_tag(@week[i].image_url, width: 108, height: 81), play_path(title: @week[i].title) %>
 								</div>
-								<%= @week[i].video.adult ? (link_to @week[i].video.title, play_path(title: @week[i].video.title), class: "text-danger") : (link_to @week[i].video.title, play_path(title: @week[i].video.title)) %>
+								<%= @week[i].adult ? (link_to @week[i].title, play_path(title: @week[i].title), class: "text-danger") : (link_to @week[i].title, play_path(title: @week[i].title)) %>
 							</td>
 							<td>
-								<% if @week[i].video.duration %>
-									<%= @week[i].video.duration %>
+								<% if @week[i].duration %>
+									<%= @week[i].duration %>
 								<% else %>
 									<%= "\s" %>
 								<% end %>
 							</td>
 							<td>
 								<div class="col-md-120px">
-									<%= link_to image_tag(@month[i].video.image_url, width: 108, height: 81), play_path(title: @month[i].video.title) %>
+									<%= link_to image_tag(@month[i].image_url, width: 108, height: 81), play_path(title: @month[i].title) %>
 								</div>
-								<%= @month[i].video.adult ? (link_to @month[i].video.title, play_path(title: @month[i].video.title), class: "text-danger") : (link_to @month[i].video.title, play_path(title: @month[i].video.title)) %>
+								<%= @month[i].adult ? (link_to @month[i].title, play_path(title: @month[i].title), class: "text-danger") : (link_to @month[i].title, play_path(title: @month[i].title)) %>
 							</td>
 							<td>
-								<% if @month[i].video.duration %>
-									<%= @month[i].video.duration %>
+								<% if @month[i].duration %>
+									<%= @month[i].duration %>
 								<% else %>
 									<%= "\s" %>
 								<% end %>

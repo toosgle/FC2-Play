@@ -44,14 +44,29 @@ class ApplicationController < ActionController::Base
   def set_root_info
     if current_user
       @favs = current_user.fav_list
-      @histories = current_user.history_list
+      his = current_user.history_list
     else
       session[:temp_id] ||= rand(8999999)+1000000
       @user = User.new
-      @histories = History.list(session[:temp_id])
+      his = History.list(session[:temp_id])
     end
-    @week = WeeklyRank.all.limit(50)
-    @month = MonthlyRank.all.limit(50)
+    w_ids = get_video_ids(WeeklyRank.all.limit(50))
+    w_query = ActiveRecord::Base.send(:sanitize_sql_array, ["field(id ,?)",w_ids])
+    @week = Video.where(id: w_ids).order(w_query)
+    m_ids = get_video_ids(WeeklyRank.all.limit(50))
+    m_query = ActiveRecord::Base.send(:sanitize_sql_array, ["field(id ,?)",m_ids])
+    @month = Video.where(id: m_ids).order(m_query)
+    his_ids = get_video_ids(his)
+    his_query = ActiveRecord::Base.send(:sanitize_sql_array, ["field(id ,?)",his_ids])
+    @histories = Video.where(id: his_ids).order(his_query)
+  end
+
+  def get_video_ids(records)
+    ids = []
+    records.each do |r|
+      ids << r.video_id
+    end
+    ids
   end
 
   def set_play_info
