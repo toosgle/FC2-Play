@@ -9,7 +9,7 @@ Fc2play::Application.routes.draw do
   get 'test' => 'home#test'
   get 'log' => 'home#log', as: :log
   get 'admin' => 'home#admin', as: :admin
-  get 'play/:title' => 'home#play', as: :play
+  get 'play' => 'home#play', as: :play
   get 'search' => 'home#search', as: :search
   post 'bug_report' => 'bug_reports#create', as: :bug_report
   post 'change_player_size' => 'home#change_player_size', as: :change_player_size
