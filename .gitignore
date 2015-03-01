@@ -21,3 +21,6 @@
 /log/*.log
 /tmp
 *.DS_Store
+
+# ignore local gems
+/vendor/bundle/*

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141016151818) do
+ActiveRecord::Schema.define(version: 20150301022348) do
 
   create_table "bug_reports", force: true do |t|
     t.string   "content"
@@ -94,7 +94,9 @@ ActiveRecord::Schema.define(version: 20141016151818) do
     t.datetime "deleted_at"
   end
 
+  add_index "videos", ["bookmarks"], name: "index_videos_on_bookmarks", using: :btree
   add_index "videos", ["deleted_at"], name: "index_videos_on_deleted_at", using: :btree
+  add_index "videos", ["title"], name: "index_videos_on_title", using: :btree
 
   create_table "weekly_ranks", force: true do |t|
     t.datetime "created_at"
