@@ -50,13 +50,13 @@ describe HomeController, :type => :controller do
       end
     end
 
-    context "limited by hourly" do
-      it "should redirect to root_path" do
-        1010.times { create(:history4limit) }
-        get :play, { title: video.title }
-        expect(response).to redirect_to root_path
-      end
-    end
+    #context "limited by hourly" do
+    #  it "should redirect to root_path" do
+    #    1010.times { create(:history4limit) }
+    #    get :play, { title: video.title }
+    #    expect(response).to redirect_to root_path
+    #  end
+    #end
 
     #context "limited by personal"
     #  it "has a 200 status code" do

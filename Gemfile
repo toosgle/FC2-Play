@@ -53,6 +53,18 @@ end
 
 group :development, :test do
   ### for test
+  # reference http://qiita.com/yusabana/items/8ce54577d959bb085b37
+  gem 'pry-rails'
+  gem 'pry-doc'
+  gem 'pry-stack_explorer'
+  gem 'pry-byebug'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'hirb'
+  gem 'hirb-unicode'
+  gem 'tapp'
+  gem 'awesome_print'
+
   gem 'rspec'
   gem 'rspec-rails'
   gem 'guard-rails'
