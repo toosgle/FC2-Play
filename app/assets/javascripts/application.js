@@ -24,3 +24,7 @@
 //= require plugins/dataTables/dataTables.bootstrap
 //= require plugins/morris/morris
 //= require plugins/morris/raphael-2.1.0.min
+//= require plugins/flot/jquery.flot
+//= require plugins/flot/jquery.flot.pie
+//= require plugins/flot/jquery.flot.resize
+//= require plugins/flot/jquery.flot.tooltip.min

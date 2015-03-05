@@ -1,10 +1,11 @@
 <div class="panel-body">
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="#menu_news" data-toggle="tab">　お知らせ　</a></li>
+		<li class="active"><a href="#menu_news" data-toggle="tab">　新着　</a></li>
 		<li><a href="#menu_hot" data-toggle="tab">　人気　</a></li>
 		<li><a href="#menu_fav" data-toggle="tab">　お気に入り　</a></li>
 		<li><a href="#menu_history" data-toggle="tab">　履歴　</a></li>
-		<li><a href="#menu_other" data-toggle="tab">　その他　</a></li>
+		<li><a href="#menu_data" data-toggle="tab">　資料館　</a></li>
+		<li><a href="#menu_other" data-toggle="tab">　設定/使い方　</a></li>
 	</ul>
 	<div class="tab-content">
 		<div class="tab-pane fade in active" id="menu_news">
@@ -18,6 +19,9 @@
 		</div>
 		<div class="tab-pane fade" id="menu_hot">
 			<%= render 'home/menu_hot' %>
+		</div>
+		<div class="tab-pane fade" id="menu_data">
+			<%= render 'home/menu_data' %>
 		</div>
 		<div class="tab-pane fade" id="menu_other">
 			<%= render 'home/menu_other' %>

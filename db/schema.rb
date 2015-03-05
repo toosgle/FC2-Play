@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150301022348) do
+ActiveRecord::Schema.define(version: 20150305000304) do
 
   create_table "bug_reports", force: true do |t|
     t.string   "content"
@@ -48,6 +48,18 @@ ActiveRecord::Schema.define(version: 20150301022348) do
   end
 
   add_index "monthly_ranks", ["video_id"], name: "index_monthly_ranks_on_video_id", using: :btree
+
+  create_table "new_arrivals", force: true do |t|
+    t.integer  "video_id"
+    t.string   "title"
+    t.string   "image_url"
+    t.string   "duration"
+    t.integer  "recommend"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "new_arrivals", ["video_id"], name: "index_new_arrivals_on_video_id", using: :btree
 
   create_table "records", force: true do |t|
     t.string   "kind"

@@ -15,7 +15,12 @@ class Video < ActiveRecord::Base
   validates_inclusion_of :adult, :in => [true, false]
   validates_inclusion_of :morethan100min, :in => [true, false]
 
-
+  scope :new_arrivals, -> {
+    four_days_ago = DateTime.now - 3
+    where { bookmarks*10000/views > 100 }
+    .where { views > 2000 }
+    .where { created_at > four_days_ago}
+  }
   scope :hot, -> {
     joins(:histories) \
     .where { length(videos.title) > 5 }
@@ -100,6 +105,8 @@ class Video < ActiveRecord::Base
   #毎日1→3000ページ(150000動画)を更新
   def self.daily_update
     start_scrape("update", 1, 3000, 1, 1500)
+    #新着オススメ動画の更新
+    NewArrivals.update
   end
 
   #全部消して初期化する 750000を検索
