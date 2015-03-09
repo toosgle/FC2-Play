@@ -50,10 +50,10 @@ class ApplicationController < ActionController::Base
       @user = User.new
       his = History.list(session[:temp_id])
     end
-    w_ids = get_video_ids(WeeklyRank.all.limit(50))
+    w_ids = get_video_ids(WeeklyRank.all.limit(100))
     w_query = ActiveRecord::Base.send(:sanitize_sql_array, ["field(id ,?)",w_ids])
     @week = Video.where(id: w_ids).order(w_query)
-    m_ids = get_video_ids(WeeklyRank.all.limit(50))
+    m_ids = get_video_ids(MonthlyRank.all.limit(100))
     m_query = ActiveRecord::Base.send(:sanitize_sql_array, ["field(id ,?)",m_ids])
     @month = Video.where(id: m_ids).order(m_query)
     his_ids = get_video_ids(his)

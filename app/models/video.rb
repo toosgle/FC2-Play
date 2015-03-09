@@ -19,7 +19,7 @@ class Video < ActiveRecord::Base
     four_days_ago = DateTime.now - 3
     where { bookmarks*10000/views > 100 }
     .where { views > 2000 }
-    .where { created_at > four_days_ago}
+    .where { created_at > four_days_ago }
   }
   scope :hot, -> {
     joins(:histories) \
