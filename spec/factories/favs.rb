@@ -12,4 +12,10 @@ FactoryGirl.define do
     video_id 10001000
   end
 
+  factory :fav4his, class: Fav do
+    user_id 1
+    comment "foocommendbar"
+    sequence(:video_id) { |n| n+10002000 }
+  end
+
 end

@@ -1,5 +1,14 @@
-require 'rails_helper'
+require 'spec_helper'
 
-RSpec.describe NewArrivals, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe NewArrival do
+
+  describe '#update' do
+    it 'should make ranks' do
+      50.times { create(:video4newarrival) }
+      NewArrival.update
+      expect(NewArrival.all.size).to eq 23
+      #factory girlで50個レコードを作ると23個がランキングINの対象になる
+    end
+  end
+
 end

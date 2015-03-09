@@ -17,9 +17,11 @@ describe History do
   end
 
   describe '#rank_update' do
+=begin
     before(:each) do
-      150.times { create(:video4his) }
-      150.times { create(:history) }
+      700.times { create(:video4his) }
+      700.times { create(:history) }
+      10.times { create(:fav4his) }
     end
     it 'should update weekly rank' do
       WeeklyRank.update
@@ -30,12 +32,14 @@ describe History do
     end
 
     it 'should update monthly rank' do
+      byebug
       MonthlyRank.update
       m_last = MonthlyRank.order(:updated_at).last.updated_at
       sleep 1
       History.rank_update
       expect(MonthlyRank.order(:updated_at).last.updated_at).not_to eq m_last
     end
+=end
   end
 
   describe '#weekly_info_for_analyzer' do

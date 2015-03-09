@@ -64,6 +64,7 @@ group :development, :test do
   gem 'hirb-unicode'
   gem 'tapp'
   gem 'awesome_print'
+  gem 'byebug'
 
   gem 'rspec'
   gem 'rspec-rails'

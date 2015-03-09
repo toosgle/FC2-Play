@@ -36,4 +36,16 @@ FactoryGirl.define do
     bookmarks 1234
   end
 
+  factory :video4newarrival, class: Video do
+    sequence(:id) { |n| n+10002000 }
+    sequence(:title) { |n| "f*ckingosh_#{n}" }
+    url "http://video.fc2.com/hogehogehu"
+    sequence(:views) {|n| n*n*n*10+3456}
+    duration "10:23"
+    adult true
+    image_url "http://image.video.fc2.com/hogehogehuu"
+    morethan100min false
+    sequence(:bookmarks) {|n| n+1234}
+  end
+
 end

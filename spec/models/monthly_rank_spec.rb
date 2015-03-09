@@ -6,17 +6,13 @@ describe MonthlyRank do
     it { should belong_to(:video) }
   end
 
-  describe '# Video.hot.monthly scope' do
-    it 'should make expected sql' do
-      month_ago = DateTime.now-30
-      expect(Video.hot.monthly.to_sql).to eq \
-       Video.joins(:histories) \
-            .where{ length(videos.title) > 5 } \
-            .where{ videos.title !~ '%Removed%' } \
-            .where{ histories.created_at > month_ago } \
-            .group("videos.title") \
-            .order("count(videos.title) DESC") \
-            .limit(500).to_sql
+  describe '# Video.hot.monthly size' do
+    it 'should make 500 ranks' do
+      700.times { create(:video4his) }
+      700.times { create(:history) }
+      10.times { create(:fav4his) }
+      MonthlyRank.update
+      expect(MonthlyRank.all.size).to eq 500
     end
   end
 
