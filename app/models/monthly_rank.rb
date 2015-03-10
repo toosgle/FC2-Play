@@ -6,13 +6,13 @@ class MonthlyRank < ActiveRecord::Base
     point = {}
     # 過去1ヶ月に再生された動画は1回につき1ポイント
     month_ago = DateTime.now-30
-    History.where("created_at > '#{month_ago}'").group("video_id").order('count(*) desc').limit(500)
+    History.where("created_at > '#{month_ago}'").group("video_id").order('count(*) desc').limit(500) \
            .select('video_id, count(*) as count').each do |his|
       point[his.video_id] = his.count
     end
     # 過去1週間に再生された動画は1回につき8ポイント
     week_ago = DateTime.now-7
-    History.where("created_at > '#{week_ago}'").group("video_id").order('count(*) desc').limit(500)
+    History.where("created_at > '#{week_ago}'").group("video_id").order('count(*) desc').limit(500) \
            .select('video_id, count(*) as count').each do |his|
       point[his.video_id].blank? ? point[his.video_id] = his.count*8 : point[his.video_id] += his.count*4
     end
@@ -25,8 +25,12 @@ class MonthlyRank < ActiveRecord::Base
 
     MonthlyRank.delete_all
     hot_videos = []
-    500.times do |i|
-      hot_videos << MonthlyRank.new(video_id: point[i][0])
+    point.each do |pv|
+      if hot_videos.size >= 300
+        break
+      elsif Video.where(id: pv[0]).present?
+        hot_videos << MonthlyRank.new(video_id: pv[0])
+      end
     end
     MonthlyRank.import hot_videos
   end

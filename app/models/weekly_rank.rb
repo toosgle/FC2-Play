@@ -43,8 +43,12 @@ class WeeklyRank < ActiveRecord::Base
     #保存
     WeeklyRank.delete_all
     hot_videos = []
-    500.times do |i|
-      hot_videos << WeeklyRank.new(video_id: iku_video[i][0])
+    iku_video.each do |iv|
+      if hot_videos.size >= 300
+        break
+      elsif Video.where(id: iv[0]).present?
+        hot_videos << WeeklyRank.new(video_id: iv[0])
+      end
     end
     WeeklyRank.import hot_videos
   end
