@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
     his_query = ActiveRecord::Base.send(:sanitize_sql_array, ["field(id ,?)",his_ids])
     @histories = Video.where(id: his_ids).order(his_query)
     @new_arrivals = []
-    (0..(NewArrival.order('recommend desc').limit(20).size)).to_a.sample(10).each do |i|
+    (0..(NewArrival.order('recommend desc').limit(20).size-1)).to_a.sample(10).each do |i|
       @new_arrivals << NewArrival.order('recommend desc')[i]
     end
   end
