@@ -12,7 +12,7 @@ describe MonthlyRank do
       700.times { create(:history) }
       10.times { create(:fav4his) }
       MonthlyRank.update
-      expect(MonthlyRank.all.size).to eq 500
+      expect(MonthlyRank.all.size).to eq 300
     end
   end
 

@@ -3,7 +3,6 @@ class NewArrival < ActiveRecord::Base
 
   #2日に1回のfc2からのスクレイピングが終わるとこれが実行される
   def self.update
-    NewArrival.delete_all
     new_arrivals = []
     Video.new_arrivals.each do |video|
       recommend = 1
@@ -23,6 +22,7 @@ class NewArrival < ActiveRecord::Base
                                    duration: video.duration,
                                    recommend: recommend)
     end
+    NewArrival.delete_all
     NewArrival.import new_arrivals
   end
 end

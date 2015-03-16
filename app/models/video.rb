@@ -91,7 +91,7 @@ class Video < ActiveRecord::Base
   def self.daily_update
     start_scrape("update", 1, 3000, 1, 1500)
     #新着オススメ動画の更新
-    NewArrivals.update
+    NewArrival.update
   end
 
   #全部消して初期化する 750000を検索
