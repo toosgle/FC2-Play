@@ -36,6 +36,7 @@ class HomeController < ApplicationController
       @shorten_url = @url.split("/").last
     else
       toast :error, "タイトルに何か問題があるようです"
+      delete_video_by_title(params[:title])
       redirect_to root_url
       return
     end
@@ -98,6 +99,12 @@ class HomeController < ApplicationController
     MonthlyRank.find_by_video_id(vid).delete if MonthlyRank.find_by_video_id(vid)
     WeeklyRank.find_by_video_id(vid).delete if WeeklyRank.find_by_video_id(vid)
     NewArrival.find_by_video_id(vid).delete if NewArrival.find_by_video_id(vid) && NewArrival.all.size > 10
+  end
+
+  def delete_video_by_title(title)
+    #MonthlyRank.find_by_video_id(vid).delete if MonthlyRank.find_by_video_id(vid)
+    #WeeklyRank.find_by_video_id(vid).delete if WeeklyRank.find_by_video_id(vid)
+    NewArrival.find_by_title(title).delete if NewArrival.find_by_title(title) && NewArrival.all.size > 10
   end
 
   def out_of_limit?
