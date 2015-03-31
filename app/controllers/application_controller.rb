@@ -5,7 +5,10 @@ class ApplicationController < ActionController::Base
 
   # 例外ハンドル
   if Rails.env == 'production' || Rails.env == 'test'
-    rescue_from ActionController::RoutingError, ActiveRecord::RecordNotFound, with: :render_404
+    rescue_from ActionController::RoutingError,\
+                ActionController::UrlGenerationError,\
+                ActiveRecord::RecordNotFound,
+                with: :render_404
     rescue_from Exception, with: :render_500
   end
 
@@ -107,14 +110,6 @@ class ApplicationController < ActionController::Base
       "大"
     else
       false
-    end
-  end
-
-  def adult_url?
-    if @url =~ /\/a\//
-      session[:adult] = true
-    else
-      session[:adult] = false
     end
   end
 

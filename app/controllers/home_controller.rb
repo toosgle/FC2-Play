@@ -107,6 +107,7 @@ class HomeController < ApplicationController
     NewArrival.find_by_title(title).delete if NewArrival.find_by_title(title) && NewArrival.all.size > 10
   end
 
+=begin
   def out_of_limit?
     case cause_of_limit
     when "hourly"
@@ -140,6 +141,7 @@ class HomeController < ApplicationController
   def go_to_survey?
     rand(200)==0
   end
+=end
 
   def create_history
     if current_user && (session[:video_url] != @url)

@@ -20,6 +20,17 @@ describe Video do
     it { should validate_inclusion_of(:morethan100min).in_array([true, false]) }
   end
 
+  describe '#check_available' do
+    it 'should delete videos not in fc2' do
+      Video.start_scrape("update", 10000, 10001, 1, 0)
+      availables = Video.all.size
+      5.times { create(:video) }
+      all = Video.all.size
+      Video.check_available
+      expect(all-5).to eq availables
+    end
+  end
+
   describe '#available?' do
     context 'url of the video is not valid' do
       it 'should return false' do
@@ -33,6 +44,17 @@ describe Video do
         Video.start_scrape("update", 10000, 10001, 1, 0)
         expect(Video.order(:updated_at).last.available?).to be_truthy
       end
+    end
+  end
+
+  describe '#delete_unavailable' do
+    it 'should delete destroyed video' do
+      5.times { create(:video) }
+      Video.check_available
+      destroyed = Video.only_deleted.all.size
+      Video.delete_unavailable
+      expect(destroyed).to eq 5
+      expect(Video.only_deleted.all.size).to eq 0
     end
   end
 

@@ -6,16 +6,35 @@ describe WeeklyRank do
     it { should belong_to(:video) }
   end
 
+  before(:all) do
+    Video.start_scrape("update", 10000, 10001, 1, 0)
+  end
+
+  before(:each) do
+    700.times { create(:video4his) }
+    700.times { create(:history) }
+    10.times { create(:fav4his) }
+    Video.limit(20).each do |v|
+      (rand(5)+1).times { create(:history, video_id: v.id, user_id: rand(5)) }
+      create(:fav, video_id: v.id) if rand(3) == 0
+    end
+    History.rank_update
+    NewArrival.update
+  end
+
   describe '# Video.hot.weekly scope' do
-    # timecopで時間を指定した履歴を作ってテストをすれば良いけど…
-    # めんどう
+    it 'should create a weekly rank' do
+      WeeklyRank.delete_all
+      WeeklyRank.update
+      expect(WeeklyRank.all.size).to be > 0
+    end
   end
 
   describe '#create_dummy' do
-    #it 'should create 50 records' do
-    #  WeeklyRank.create_dummy
-    #  expect(WeeklyRank.all.size).to eq 500
-    #end
+    it 'should create 500 dummies' do
+      MonthlyRank.create_dummy
+      expect(MonthlyRank.all.size).to eq 500
+    end
   end
 
 end

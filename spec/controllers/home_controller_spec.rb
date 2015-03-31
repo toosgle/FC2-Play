@@ -12,19 +12,63 @@ describe HomeController, :type => :controller do
 
   before(:each) do
     session[:user_id] = user.id
+    Video.limit(10).each do |v|
+      (rand(5)+1).times { create(:history4wrank, video_id: v.id, user_id: rand(5)) }
+    end
+    History.rank_update
+    NewArrival.update
   end
 
   describe '#render_404' do
-    it "should render 404 file" do
-      #get :play, { title: 'not_existing_page_321' }
-      #expect(response.status).to eq(404)
+    before do
+      def controller.index
+        render_404
+      end
+    end
+    it "should raise RoutingError" do
+      get :index
+      expect(response.code).to eq("404")
     end
   end
 
   describe '#index' do
-    it "has a 200 status code" do
-      get :index
-      expect(response.code).to eq("200")
+    context 'user is registerd' do
+      it "has a 200 status code" do
+        get :index
+        expect(response.code).to eq("200")
+      end
+    end
+
+    context 'user is not registered' do
+      it 'has a 200 status code' do
+        session[:user_id] = nil
+        get :index
+        expect(response.code).to eq("200")
+      end
+    end
+
+    context 'window size is 590' do
+      it 'has a 200 status code' do
+        session[:size] = 590
+        get :index
+        expect(response.code).to eq("200")
+      end
+    end
+
+    context 'window size is 750' do
+      it 'has a 200 status code' do
+        session[:size] = 750
+        get :index
+        expect(response.code).to eq("200")
+      end
+    end
+
+    context 'window size is 900' do
+      it 'has a 200 status code' do
+        session[:size] = 900
+        get :index
+        expect(response.code).to eq("200")
+      end
     end
   end
 
