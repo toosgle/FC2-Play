@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.7'
+gem 'rails', '4.2.1'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -56,11 +56,6 @@ end
 
 group :development, :test do
   ### for test
-  # reference http://qiita.com/yusabana/items/8ce54577d959bb085b37
-  #gem 'pry-rails'
-  #gem 'pry-doc'
-  #gem 'pry-stack_explorer'
-  #gem 'pry-byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'hirb'
