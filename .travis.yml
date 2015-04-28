@@ -27,7 +27,3 @@ script:
 after_success:
 - echo "$TRAVIS_BRANCH"
 - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then script/deploy.sh; fi
-
-notifications:
-  slack:
-    secure: R/BrmCA+DyMmwI87lrN0tByRn2SsyPEIMis+wud9K8XjxBXTp60MYPluAyPs+3+CwgMQ3/34ZdlBIW9790B1k3MLs0QTeUoAf0819Y4Tin4UjGw+iJAGgog09EDRiGdNesJnNSBemiKQNJjAc3GbcHprwUaen/E/HDBckol9wIo=
