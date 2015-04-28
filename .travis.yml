@@ -32,4 +32,6 @@ after_success:
 - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then script/deploy.sh; fi
 
 notifications:
-  slack: showwin:pUU8Uhbni2AFAlEYYP1OQmvp
+  hipchat:
+    rooms:
+      secure: YJt/sO0Roi6VhmdTOVu740zrRYLcaTij42/H5OLM1NQ84SmgQ5SWYdH6q2TZtMcmE/0xncS1wpapPwxXy6hb60XhDWzHu/l76FDSKLWBGWeIk3+YPQE+tW8ayeO1hufFemQ0V7fgRGxzqVsrVirZ8ttcVBjV1QnVtpSvGCxuecc=
