@@ -1,5 +1,8 @@
 language: ruby
-cache: bundler
+bundler_args: "--without development --deployment --jobs=3 --retry=3"
+cache:
+  directories:
+  - vendor/bundle
 
 rvm:
 - 2.2.2
@@ -27,3 +30,8 @@ script:
 after_success:
 - echo "$TRAVIS_BRANCH"
 - if [[ "$TRAVIS_BRANCH" == "master" ]] ; then script/deploy.sh; fi
+
+notifications:
+  hipchat:
+    rooms:
+      secure: YJt/sO0Roi6VhmdTOVu740zrRYLcaTij42/H5OLM1NQ84SmgQ5SWYdH6q2TZtMcmE/0xncS1wpapPwxXy6hb60XhDWzHu/l76FDSKLWBGWeIk3+YPQE+tW8ayeO1hufFemQ0V7fgRGxzqVsrVirZ8ttcVBjV1QnVtpSvGCxuecc=
