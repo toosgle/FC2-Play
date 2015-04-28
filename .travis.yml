@@ -20,9 +20,9 @@ env:
 
 before_script:
 - cp config/database.travis.yml config/database.yml
+- mysql -e 'create database fc2play_test'
 
 script:
-- RAILS_ENV=test bundle exec rake db:create
 - RAILS_ENV=test bundle exec rake db:migrate
 - RAILS_ENV=test bundle exec rake db:test:prepare
 - RAILS_ENV=test bundle exec rake spec
