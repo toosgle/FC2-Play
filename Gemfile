@@ -42,6 +42,9 @@ gem 'sprockets'
 ### for bulk insert
 gem 'activerecord-import'
 
+### for errbit
+gem 'airbrake'
+
 group :deployment do
   ### for preloader
   gem 'spring'
