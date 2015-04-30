@@ -1,7 +1,7 @@
 <h4>新着オススメ動画</h4>
 <div class="row">
 	<div class="col-lg-6">
-		<% for i in 0..4 do %>
+		<% for i in 0..3 do %>
 			<div class="well-h100 well-sm">
 				<div class="col-md-120px">
 					<%= link_to image_tag(@new_arrivals[i].image_url, width: 108, height: 81), play_path(title: @new_arrivals[i].title) %>
@@ -15,7 +15,7 @@
 		<% end %>
 	</div>
 	<div class="col-lg-6">
-		<% for i in 5..9 do %>
+		<% for i in 4..7 do %>
 			<div class="well-h100 well-sm">
 				<div class="col-md-120px">
 					<%= link_to image_tag(@new_arrivals[i].image_url, width: 108, height: 81), play_path(title: @new_arrivals[i].title) %>
@@ -27,5 +27,30 @@
 				オススメ度: <% @new_arrivals[i].recommend.times do %>★<% end %>
 			</div>
 		<% end %>
+	</div>
+</div>
+<h4>えろうと 新着記事 (姉弟サイト)</h4>
+<div class="row">
+	<div class="col-lg-6">
+		<div class="well-h100 well-sm">
+			<div class="col-md-120px">
+				<%= link_to image_tag(@ero_articles[0].thumbnail, width: 108, height: 81), @ero_articles[0].url, target: '_blank' %>
+			</div>
+			<div style="height: 45px;">
+				<%= link_to @ero_articles[0].title, @ero_articles[0].url, class: "text-danger", target: '_blank' %>
+			</div>
+			<%= @ero_articles[0].content.truncate(55) %>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="well-h100 well-sm">
+			<div class="col-md-120px">
+				<%= link_to image_tag(@ero_articles[1].thumbnail, width: 108, height: 81), @ero_articles[1].url, target: '_blank' %>
+			</div>
+			<div style="height: 45px;">
+				<%= link_to @ero_articles[1].title, @ero_articles[1].url, class: "text-danger", target: '_blank' %>
+			</div>
+			<%= @ero_articles[1].content.truncate(55) %>
+		</div>
 	</div>
 </div>
