@@ -18,6 +18,8 @@ class Record < ActiveRecord::Base
 
   def self.create_yesterday_his
     create_a_record_of(Date.today)
+    ## for ero-to
+    Eroto.crawl_new_article
   end
 
   def self.create_a_record_of(day)

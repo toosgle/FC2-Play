@@ -1,7 +1,7 @@
 class Eroto < ActiveRecord::Base
   require 'open-uri'
 
-  def crawl_new_article
+  def self.crawl_new_article
     Eroto.delete_all
     targets = ['http://www.ero-to.com/movies/parody',
                'http://www.ero-to.com/movies/fantasy',
