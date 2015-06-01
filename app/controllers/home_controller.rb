@@ -174,9 +174,8 @@ class HomeController < ApplicationController
   end
 
   def set_reports_result
-    start = Date::new(2014, 10, 8)
-    @days = ((Date.today-start-1).to_i)#/7
-    reports = Record.create_reports(@days)
+    reports = Record.create_reports
+    @weeks = reports[:weeks]
     @users = reports[:users]
     @playall = reports[:playall]
     @playall_adult = reports[:playall_adult]
