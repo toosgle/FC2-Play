@@ -49,6 +49,8 @@ describe Video do
 
   describe '#delete_unavailable' do
     it 'should delete destroyed video' do
+      Video.check_available
+      Video.delete_unavailable
       5.times { create(:video) }
       Video.check_available
       destroyed = Video.only_deleted.all.size

@@ -3,7 +3,7 @@ cache:
   bundler: true
 
 rvm:
-- 2.2.2
+- 2.1.1
 
 branches:
   only:
@@ -18,12 +18,12 @@ env:
 
 before_script:
 - cp config/database.travis.yml config/database.yml
-- mysql -e 'create database fc2play_test'
+- mysql -e 'create database fc2play_test;'
 
 script:
-- RAILS_ENV=test bundle exec rake db:migrate
-- RAILS_ENV=test bundle exec rake db:test:prepare
-- RAILS_ENV=test bundle exec rake spec
+- bundle exec rake db:migrate RAILS_ENV=test
+- bundle exec rake db:test:prepare RAILS_ENV=test
+- bundle exec rake spec RAILS_ENV=test
 
 after_success:
 - echo "$TRAVIS_BRANCH"
