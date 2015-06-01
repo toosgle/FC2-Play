@@ -14,7 +14,7 @@
       <img src="./assets/0.10.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2015-06-02T07:13:57+09:00">2015-06-02T07:13:57+09:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2015-06-02T08:17:17+09:00">2015-06-02T08:17:17+09:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,7 +25,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         123.59
+         129.7
        </span>
     </span> hits/line)
   </h2>
@@ -227,7 +227,7 @@
         <td>28</td>
         <td>28</td>
         <td>0</td>
-        <td>429.4</td>
+        <td>500.1</td>
       </tr>
       
       <tr>
@@ -287,7 +287,7 @@
         <td>96</td>
         <td>93</td>
         <td>3</td>
-        <td>57.9</td>
+        <td>74.3</td>
       </tr>
       
       <tr>
@@ -297,7 +297,7 @@
         <td>41</td>
         <td>40</td>
         <td>1</td>
-        <td>430.7</td>
+        <td>428.5</td>
       </tr>
       
     </tbody>
@@ -420,7 +420,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         231.95
+         243.53
        </span>
     </span> hits/line)
   </h2>
@@ -482,7 +482,7 @@
         <td>28</td>
         <td>28</td>
         <td>0</td>
-        <td>429.4</td>
+        <td>500.1</td>
       </tr>
       
       <tr>
@@ -542,7 +542,7 @@
         <td>96</td>
         <td>93</td>
         <td>3</td>
-        <td>57.9</td>
+        <td>74.3</td>
       </tr>
       
       <tr>
@@ -552,7 +552,7 @@
         <td>41</td>
         <td>40</td>
         <td>1</td>
-        <td>430.7</td>
+        <td>428.5</td>
       </tr>
       
     </tbody>
@@ -1203,8 +1203,8 @@
           <code class="ruby">    records.each do |r|</code>
         </li>
       
-        <li class="covered" data-hits="87" data-linenumber="74">
-          <span class="hits">87</span>
+        <li class="covered" data-hits="88" data-linenumber="74">
+          <span class="hits">88</span>
           
           <code class="ruby">      ids &lt;&lt; r.video_id</code>
         </li>
@@ -4683,8 +4683,8 @@
           <code class="ruby">    end</code>
         </li>
       
-        <li class="covered" data-hits="3595" data-linenumber="24">
-          <span class="hits">3595</span>
+        <li class="covered" data-hits="5564" data-linenumber="24">
+          <span class="hits">5564</span>
           
           <code class="ruby">    point = point.sort {|(k1, v1), (k2, v2)| v2 &lt;=&gt; v1 }</code>
         </li>
@@ -4713,8 +4713,8 @@
           <code class="ruby">    point.each do |pv|</code>
         </li>
       
-        <li class="covered" data-hits="1404" data-linenumber="29">
-          <span class="hits">1404</span>
+        <li class="covered" data-hits="1414" data-linenumber="29">
+          <span class="hits">1414</span>
           
           <code class="ruby">      if hot_videos.size &gt;= 300</code>
         </li>
@@ -6177,8 +6177,8 @@
           <code class="ruby">    Video.all.each do |video|</code>
         </li>
       
-        <li class="covered" data-hits="124" data-linenumber="60">
-          <span class="hits">124</span>
+        <li class="covered" data-hits="130" data-linenumber="60">
+          <span class="hits">130</span>
           
           <code class="ruby">      video.destroy if !video.available?</code>
         </li>
@@ -6207,26 +6207,26 @@
           <code class="ruby">  def available?</code>
         </li>
       
-        <li class="covered" data-hits="126" data-linenumber="65">
-          <span class="hits">126</span>
+        <li class="covered" data-hits="132" data-linenumber="65">
+          <span class="hits">132</span>
           
           <code class="ruby">    begin</code>
         </li>
       
-        <li class="covered" data-hits="126" data-linenumber="66">
-          <span class="hits">126</span>
+        <li class="covered" data-hits="132" data-linenumber="66">
+          <span class="hits">132</span>
           
           <code class="ruby">      page = Nokogiri::HTML(open(self.url))</code>
         </li>
       
-        <li class="covered" data-hits="115" data-linenumber="67">
-          <span class="hits">115</span>
+        <li class="covered" data-hits="121" data-linenumber="67">
+          <span class="hits">121</span>
           
           <code class="ruby">      title = page.css(&#39;meta[@itemprop=&quot;name&quot;]&#39;).attr(&#39;content&#39;).value</code>
         </li>
       
-        <li class="covered" data-hits="115" data-linenumber="68">
-          <span class="hits">115</span>
+        <li class="covered" data-hits="121" data-linenumber="68">
+          <span class="hits">121</span>
           
           <code class="ruby">      title.include?(&quot;Removed&quot;) ? false : true</code>
         </li>
@@ -6435,8 +6435,8 @@
           <code class="ruby">  def self.start_scrape(kinds, adult_from, adult_to, normal_from, normal_to)</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="103">
-          <span class="hits">6</span>
+        <li class="covered" data-hits="8" data-linenumber="103">
+          <span class="hits">8</span>
           
           <code class="ruby">    Video.delete_all if kinds == &quot;init&quot;</code>
         </li>
@@ -6453,26 +6453,26 @@
           <code class="ruby">    #アダルト</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="106">
-          <span class="hits">6</span>
+        <li class="covered" data-hits="8" data-linenumber="106">
+          <span class="hits">8</span>
           
           <code class="ruby">    adult_from.upto(adult_to) do |i|</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="107">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="18" data-linenumber="107">
+          <span class="hits">18</span>
           
           <code class="ruby">      p i</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="108">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="18" data-linenumber="108">
+          <span class="hits">18</span>
           
           <code class="ruby">      next unless page = Nokogiri::HTML(open(ADULT_SEARCH_URL+i.to_s))</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="109">
-          <span class="hits">14</span>
+        <li class="covered" data-hits="18" data-linenumber="109">
+          <span class="hits">18</span>
           
           <code class="ruby">      create_50_records(page, &quot;adult&quot;)</code>
         </li>
@@ -6489,8 +6489,8 @@
           <code class="ruby">    #一般</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="112">
-          <span class="hits">6</span>
+        <li class="covered" data-hits="8" data-linenumber="112">
+          <span class="hits">8</span>
           
           <code class="ruby">    normal_from.upto(normal_to) do |i|</code>
         </li>
@@ -6537,68 +6537,68 @@
           <code class="ruby">  def self.create_50_records(page, kinds)</code>
         </li>
       
-        <li class="covered" data-hits="16" data-linenumber="120">
-          <span class="hits">16</span>
+        <li class="covered" data-hits="20" data-linenumber="120">
+          <span class="hits">20</span>
           
           <code class="ruby">    adult_flg = (kinds == &quot;adult&quot;)</code>
         </li>
       
-        <li class="covered" data-hits="16" data-linenumber="121">
-          <span class="hits">16</span>
+        <li class="covered" data-hits="20" data-linenumber="121">
+          <span class="hits">20</span>
           
           <code class="ruby">    elms = page.xpath(VIDEO_PATH)</code>
         </li>
       
-        <li class="covered" data-hits="16" data-linenumber="122">
-          <span class="hits">16</span>
+        <li class="covered" data-hits="20" data-linenumber="122">
+          <span class="hits">20</span>
           
           <code class="ruby">    50.times do |j|</code>
         </li>
       
-        <li class="covered" data-hits="800" data-linenumber="123">
-          <span class="hits">800</span>
+        <li class="covered" data-hits="1000" data-linenumber="123">
+          <span class="hits">1000</span>
           
           <code class="ruby">      if video_exists_on_fc2?(elms[j], kinds)</code>
         </li>
       
-        <li class="covered" data-hits="131" data-linenumber="124">
-          <span class="hits">131</span>
+        <li class="covered" data-hits="197" data-linenumber="124">
+          <span class="hits">197</span>
           
           <code class="ruby">        title = elms[j].xpath(TITLE_PATH).first.content</code>
         </li>
       
-        <li class="covered" data-hits="131" data-linenumber="125">
-          <span class="hits">131</span>
+        <li class="covered" data-hits="197" data-linenumber="125">
+          <span class="hits">197</span>
           
           <code class="ruby">        duration = elms[j].xpath(DURATION_PATH).first.content</code>
         </li>
       
-        <li class="covered" data-hits="131" data-linenumber="126">
-          <span class="hits">131</span>
+        <li class="covered" data-hits="197" data-linenumber="126">
+          <span class="hits">197</span>
           
           <code class="ruby">        url = elms[j].xpath(URL_PATH).first[&quot;href&quot;]</code>
         </li>
       
-        <li class="covered" data-hits="131" data-linenumber="127">
-          <span class="hits">131</span>
+        <li class="covered" data-hits="197" data-linenumber="127">
+          <span class="hits">197</span>
           
           <code class="ruby">        image_url = elms[j].xpath(IMAGE_URL_PATH).first[&quot;src&quot;]</code>
         </li>
       
-        <li class="covered" data-hits="131" data-linenumber="128">
-          <span class="hits">131</span>
+        <li class="covered" data-hits="197" data-linenumber="128">
+          <span class="hits">197</span>
           
           <code class="ruby">        views = elms[j].xpath(VIEWS_PATH)[1].content</code>
         </li>
       
-        <li class="covered" data-hits="131" data-linenumber="129">
-          <span class="hits">131</span>
+        <li class="covered" data-hits="197" data-linenumber="129">
+          <span class="hits">197</span>
           
           <code class="ruby">        bookmarks = elms[j].xpath(FAVS_PATH)[2].content</code>
         </li>
       
-        <li class="covered" data-hits="131" data-linenumber="130">
-          <span class="hits">131</span>
+        <li class="covered" data-hits="197" data-linenumber="130">
+          <span class="hits">197</span>
           
           <code class="ruby">        morethan100min = (duration.length == 6)</code>
         </li>
@@ -6609,32 +6609,32 @@
           <code class="ruby">        #保存</code>
         </li>
       
-        <li class="covered" data-hits="131" data-linenumber="132">
-          <span class="hits">131</span>
+        <li class="covered" data-hits="197" data-linenumber="132">
+          <span class="hits">197</span>
           
           <code class="ruby">        if video = Video.find_by_title(title)</code>
         </li>
       
-        <li class="covered" data-hits="112" data-linenumber="133">
-          <span class="hits">112</span>
+        <li class="covered" data-hits="139" data-linenumber="133">
+          <span class="hits">139</span>
           
           <code class="ruby">          video.views = views.to_i</code>
         </li>
       
-        <li class="covered" data-hits="112" data-linenumber="134">
-          <span class="hits">112</span>
+        <li class="covered" data-hits="139" data-linenumber="134">
+          <span class="hits">139</span>
           
           <code class="ruby">          video.bookmarks = bookmarks.to_i</code>
         </li>
       
-        <li class="covered" data-hits="112" data-linenumber="135">
-          <span class="hits">112</span>
+        <li class="covered" data-hits="139" data-linenumber="135">
+          <span class="hits">139</span>
           
           <code class="ruby">          video.touch</code>
         </li>
       
-        <li class="covered" data-hits="112" data-linenumber="136">
-          <span class="hits">112</span>
+        <li class="covered" data-hits="139" data-linenumber="136">
+          <span class="hits">139</span>
           
           <code class="ruby">          video.save</code>
         </li>
@@ -6645,14 +6645,14 @@
           <code class="ruby">        else</code>
         </li>
       
-        <li class="covered" data-hits="19" data-linenumber="138">
-          <span class="hits">19</span>
+        <li class="covered" data-hits="58" data-linenumber="138">
+          <span class="hits">58</span>
           
           <code class="ruby">          video = Video.new(title: title, url: url, image_url: image_url, duration: duration, views: views.to_i, bookmarks: bookmarks.to_i, adult: adult_flg, morethan100min: morethan100min)</code>
         </li>
       
-        <li class="covered" data-hits="19" data-linenumber="139">
-          <span class="hits">19</span>
+        <li class="covered" data-hits="58" data-linenumber="139">
+          <span class="hits">58</span>
           
           <code class="ruby">          video.save</code>
         </li>
@@ -6693,8 +6693,8 @@
           <code class="ruby">  def self.video_exists_on_fc2?(elm, type)</code>
         </li>
       
-        <li class="covered" data-hits="800" data-linenumber="146">
-          <span class="hits">800</span>
+        <li class="covered" data-hits="1000" data-linenumber="146">
+          <span class="hits">1000</span>
           
           <code class="ruby">    if type == &quot;normal&quot;</code>
         </li>
@@ -6717,8 +6717,8 @@
           <code class="ruby">          elm.xpath(AUTHORITY_PATH)[0].content == &quot;All&quot;)</code>
         </li>
       
-        <li class="covered" data-hits="700" data-linenumber="150">
-          <span class="hits">700</span>
+        <li class="covered" data-hits="900" data-linenumber="150">
+          <span class="hits">900</span>
           
           <code class="ruby">    elsif type == &quot;adult&quot;</code>
         </li>
@@ -6729,8 +6729,8 @@
           <code class="ruby">      (elm.xpath(FAVS_PATH)[2] &amp;&amp;</code>
         </li>
       
-        <li class="covered" data-hits="700" data-linenumber="152">
-          <span class="hits">700</span>
+        <li class="covered" data-hits="900" data-linenumber="152">
+          <span class="hits">900</span>
           
           <code class="ruby">        elm.xpath(FAVS_PATH)[2].content.to_i &gt;= 30 &amp;&amp;</code>
         </li>
@@ -6873,20 +6873,20 @@
           <code class="ruby">      # user_idが変わるか、前回の再生から3時間以上経つ</code>
         </li>
       
-        <li class="covered" data-hits="3160" data-linenumber="16">
-          <span class="hits">3160</span>
+        <li class="covered" data-hits="3136" data-linenumber="16">
+          <span class="hits">3136</span>
           
           <code class="ruby">      if (p_uid != his.user_id || his.created_at - p_view  &gt; 10800) &amp;&amp; add_flg</code>
         </li>
       
-        <li class="covered" data-hits="141" data-linenumber="17">
-          <span class="hits">141</span>
+        <li class="covered" data-hits="135" data-linenumber="17">
+          <span class="hits">135</span>
           
           <code class="ruby">        iku_video[p_vid].blank? ? iku_video[p_vid] = 1 : iku_video[p_vid] += 1</code>
         </li>
       
-        <li class="covered" data-hits="141" data-linenumber="18">
-          <span class="hits">141</span>
+        <li class="covered" data-hits="135" data-linenumber="18">
+          <span class="hits">135</span>
           
           <code class="ruby">        add_flg = false</code>
         </li>
@@ -6909,20 +6909,20 @@
           <code class="ruby">      end</code>
         </li>
       
-        <li class="covered" data-hits="3160" data-linenumber="22">
-          <span class="hits">3160</span>
+        <li class="covered" data-hits="3136" data-linenumber="22">
+          <span class="hits">3136</span>
           
           <code class="ruby">      p_uid = his.user_id</code>
         </li>
       
-        <li class="covered" data-hits="3160" data-linenumber="23">
-          <span class="hits">3160</span>
+        <li class="covered" data-hits="3136" data-linenumber="23">
+          <span class="hits">3136</span>
           
           <code class="ruby">      p_view = his.created_at</code>
         </li>
       
-        <li class="covered" data-hits="3160" data-linenumber="24">
-          <span class="hits">3160</span>
+        <li class="covered" data-hits="3136" data-linenumber="24">
+          <span class="hits">3136</span>
           
           <code class="ruby">      p_vid = his.video_id</code>
         </li>
@@ -6987,14 +6987,14 @@
           <code class="ruby">    iku_video.each do |v_id, t|</code>
         </li>
       
-        <li class="covered" data-hits="116" data-linenumber="35">
-          <span class="hits">116</span>
+        <li class="covered" data-hits="118" data-linenumber="35">
+          <span class="hits">118</span>
           
           <code class="ruby">      if playtimes[v_id] &lt;= 3</code>
         </li>
       
-        <li class="covered" data-hits="40" data-linenumber="36">
-          <span class="hits">40</span>
+        <li class="covered" data-hits="49" data-linenumber="36">
+          <span class="hits">49</span>
           
           <code class="ruby">        iku_video[v_id] = 0</code>
         </li>
@@ -7005,8 +7005,8 @@
           <code class="ruby">      else</code>
         </li>
       
-        <li class="covered" data-hits="76" data-linenumber="38">
-          <span class="hits">76</span>
+        <li class="covered" data-hits="69" data-linenumber="38">
+          <span class="hits">69</span>
           
           <code class="ruby">        iku_video[v_id] = (t*1.0)/playtimes[v_id]</code>
         </li>
@@ -7023,8 +7023,8 @@
           <code class="ruby">    end</code>
         </li>
       
-        <li class="covered" data-hits="184" data-linenumber="41">
-          <span class="hits">184</span>
+        <li class="covered" data-hits="193" data-linenumber="41">
+          <span class="hits">193</span>
           
           <code class="ruby">    iku_video = iku_video.sort {|(k1, v1), (k2, v2)| v2 &lt;=&gt; v1 }</code>
         </li>
@@ -7059,8 +7059,8 @@
           <code class="ruby">    iku_video.each do |iv|</code>
         </li>
       
-        <li class="covered" data-hits="116" data-linenumber="47">
-          <span class="hits">116</span>
+        <li class="covered" data-hits="118" data-linenumber="47">
+          <span class="hits">118</span>
           
           <code class="ruby">      if hot_videos.size &gt;= 300</code>
         </li>
@@ -7077,8 +7077,8 @@
           <code class="ruby">      elsif Video.where(id: iv[0]).present?</code>
         </li>
       
-        <li class="covered" data-hits="116" data-linenumber="50">
-          <span class="hits">116</span>
+        <li class="covered" data-hits="118" data-linenumber="50">
+          <span class="hits">118</span>
           
           <code class="ruby">        hot_videos &lt;&lt; WeeklyRank.new(video_id: iv[0])</code>
         </li>
