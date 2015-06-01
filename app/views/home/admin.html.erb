@@ -124,10 +124,10 @@ new Morris.Area({
   element: 'play-all-his',
 
   data: [
-		<% (@days-1).times do |i| %>
+		<% (@weeks-1).times do |i| %>
     	{ year: '<%= i+10000 %>', value: <%=@playall[i]%>, value_a: <%=@playall_adult[i]%> },
 		<% end %>
-    { year: '<%= @days-1+10000 %>', value: <%=@playall[@days-1]%>, value_a: <%=@playall_adult[@days-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@playall[@weeks-1]%>, value_a: <%=@playall_adult[@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value', 'value_a'],
@@ -139,10 +139,10 @@ new Morris.Area({
   element: 'user-no',
 
   data: [
-		<% (@days-1).times do |i| %>
+		<% (@weeks-1).times do |i| %>
     	{ year: '<%= i+10000 %>', value: <%=@users[i]%> },
 		<% end %>
-    { year: '<%= @days-1+10000 %>', value: <%=@users[@days-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@users[@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -153,10 +153,10 @@ new Morris.Area({
   element: 'fav-no',
 
   data: [
-		<% (@days-1).times do |i| %>
+		<% (@weeks-1).times do |i| %>
     	{ year: '<%= i+10000 %>', value: <%=@favs[i]%> },
 		<% end %>
-    { year: '<%= @days-1+10000 %>', value: <%=@favs[@days-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@favs[@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -168,10 +168,10 @@ new Morris.Area({
   element: 'add-no',
 
   data: [
-		<% (@days-1).times do |i| %>
+		<% (@weeks-1).times do |i| %>
     	{ year: '<%= i+10000 %>', value: <%=@videos[i]%> },
 		<% end %>
-    { year: '<%= @days-1+10000 %>', value: <%=@videos[@days-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@videos[@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -183,10 +183,10 @@ new Morris.Area({
   element: 'update-no',
 
   data: [
-		<% (@days-1).times do |i| %>
+		<% (@weeks-1).times do |i| %>
     	{ year: '<%= i+10000 %>', value: <%=@updated_videos[i]%> },
 		<% end %>
-    { year: '<%= @days-1+10000 %>', value: <%=@updated_videos[@days-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@updated_videos[@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],

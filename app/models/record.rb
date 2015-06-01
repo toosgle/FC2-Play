@@ -10,9 +10,13 @@ class Record < ActiveRecord::Base
     Record.delete_all
     start = Date.new(2014, 10, 8)
     days = (Date.today-start+1).to_i
-    days.times do |i|
-      day = (start+i).strftime('%Y-%m-%d')
-      create_a_record_of(day)
+    rest_days = (Date.today-start+1).to_i % 7
+    weeks = (days - rest_days) / 7
+    # 2014-10-08 から7日に1回
+    weeks.times do |i|
+      day = (start+(i*7)).strftime('%Y-%m-%d')
+      week_ago = (start+(i*7)-7).strftime('%Y-%m-%d')
+      create_a_record_of(day, week_ago)
     end
   end
 
@@ -20,7 +24,7 @@ class Record < ActiveRecord::Base
     create_a_record_of(Date.today)
   end
 
-  def self.create_a_record_of(day)
+  def self.create_a_record_of(day, week_ago)
     #総再生回数(一般)
     record = Record.new(day: day)
     record.kind = "total_play_his"
@@ -49,15 +53,21 @@ class Record < ActiveRecord::Base
     #動画情報更新総数
     record = Record.new(day: day)
     record.kind = "total_updated_video"
-    record.value = Video.where("created_at <> updated_at").where("created_at < '#{day}'").size
+    record.value = Video.where("created_at <> updated_at")
+                        .where("created_at >= '#{week_ago}'")
+                        .where("created_at < '#{day}'").size
     record.save
   end
 
-  def self.create_reports(days)
+  def self.create_reports
+    start = Date.new(2014, 10, 8)
+    days = (Date.today-start+1).to_i
+    rest_days = (Date.today-start+1).to_i % 7
+    weeks = (days - rest_days) / 7
     result = {}
     videos, updated_videos, users, his, adult_his, favs = [],[],[],[],[],[]
-    days.times do |i|
-      day = Date.today+(i-days)
+    weeks.times do |i|
+      day = start + i*7
       videos[i] = Record.of("total_video", day).value
       updated_videos[i] = Record.of("total_updated_video", day).value
       users[i] = Record.of("total_user", day).value
@@ -65,6 +75,7 @@ class Record < ActiveRecord::Base
       adult_his[i] = Record.of("total_play_his_a", day).value
       favs[i] = Record.of("total_fav", day).value
     end
+    result[:weeks] = weeks
     result[:videos] = videos
     result[:updated_videos] = updated_videos
     result[:users] = users
