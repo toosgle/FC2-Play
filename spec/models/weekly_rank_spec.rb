@@ -7,10 +7,10 @@ describe WeeklyRank do
   end
 
   before(:each) do
-    Video.start_scrape("update", 10000, 10001, 1, 0)
     600.times { create(:video4his) }
     600.times { create(:history) }
     10.times { create(:fav4his) }
+    Video.start_scrape("update", 10000, 10001, 1, 0)
     Video.limit(20).each do |v|
       (rand(5)+1).times { create(:history, video_id: v.id, user_id: rand(5)) }
       create(:fav, video_id: v.id) if rand(3) == 0
