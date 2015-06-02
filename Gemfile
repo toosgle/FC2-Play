@@ -80,6 +80,7 @@ end
 group :test do
   ### for rspec one-liner
   gem 'shoulda-matchers'
+  gem 'timecop'
 end
 
 # Use SCSS for stylesheets

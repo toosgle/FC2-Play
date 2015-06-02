@@ -9,9 +9,9 @@ class Record < ActiveRecord::Base
   def self.create_all_his
     Record.delete_all
     start = Date.new(2014, 10, 8)
-    days = (Date.today-start+1).to_i
-    rest_days = (Date.today-start+1).to_i % 7
-    weeks = (days - rest_days) / 7
+    days = (Date.today-start).to_i
+    rest_days = (Date.today-start).to_i % 7
+    weeks = ((days - rest_days) / 7) + 1
     # 2014-10-08 から7日に1回
     weeks.times do |i|
       day = (start+(i*7)).strftime('%Y-%m-%d')
@@ -21,7 +21,12 @@ class Record < ActiveRecord::Base
   end
 
   def self.create_yesterday_his
-    create_a_record_of(Date.today)
+    start = Date.new(2014, 10, 8)
+    days = (Date.today-start).to_i
+    # 2014-10-08から7の倍数日経っていた場合
+    if (Date.today-start).to_i % 7 == 0
+      create_a_record_of(Date.today, Date.today-7)
+    end
   end
 
   def self.create_a_record_of(day, week_ago)
@@ -61,9 +66,9 @@ class Record < ActiveRecord::Base
 
   def self.create_reports
     start = Date.new(2014, 10, 8)
-    days = (Date.today-start+1).to_i
-    rest_days = (Date.today-start+1).to_i % 7
-    weeks = (days - rest_days) / 7
+    days = (Date.today-start).to_i
+    rest_days = (Date.today-start).to_i % 7
+    weeks = ((days - rest_days) / 7) + 1
     result = {}
     videos, updated_videos, users, his, adult_his, favs = [],[],[],[],[],[]
     weeks.times do |i|
