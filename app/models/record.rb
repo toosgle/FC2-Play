@@ -43,10 +43,15 @@ class Record < ActiveRecord::Base
     record.kind = 'total_fav'
     record.value = Fav.where("created_at < '#{day}'").size
     record.save
+    # 登録ユーザ数総数
+    record = Record.new(day: day)
+    record.kind = 'total_reg_user'
+    record.value = User.where("created_at < '#{day}'").size
+    record.save
     # ユーザ数総数
     record = Record.new(day: day)
     record.kind = 'total_user'
-    record.value = User.where("created_at < '#{day}'").size
+    record.value = History.where("created_at < '#{day}'").group('user_id').length
     record.save
     # 動画総数
     record = Record.new(day: day)
@@ -69,11 +74,13 @@ class Record < ActiveRecord::Base
     rest_days = (Date.today - start).to_i % 7
     weeks = ((days - rest_days) / 7) + 1
     result = {}
-    videos, updated_videos, users, his, adult_his, favs = [], [], [], [], [], []
+    videos, updated_videos, reg_users = [], [], []
+    users, his, adult_his, favs = [], [], [], []
     weeks.times do |i|
       day = start + i * 7
       videos[i] = Record.of('total_video', day).value
       updated_videos[i] = Record.of('total_updated_video', day).value
+      reg_users[i] = Record.of('total_reg_user', day).value
       users[i] = Record.of('total_user', day).value
       his[i] = Record.of('total_play_his', day).value
       adult_his[i] = Record.of('total_play_his_a', day).value
@@ -82,6 +89,7 @@ class Record < ActiveRecord::Base
     result[:weeks] = weeks
     result[:videos] = videos
     result[:updated_videos] = updated_videos
+    result[:reg_users] = reg_users
     result[:users] = users
     result[:playall] = his
     result[:playall_adult] = adult_his

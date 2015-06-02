@@ -177,6 +177,7 @@ class HomeController < ApplicationController
   def set_reports_result
     reports = Record.create_reports
     @weeks = reports[:weeks]
+    @reg_users = reports[:reg_users]
     @users = reports[:users]
     @playall = reports[:playall]
     @playall_adult = reports[:playall_adult]

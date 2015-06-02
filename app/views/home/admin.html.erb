@@ -26,6 +26,16 @@
 	<div class="col-lg-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
+				登録ユーザー数
+			</div>
+			<div class="panel-body">
+				<div id="reg_user-no" style="height: 250px;"></div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
 				ユーザー数
 			</div>
 			<div class="panel-body">
@@ -46,7 +56,7 @@
 	<div class="col-lg-6">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				動画追加数
+				動画数
 			</div>
 			<div class="panel-body">
 				<div id="add-no" style="height: 250px;"></div>
@@ -133,6 +143,20 @@ new Morris.Area({
   ykeys: ['value', 'value_a'],
   labels: ['normal', 'adult'],
 	lineColors: ['#3333FF','#FF3333'],
+	hideHover: true
+});
+new Morris.Area({
+  element: 'reg_user-no',
+
+  data: [
+		<% (@weeks-1).times do |i| %>
+    	{ year: '<%= i+10000 %>', value: <%=@reg_users[i]%> },
+		<% end %>
+    { year: '<%= @weeks-1+10000 %>', value: <%=@reg_users[@weeks-1]%> }
+  ],
+  xkey: 'year',
+  ykeys: ['value'],
+  labels: ['reg_users'],
 	hideHover: true
 });
 new Morris.Area({
