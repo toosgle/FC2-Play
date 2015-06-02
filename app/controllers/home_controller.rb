@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   after_filter :flash_clear, only: [:search, :change_player_size]
 
   def index
-    set_root_info
+    set_basic_info
   end
 
   def coming_soon
