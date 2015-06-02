@@ -1,11 +1,11 @@
 class WeeklyRank < ActiveRecord::Base
   belongs_to :video
 
-  #FC*FC Playのイクイクランキング
+  # FC*FC Playのイクイクランキング
   def self.update
     # 最近3ヶ月の履歴から、イッたであろう動画を探し出す
     iku_video = {}
-    three_month_ago = DateTime.now-90
+    three_month_ago = DateTime.now - 90
     first = History.where("created_at > '#{three_month_ago}'").first
     p_uid = first.user_id
     p_view = first.created_at
@@ -13,10 +13,10 @@ class WeeklyRank < ActiveRecord::Base
     add_flg = false
     History.where("created_at > '#{three_month_ago}'").each do |his|
       # user_idが変わるか、前回の再生から3時間以上経つ
-      if (p_uid != his.user_id || his.created_at - p_view  > 10800) && add_flg
+      if (p_uid != his.user_id || his.created_at - p_view > 10_800) && add_flg
         iku_video[p_vid].blank? ? iku_video[p_vid] = 1 : iku_video[p_vid] += 1
         add_flg = false
-      elsif p_uid == his.user_id && his.created_at - p_view < 10800
+      elsif p_uid == his.user_id && his.created_at - p_view < 10_800
         add_flg = true
       end
       p_uid = his.user_id
@@ -25,8 +25,9 @@ class WeeklyRank < ActiveRecord::Base
     end
 
     # イクのに使われた回数/再生された回数 を計算してソーティング
-    h = History.where("created_at > '#{three_month_ago}'").group('video_id') \
-                     .select('video_id, count(*) as count')
+    h = History.where("created_at > '#{three_month_ago}'")
+        .group('video_id')
+        .select('video_id, count(*) as count')
     playtimes = {}
     h.each do |his|
       playtimes[his.video_id] = his.count
@@ -35,12 +36,12 @@ class WeeklyRank < ActiveRecord::Base
       if playtimes[v_id] <= 3
         iku_video[v_id] = 0
       else
-        iku_video[v_id] = (t*1.0)/playtimes[v_id]
+        iku_video[v_id] = (t * 1.0) / playtimes[v_id]
       end
     end
-    iku_video = iku_video.sort {|(k1, v1), (k2, v2)| v2 <=> v1 }
+    iku_video = iku_video.sort { |(_, v1), (_, v2)| v2 <=> v1 }
 
-    #保存
+    # 保存
     WeeklyRank.delete_all
     hot_videos = []
     iku_video.each do |iv|
@@ -62,5 +63,4 @@ class WeeklyRank < ActiveRecord::Base
     WeeklyRank.import videos
     MonthlyRank.create_dummy if MonthlyRank.all.size != 500
   end
-
 end
