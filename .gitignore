@@ -7,6 +7,8 @@
 # Ignore assets
 /public/assets/*
 
+/coverage/*
+
 # Ignore bundler config.
 /.bundle
 

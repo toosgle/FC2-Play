@@ -42,38 +42,60 @@ class ApplicationController < ActionController::Base
   def set_fc2_info
     page = Nokogiri::HTML(open(@url))
     @title = page.css('meta[@itemprop="name"]').attr('content').value
-    @duration = page.css('meta[@property="video:duration"]').attr('content').value
+    @duration = page.css('meta[@property="video:duration"]')
+                .attr('content').value
     @title.include?('Removed') ? false : true
   rescue
     false
   end
 
-  def set_root_info
+  def set_basic_info
     if current_user
       @favs = current_user.fav_list
       his = current_user.history_list
     else
-      session[:temp_id] ||= rand(8_999_999) + 1_000_000
+      session[:temp_id] ||= make_tmp_id
       @user = User.new
       his = History.list(session[:temp_id])
     end
-    w_ids = get_video_ids(WeeklyRank.all.limit(100))
-    w_query = ActiveRecord::Base.send(:sanitize_sql_array,
-                                      ['field(id ,?)', w_ids])
-    @week = Video.where(id: w_ids).order(w_query)
+    @week = get_weekly_rank
+    @month = get_monthly_rank
+    @histories = get_user_histories(his)
+    @new_arrivals = get_new_arrivals
+  end
+
+  def make_tmp_id
+    rand(8_999_999) + 1_000_000
+  end
+
+  def get_weekly_rank
     m_ids = get_video_ids(MonthlyRank.all.limit(100))
     m_query = ActiveRecord::Base.send(:sanitize_sql_array,
                                       ['field(id ,?)', m_ids])
-    @month = Video.where(id: m_ids).order(m_query)
+    Video.where(id: m_ids).order(m_query)
+  end
+
+  def get_monthly_rank
+    w_ids = get_video_ids(WeeklyRank.all.limit(100))
+    w_query = ActiveRecord::Base.send(:sanitize_sql_array,
+                                      ['field(id ,?)', w_ids])
+    Video.where(id: w_ids).order(w_query)
+  end
+
+  def get_user_histories(his)
     his_ids = get_video_ids(his)
     his_query = ActiveRecord::Base.send(:sanitize_sql_array,
                                         ['field(id ,?)', his_ids])
-    @histories = Video.where(id: his_ids).order(his_query)
-    @new_arrivals = []
+    Video.where(id: his_ids).order(his_query)
+  end
+
+  def get_new_arrivals
+    videos = []
     rcmd_videos_size = NewArrival.order('recommend desc').limit(20).size - 1
     (0..rcmd_videos_size).to_a.sample(10).each do |i|
-      @new_arrivals << NewArrival.order('recommend desc')[i]
+      videos << NewArrival.order('recommend desc')[i]
     end
+    videos
   end
 
   def get_video_ids(records)
@@ -85,7 +107,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_play_info
-    set_root_info
+    set_basic_info
     set_player_size
     @adult = session[:adult]
     @bug_report = BugReport.new

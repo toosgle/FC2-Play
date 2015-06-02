@@ -15,7 +15,7 @@ describe Record do
   describe '#create_yesterday_his' do
     it 'create new 6 records' do
       start_day = Date.new(2014, 10, 8)
-      Timecop.freeze(start_day + 7) do
+      Timecop.freeze(start_day + 14) do
         expect do
           Record.create_yesterday_his
         end.to change(Record, :count).by(6)
@@ -24,7 +24,7 @@ describe Record do
   end
 
   describe '#create_reports' do
-    it 'resurns 6 reports' do
+    it 'returns 7 reports' do
       start_day = Date.new(2014, 10, 8)
       Timecop.freeze(start_day + 7) do
         Record.create_all_his
