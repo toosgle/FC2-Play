@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Survey do
-
   describe 'Validation' do
     it { should validate_presence_of(:result) }
   end
@@ -9,8 +8,7 @@ describe Survey do
   describe '#info_for_analyzer' do
     it 'should return 5 values' do
       results = Survey.info_for_analyzer
-      expect(results.size).to eq 5+1 #[0] is nil
+      expect(results.size).to eq 5 + 1 # [0] is nil
     end
   end
-
 end

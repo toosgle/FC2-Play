@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe WeeklyRank do
-
   describe 'Association' do
     it { should belong_to(:video) }
   end
@@ -11,9 +10,11 @@ describe WeeklyRank do
       600.times { create(:video4his) }
       600.times { create(:history) }
       10.times { create(:fav4his) }
-      Video.start_scrape("update", 10000, 10001, 1, 0)
+      Video.start_scrape('update', 10_000, 10_001, 1, 0)
       Video.limit(20).each do |v|
-        (rand(5)+1).times { create(:history, video_id: v.id, user_id: rand(5)) }
+        (rand(5) + 1).times do
+          create(:history, video_id: v.id, user_id: rand(5))
+        end
         create(:fav, video_id: v.id) if rand(3) == 0
       end
       History.rank_update

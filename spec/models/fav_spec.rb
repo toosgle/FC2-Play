@@ -20,14 +20,14 @@ describe Fav do
     end
     context 'user have not faved yet' do
       it 'should return false' do
-        f = Fav.new(user_id: 1, video_id: 99999999)
+        f = Fav.new(user_id: 1, video_id: 99_999_999)
         expect(f.exist?).to be_falsey
       end
     end
 
     context 'user have already favd' do
       it 'should return true' do
-        f = Fav.new(user_id: 1, video_id: 10001000)
+        f = Fav.new(user_id: 1, video_id: 10_001_000)
         expect(f.exist?).to be_truthy
       end
     end
@@ -36,7 +36,7 @@ describe Fav do
   describe '#cannot_create?' do
     context 'number of favs is less than 100' do
       it 'should can create new fav' do
-        f = Fav.new(user_id: 10001000, video_id: 10001000)
+        f = Fav.new(user_id: 10_001_000, video_id: 10_001_000)
         expect(f.cannot_create?).to be_falsey
       end
     end
@@ -44,10 +44,9 @@ describe Fav do
     context 'number of favs is more than 100' do
       it 'should cannot create new fav' do
         100.times { create(:fav) }
-        f = Fav.new(user_id: 1, video_id: 99999998)
+        f = Fav.new(user_id: 1, video_id: 99_999_998)
         expect(f.cannot_create?).to be_truthy
       end
     end
   end
-
 end

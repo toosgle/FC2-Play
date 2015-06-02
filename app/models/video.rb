@@ -22,10 +22,7 @@ class Video < ActiveRecord::Base
       .where { created_at > four_days_ago }
   }
   scope :title_is, ->(keywords) {
-    sql = keywords.inject('') do |_, words|
-      + "(title LIKE '%#{words}%') AND "
-    end
-    sql += '(1=1'
+    sql = keywords.inject('') { |sql, words| sql += "(title LIKE '%#{words}%') AND " } + '(1=1'
     where(sql[1..sql.length])
   }
   scope :bookmarks_is, ->(condition) {

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe History do
-
   describe 'Association' do
     it { should belong_to(:user) }
     it { should belong_to(:video) }
@@ -10,9 +9,9 @@ describe History do
   describe '#create_record' do
     it 'should create record successfully' do
       create(:video1)
-      expect{
-        History.create_record(1, "a b c", 20001001)
-      }.to change(History, :count).by(1)
+      expect do
+        History.create_record(1, 'a b c', 20_001_001)
+      end.to change(History, :count).by(1)
     end
   end
 
@@ -48,5 +47,4 @@ describe History do
       expect(results.size).to eq 21
     end
   end
-
 end

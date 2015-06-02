@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe FavsController, :type => :controller do
-
+describe FavsController, type: :controller do
   let(:user) { create(:user) }
   let(:fav) { create(:fav1, user_id: user.id) }
 
@@ -10,93 +9,93 @@ describe FavsController, :type => :controller do
     fav.save
   end
 
-  describe "#create" do
-    let(:params) {
+  describe '#create' do
+    let(:params) do
       {
         fav: {
           video_id: video_id,
-          comment: "abcde"
+          comment: 'abcde'
         },
         format: 'js'
       }
-    }
-    context "valid params" do
-      let(:video_id) { "10001001" }
+    end
+    context 'valid params' do
+      let(:video_id) { '10001001' }
 
-      it "should create new fav" do
-        expect{
+      it 'should create new fav' do
+        expect do
           post :create, params
-        }.to change(Fav, :count).by(1)
+        end.to change(Fav, :count).by(1)
       end
 
-      it "has a 200 status code" do
+      it 'has a 200 status code' do
         post :create, params
-        expect(response.code).to eq("200")
+        expect(response.code).to eq('200')
       end
     end
 
-    context "already has 100 favs" do
-      let(:video_id) { "99999999" }
+    context 'already has 100 favs' do
+      let(:video_id) { '99999999' }
 
-      it "should fail to create new fav" do
+      it 'should fail to create new fav' do
         100.times { create(:fav, user_id: user.id) }
-        expect{
+        expect do
           post :create, params
-        }.to change(Fav, :count).by(0)
+        end.to change(Fav, :count).by(0)
       end
     end
 
-    context "bad_params" do
+    context 'bad_params' do
       let(:video_id) { nil }
 
-      it "should fail to create new fav" do
+      it 'should fail to create new fav' do
         100.times { create(:fav, user_id: user.id) }
-        expect{
+        expect do
           post :create, params
-        }.to change(Fav, :count).by(0)
+        end.to change(Fav, :count).by(0)
       end
     end
 
-    context "the bookmark has already exist" do
-      let(:video_id) { "10001000" }
+    context 'the bookmark has already exist' do
+      let(:video_id) { '10001000' }
 
-      it "should fail to create new fav" do
-        expect{
+      it 'should fail to create new fav' do
+        expect do
           post :create, params
-        }.to change(Fav, :count).by(0)
+        end.to change(Fav, :count).by(0)
       end
     end
   end
 
-  describe "#update" do
-    let (:params) {
+  describe '#update' do
+    let(:params) do
       {
         fav: {
           video_id: video_id,
-          comment: "updated"
+          comment: 'updated'
         },
         id: fav.id,
         format: 'js'
       }
-    }
-    context "valid params" do
-      let(:video_id) { "10001000" }
+    end
+    context 'valid params' do
+      let(:video_id) { '10001000' }
 
-      it "should update successfully" do
+      it 'should update successfully' do
         put :update, params
-        expect(Fav.order(:updated_at).last.comment).to eq "updated"
+        expect(Fav.order(:updated_at).last.comment).to eq 'updated'
       end
 
-      it "has 200 status code" do
+      it 'has 200 status code' do
         put :update, params
-        expect(response.code).to eq "200"
+        expect(response.code).to eq '200'
       end
     end
 
-    context "invalid params" do
+    context 'invalid params' do
       let(:video_id) { nil }
 
-      it "should not update" do
+      it 'should not update' do
         last_update = Fav.order(:updated_at).last.updated_at
         sleep 1
         put :update, params
@@ -105,24 +104,23 @@ describe FavsController, :type => :controller do
     end
   end
 
-  describe "#destroy" do
-    it "should destroy successfully" do
-      expect{
-        delete :destroy, {:id => fav.id, format: 'js'}
-      }.to change(Fav, :count).by(-1)
+  describe '#destroy' do
+    it 'should destroy successfully' do
+      expect do
+        delete :destroy, id: fav.id, format: 'js'
+      end.to change(Fav, :count).by(-1)
     end
 
-    it "has 200 status code" do
-      delete :destroy, {:id => fav.id, format: 'js'}
-      expect(response.code).to eq "200"
+    it 'has 200 status code' do
+      delete :destroy, id: fav.id, format: 'js'
+      expect(response.code).to eq '200'
     end
 
-    it "should not destroy successfully" do
-      others_fav = create(:fav, user_id: user.id+1)
-      expect{
-        delete :destroy, {:id => others_fav.id, format: 'js'}
-      }.to change(Fav, :count).by(0)
+    it 'should not destroy successfully' do
+      others_fav = create(:fav, user_id: user.id + 1)
+      expect do
+        delete :destroy, id: others_fav.id, format: 'js'
+      end.to change(Fav, :count).by(0)
     end
   end
-
 end

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe MonthlyRank do
-
   before(:each) do
     700.times { create(:video4his) }
     700.times { create(:history) }
@@ -25,5 +24,4 @@ describe MonthlyRank do
       expect(MonthlyRank.all.size).to eq 500
     end
   end
-
 end
