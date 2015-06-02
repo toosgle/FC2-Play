@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe User do
-
   describe 'Association' do
     it { should have_many(:favs) }
     it { should have_many(:histories) }
@@ -36,17 +35,20 @@ describe User do
 
     context 'unique' do
       it 'should return true' do
-        u = User.new(name: "testRspecUni", password: "a", password_confirmation: "a")
+        u = User.new(name: 'testRspecUni',
+                     password: 'a',
+                     password_confirmation: 'a')
         expect(u.unique?).to be_truthy
       end
     end
 
     context 'not unique' do
       it 'should return false' do
-        u = User.new(name: "testRspec", password: "a", password_confirmation: "a")
+        u = User.new(name: 'testRspec',
+                     password: 'a',
+                     password_confirmation: 'a')
         expect(u.unique?).to be_falsey
       end
     end
   end
-
 end

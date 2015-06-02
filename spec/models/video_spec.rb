@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Video do
-
   describe 'Association' do
     it { should have_many(:favs) }
     it { should have_many(:histories) }
@@ -22,12 +21,12 @@ describe Video do
 
   describe '#check_available' do
     it 'should delete videos not in fc2' do
-      Video.start_scrape("update", 10000, 10001, 1, 0)
+      Video.start_scrape('update', 10_000, 10_001, 1, 0)
       availables = Video.all.size
       5.times { create(:video) }
       all = Video.all.size
       Video.check_available
-      expect(all-5).to eq availables
+      expect(all - 5).to eq availables
     end
   end
 
@@ -41,7 +40,7 @@ describe Video do
 
     context 'the video is available on FC2Video' do
       it 'should return true' do
-        Video.start_scrape("update", 10000, 10001, 1, 0)
+        Video.start_scrape('update', 10_000, 10_001, 1, 0)
         expect(Video.order(:updated_at).last.available?).to be_truthy
       end
     end
@@ -62,71 +61,70 @@ describe Video do
 
   describe '#scrape' do
     it 'should scrape/create more than 1 videos' do
-      Video.start_scrape("update", 10000, 10003, 4500, 4501)
-      Video.start_scrape("update", 10000, 10001, 1, 0)
-    expect(
-      Video.where("updated_at > ?", Time.now-60).count
-    ).to be_between(1, 250)
+      Video.start_scrape('update', 10_000, 10_003, 4500, 4501)
+      Video.start_scrape('update', 10_000, 10_001, 1, 0)
+      expect(
+        Video.where('updated_at > ?', Time.now - 60).count
+      ).to be_between(1, 250)
     end
   end
 
   describe '#search' do
     context 'no condition' do
       it 'should make expected sql' do
-        expect(Video.search([],"no","no").to_sql).to eq \
-          Video.where("1=1").order("bookmarks DESC").limit(200).to_sql
+        expect(Video.search([], 'no', 'no').to_sql).to eq \
+          Video.where('1=1').order('bookmarks DESC').limit(200).to_sql
       end
     end
 
     context '[a]-s-s condition' do
       it 'should make expected sql' do
-        expect(Video.search(["a"],"s","s").to_sql).to eq \
-          Video.where("title LIKE '%a%'") \
-                .where("1=1") \
-                .where(bookmarks: 30..500) \
-                .where(duration: '00:00'..'10:00') \
-                .where(morethan100min: 0) \
-                .order("bookmarks DESC") \
-                .limit(200).to_sql
+        expect(Video.search(['a'], 's', 's').to_sql).to eq \
+          Video.where("title LIKE '%a%'")
+          .where('1=1')
+          .where(bookmarks: 30..500)
+          .where(duration: '00:00'..'10:00')
+          .where(morethan100min: 0)
+          .order('bookmarks DESC')
+          .limit(200).to_sql
       end
     end
 
     context '[a,b]-m-m condition' do
       it 'should make expected sql' do
-        expect(Video.search(["a", "b"],"m","m").to_sql).to eq \
-          Video.where("title LIKE '%a%'") \
-                .where("title LIKE '%b%'") \
-                .where("1=1") \
-                .where(bookmarks: 500..2000) \
-                .where(duration: '10:00'..'30:00') \
-                .where(morethan100min: 0) \
-                .order("bookmarks DESC") \
-                .limit(200).to_sql
+        expect(Video.search(%w(a b), 'm', 'm').to_sql).to eq \
+          Video.where("title LIKE '%a%'")
+          .where("title LIKE '%b%'")
+          .where('1=1') \
+          .where(bookmarks: 500..2000)
+          .where(duration: '10:00'..'30:00')
+          .where(morethan100min: 0)
+          .order('bookmarks DESC')
+          .limit(200).to_sql
       end
     end
 
     context '[]-l-l condition' do
       it 'should make expected sql' do
-        expect(Video.search([],"l","l").to_sql).to eq \
-          Video.where("1=1") \
-                .where{ bookmarks >= 2000 } \
-                .where(duration: '30:00'..'60:00') \
-                .where(morethan100min: 0) \
-                .order("bookmarks DESC") \
-                .limit(200).to_sql
+        expect(Video.search([], 'l', 'l').to_sql).to eq \
+          Video.where('1=1')
+          .where { bookmarks >= 2000 }
+          .where(duration: '30:00'..'60:00')
+          .where(morethan100min: 0)
+          .order('bookmarks DESC')
+          .limit(200).to_sql
       end
     end
 
     context '["a"]-no-xl condition' do
       it 'should make expected sql' do
-        expect(Video.search(["a"],"no","xl").to_sql).to eq \
-          Video.where("title LIKE '%a%'") \
-                .where("1=1") \
-                .where("duration >= '60:00' or morethan100min = 1") \
-                .order("bookmarks DESC") \
-                .limit(200).to_sql
+        expect(Video.search(['a'], 'no', 'xl').to_sql).to eq \
+          Video.where("title LIKE '%a%'")
+          .where('1=1')
+          .where("duration >= '60:00' or morethan100min = 1")
+          .order('bookmarks DESC')
+          .limit(200).to_sql
       end
     end
   end
-
 end

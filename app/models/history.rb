@@ -3,16 +3,16 @@ class History < ActiveRecord::Base
   belongs_to :video
 
   scope :list, ->(uid) {
-    joins(:video) \
-    .where(user_id: uid) \
-    .order("created_at DESC") \
-    .limit(100)
+    joins(:video)
+      .where(user_id: uid)
+      .order('created_at DESC')
+      .limit(100)
   }
 
   scope :play_count, ->(day) {
-    joins(:video) \
-    .where("histories.created_at < ?", day) \
-    .size
+    joins(:video)
+      .where('histories.created_at < ?', day)
+      .size
   }
 
   scope :adult, ->{
@@ -28,19 +28,19 @@ class History < ActiveRecord::Base
     history.save
   end
 
-  #FCFCPlayののランキング更新
+  # FCFCPlayののランキング更新
   def self.rank_update
     WeeklyRank.update
     MonthlyRank.update
   end
 
-  #管理者用(admin)
+  # 管理者用(admin)
   def self.weekly_info_for_analyzer
     result = []
-    days = 20 - (6-Date.today.wday)
+    days = 20 - (6 - Date.today.wday)
     days.times do |i|
-      day = Date.today+i-days
-      nextday = Date.today+i-days+1
+      day = Date.today + i - days
+      nextday = Date.today + i - days + 1
       result[i] = History.where('created_at between ? and ?', day, nextday).size
     end
     days.upto(20) do |i|
@@ -48,5 +48,4 @@ class History < ActiveRecord::Base
     end
     result
   end
-
 end

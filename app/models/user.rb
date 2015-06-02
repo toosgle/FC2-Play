@@ -6,15 +6,14 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :name
 
   def unique?
-    !User.find_by_name(self.name)
+    !User.find_by_name(name)
   end
 
   def fav_list
-    Fav.list(self.id)
+    Fav.list(id)
   end
 
   def history_list
-    History.list(self.id)
+    History.list(id)
   end
-
 end

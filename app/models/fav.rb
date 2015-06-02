@@ -1,3 +1,4 @@
+# Fav
 class Fav < ActiveRecord::Base
   belongs_to :user
   belongs_to :video
@@ -6,17 +7,16 @@ class Fav < ActiveRecord::Base
   validates_presence_of :user_id
 
   scope :list, ->(uid) {
-    joins(:video) \
-    .where(user_id: uid) \
-    .order("created_at desc")
+    joins(:video)
+      .where(user_id: uid)
+      .order('created_at desc')
   }
 
   def exist?
-    Fav.where(user_id: self.user_id).where(video_id: self.video_id).size >= 1
+    Fav.where(user_id: user_id).where(video_id: video_id).size >= 1
   end
 
   def cannot_create?
-    Fav.where(user_id: self.user_id).size >= 100
+    Fav.where(user_id: user_id).size >= 100
   end
-
 end
