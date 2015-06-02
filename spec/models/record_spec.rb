@@ -16,7 +16,7 @@ describe Record do
   describe '#create_yesterday_his' do
     it 'create new 6 records' do
       start_day = Date.new(2014, 10, 8)
-      Timecop.travel(start_day + 7) do
+      Timecop.freeze(start_day + 7) do
         expect{
           Record.create_yesterday_his
         }.to change(Record, :count).by(6)
@@ -27,7 +27,7 @@ describe Record do
   describe '#create_reports' do
     it 'resurns 6 reports' do
       start_day = Date.new(2014, 10, 8)
-      Timecop.travel(start_day + 7) do
+      Timecop.freeze(start_day + 7) do
         Record.create_all_his
         results = Record.create_reports
         expect(results.size).to eq 7
