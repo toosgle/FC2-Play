@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       toast :error, 'そのID名は既に使われています'
     elsif user_params[:password] != user_params[:password_confirmation]
       toast :error, 'パスワードが異なっています'
-    elsif @user.save
+    elsif @user.save_and_rewrite_his(session[:user_id])
       toast :success, '登録しました'
     else
       toast :error, '登録に失敗しました。もう一度試してみてください'

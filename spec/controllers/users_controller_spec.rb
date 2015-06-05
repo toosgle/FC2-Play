@@ -25,6 +25,16 @@ describe UsersController, type: :controller  do
         end.to change(User, :count).by(1)
       end
 
+      it 'should rewrite tmp_user history' do
+        create(:history, user_id: 1_234_567)
+        create(:history, user_id: 1_234_567)
+        session[:user_id] = 1_234_567
+        expect do
+          post :create, params
+        end.to change(User, :count).by(1)
+        expect(History.where(user_id: User.last).size).to eq 2
+      end
+
       it 'should redirect to root' do
         post :create, params
         expect(response).to redirect_to root_path

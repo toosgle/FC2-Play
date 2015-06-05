@@ -34,6 +34,11 @@ class History < ActiveRecord::Base
     MonthlyRank.update
   end
 
+  # ユーザ登録した時に、tmp_idでの履歴情報を新しいUserIdの番号に書き換える
+  def self.rename_user_history(tmp_user_id, id)
+    History.where(user_id: tmp_user_id).update_all(user_id: id)
+  end
+
   # 管理者用(admin)
   def self.weekly_info_for_analyzer
     result = []
