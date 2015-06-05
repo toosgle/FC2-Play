@@ -65,7 +65,12 @@ class ApplicationController < ActionController::Base
   end
 
   def make_tmp_id
-    rand(8_999_999) + 1_000_000
+    while 1 do
+      tmp_id = rand(8_999_999) + 1_000_000
+      p tmp_id
+      break if History.find_by(user_id: tmp_id).nil?
+    end
+    tmp_id
   end
 
   def get_weekly_rank
