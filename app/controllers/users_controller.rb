@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     else
       toast :error, '登録に失敗しました。もう一度試してみてください'
     end
-    redirect_to root_url
+    redirect_to session[:request_from]
   end
 
   def destroy
@@ -24,7 +24,7 @@ class UsersController < ApplicationController
     else
       toast :error, 'アカウントの削除に失敗しました。もう一度試してみてください'
     end
-    redirect_to root_path
+    redirect_to root_url
   end
 
   def update

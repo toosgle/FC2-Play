@@ -10,12 +10,12 @@ class SessionsController < ApplicationController
     else
       toast :error, 'IDかパスワードが間違っています'
     end
-    redirect_to root_url
+    redirect_to session[:request_from]
   end
 
   def destroy
     session[:user_id] = nil
     toast :success, 'ログアウトしました'
-    redirect_to root_url
+    redirect_to session[:request_from]
   end
 end

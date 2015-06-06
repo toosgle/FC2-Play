@@ -64,6 +64,7 @@ class HomeController < ApplicationController
 
     create_search_history
     set_previous_search_condition
+    set_request_from
     @user = User.new unless current_user
   end
 

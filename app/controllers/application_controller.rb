@@ -62,6 +62,7 @@ class ApplicationController < ActionController::Base
     @month = get_monthly_rank
     @histories = get_user_histories(his)
     @new_arrivals = get_new_arrivals
+    set_request_from
   end
 
   def make_tmp_id
@@ -109,6 +110,12 @@ class ApplicationController < ActionController::Base
       ids << r.video_id
     end
     ids
+  end
+
+  def set_request_from
+    @request_from = session[:request_from] if session[:request_from]
+    # 現在のURLを保存しておく
+    session[:request_from] = request.original_url
   end
 
   def set_play_info
