@@ -45,13 +45,17 @@ gem 'activerecord-import'
 ### for errbit
 gem 'airbrake'
 
+gem 'unicorn'
+
 group :deployment do
   ### for preloader
   gem 'spring'
   ### for Deploy ###
-  #gem 'capistrano', '~> 3.2.1'
-  #gem 'capistrano-rails'
-  #gem 'capistrano-bundler'
+  gem 'capistrano', '~> 3.4'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rbenv'
+  gem 'capistrano3-unicorn'
 end
 
 group :development, :test do

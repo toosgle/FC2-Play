@@ -55,6 +55,21 @@ GEM
     builder (3.2.2)
     byebug (5.0.0)
       columnize (= 0.9.0)
+    capistrano (3.4.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (~> 1.3)
+    capistrano-bundler (1.1.4)
+      capistrano (~> 3.1)
+      sshkit (~> 1.2)
+    capistrano-rails (1.1.3)
+      capistrano (~> 3.1)
+      capistrano-bundler (~> 1.1)
+    capistrano-rbenv (2.0.3)
+      capistrano (~> 3.1)
+      sshkit (~> 1.3)
+    capistrano3-unicorn (0.2.1)
+      capistrano (~> 3.1, >= 3.1.0)
     celluloid (0.16.0)
       timers (~> 4.0.0)
     chronic (0.10.2)
@@ -66,6 +81,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    colorize (0.7.7)
     columnize (0.9.0)
     coveralls (0.8.1)
       json (~> 1.8)
@@ -134,6 +150,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
+    kgio (2.9.3)
     launchy (2.4.3)
       addressable (~> 2.3)
     libv8 (3.16.14.7)
@@ -156,6 +173,9 @@ GEM
     nenv (0.2.0)
     net-http-persistent (2.9.4)
     net-http-pipeline (1.0.1)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (2.9.2)
     netrc (0.10.3)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
@@ -200,6 +220,7 @@ GEM
       activesupport (= 4.2.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+    raindrops (0.15.0)
     rake (10.4.2)
     rb-fsevent (0.9.5)
     rb-inotify (0.9.5)
@@ -265,6 +286,10 @@ GEM
       activerecord (>= 3.0)
       activesupport (>= 3.0)
       polyamorous (~> 1.1.0)
+    sshkit (1.7.1)
+      colorize (>= 0.7.0)
+      net-scp (>= 1.1.2)
+      net-ssh (>= 2.8.0)
     tapp (1.5.0)
       thor
     term-ansicolor (1.3.0)
@@ -305,6 +330,10 @@ GEM
       unf_ext
     unf_ext (0.0.7.1)
     unicode-display_width (0.1.1)
+    unicorn (4.9.0)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
     websocket (1.2.2)
     whenever (0.9.4)
       chronic (>= 0.6.3)
@@ -320,6 +349,11 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   byebug
+  capistrano (~> 3.4)
+  capistrano-bundler
+  capistrano-rails
+  capistrano-rbenv
+  capistrano3-unicorn
   coffee-rails (~> 4.1.0)
   coveralls
   factory_girl_rails
@@ -350,6 +384,7 @@ DEPENDENCIES
   travis (~> 1.7.2)
   travis-lint
   uglifier (>= 1.3.0)
+  unicorn
   whenever
 
 BUNDLED WITH
