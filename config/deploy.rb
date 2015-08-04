@@ -29,8 +29,8 @@ set :pty, true
 # Default value for linked_dirs is []
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
-# Default value for default_env is {}
-set :default_env, { path: '/home/showwin/.rbenv/shims:/home/showwin/.rbenv/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/showwin/bin' }
+set :shell, '/bin/bash'
+
 
 # Default value for keep_releases is 5
 set :keep_releases, 5

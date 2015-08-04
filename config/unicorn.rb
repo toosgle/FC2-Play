@@ -1,3 +1,5 @@
+ENV['RAILS_ENV'] || 'production'
+
 app_path = '/var/www/fc2play'
 app_shared_path = "#{app_path}/shared"
 
