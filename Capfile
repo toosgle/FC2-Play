@@ -16,7 +16,7 @@ require 'capistrano/deploy'
 #   https://github.com/capistrano/passenger
 #
 require 'capistrano/rbenv'
-set :rbenv_type, :showwin
+set :rbenv_type, :user
 set :rbenv_ruby, '2.1.1'
 # require 'capistrano/chruby'
 require 'capistrano/bundler'

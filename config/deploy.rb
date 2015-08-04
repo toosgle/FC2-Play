@@ -30,12 +30,25 @@ set :pty, true
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # Default value for default_env is {}
-set :default_env, { path: '/usr/local/rbenv/shims:/usr/local/rbenv/bin:$PATH' }
+set :default_env, { path: '/home/showwin/.rbenv/shims:/home/showwin/.rbenv/bin:/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/showwin/bin' }
 
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
 namespace :deploy do
+  task :start do
+    invoke 'unicorn:start'
+  end
+
+  task :stop do
+    invoke 'unicorn:stop'
+  end
+
+  desc 'Restart application'
+  task :restart do
+    invoke 'unicorn:restart'
+  end
+
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
@@ -45,8 +58,6 @@ namespace :deploy do
     end
   end
 
-  desc 'Restart application'
-  task :restart do
-    invoke 'unicorn:restart'
-  end
+  after :finishing, 'deploy:cleanup'
+  after 'deploy:publishing', 'deploy:restart'
 end
