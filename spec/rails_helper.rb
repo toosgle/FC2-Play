@@ -4,6 +4,7 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'database_rewinder'
+require 'factory_girl_rails'
 
 require 'capybara/rails'
 require 'capybara/rspec'

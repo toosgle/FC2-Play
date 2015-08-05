@@ -2,9 +2,11 @@ require 'spec_helper'
 
 describe MonthlyRank do
   before(:each) do
-    700.times { create(:video4his) }
-    700.times { create(:history) }
-    10.times { create(:fav4his) }
+    700.times do |i|
+      create(:video4his, id: 20_002_000 + i)
+      create(:history, id: 20_002_000 + i, video_id: 20_002_000 + i)
+    end
+    create_list(:fav4his, 10)
   end
 
   describe 'Association' do

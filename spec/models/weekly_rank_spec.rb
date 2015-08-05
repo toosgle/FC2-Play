@@ -7,9 +7,11 @@ describe WeeklyRank do
 
   context 'getting information from fc2' do
     before(:each) do
-      600.times { create(:video4his) }
-      600.times { create(:history) }
-      10.times { create(:fav4his) }
+      600.times do |i|
+        create(:video4his, id: 20_001_000 + i)
+        create(:history, id: 20_001_000 + i, video_id: 20_001_000 + i)
+      end
+      create_list(:fav4his, 10)
       Video.start_scrape('update', 10_000, 10_001, 1, 0)
       Video.limit(20).each do |v|
         (rand(5) + 1).times do
