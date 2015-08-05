@@ -87,7 +87,7 @@ class HomeController < ApplicationController
       toast :error, '報告に失敗しました。もう一度試してみてください。'
     end
     delete_video(video.id)
-    redirect_to session[:referer_url]
+    redirect_to session[:referer_url] || root_path
   end
 
   def admin

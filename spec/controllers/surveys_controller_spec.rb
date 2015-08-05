@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SurveysController, type: :controller do
+RSpec.describe SurveysController, type: :controller do
   describe '#new' do
     it 'has a 200 status code' do
       get :new

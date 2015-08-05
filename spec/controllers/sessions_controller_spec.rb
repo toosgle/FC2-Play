@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SessionsController, type: :controller do
+RSpec.describe SessionsController, type: :controller do
   let(:user) { create(:user) }
 
   describe '#create' do

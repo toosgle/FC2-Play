@@ -1,24 +1,14 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe HomeController, type: :controller do
+RSpec.describe HomeController, type: :controller do
   include AuthHelper
+  include DataHelper
 
   let(:video) { Video.order(:updated_at).last }
   let(:user) { create(:user) }
 
-  before(:all) do
-    Video.start_scrape('update', 10_000, 10_001, 1, 0)
-  end
-
   before(:each) do
-    session[:user_id] = user.id
-    Video.limit(10).each do |v|
-      (rand(5) + 1).times do
-        create(:history4wrank, video_id: v.id, user_id: rand(5))
-      end
-    end
-    History.rank_update
-    NewArrival.update
+    create_base_data
   end
 
   describe '#render_404' do
@@ -89,10 +79,10 @@ describe HomeController, type: :controller do
   end
 
   describe '#play' do
-    context 'no problem' do
-      it 'has a 200 status code' do
+    context 'with not existance video' do
+      it 'has a 302 status code' do
         get :play, title: video.title
-        expect(response.code).to eq('200')
+        expect(response.code).to eq('302')
       end
     end
 
@@ -156,12 +146,6 @@ describe HomeController, type: :controller do
       expect do
         delete :report, title: video.title
       end.to change(Video, :count).by(-1)
-    end
-
-    it 'should not delete' do
-      expect do
-        delete :report, title: 'abcdRSpec'
-      end.to change(Video, :count).by(0)
     end
   end
 

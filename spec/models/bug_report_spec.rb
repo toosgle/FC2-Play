@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe BugReport do
+RSpec.describe BugReport do
   describe 'Validation' do
     it { should validate_presence_of(:content) }
   end

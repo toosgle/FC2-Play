@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe SearchHis do
+RSpec.describe SearchHis do
   describe '#create_record' do
     it 'create new record successfully' do
       expect do
