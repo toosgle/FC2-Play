@@ -3,6 +3,21 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+require 'database_rewinder'
+
+require 'capybara/rails'
+require 'capybara/rspec'
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
+
+Capybara.register_driver :poltergeist do |app|
+  # JS Error disable.
+  Capybara::Poltergeist::Driver.new(app, js_errors: false, timeout: 240)
+end
+Capybara.default_driver   = :rack_test
+Capybara.default_selector = :css
+Capybara.default_wait_time = 5
+
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -31,7 +46,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # RSpec Rails can automatically mix in different behaviours to your tests
   # based on their file location, for example enabling you to call `get` and
@@ -47,4 +62,19 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.include FactoryGirl::Syntax::Methods
+  config.include Capybara::DSL
+  config.before :suite do
+    DatabaseRewinder.clean_all
+  end
+
+  config.before :all do
+  end
+
+  config.after :each do
+    Capybara.reset_sessions!
+    DatabaseRewinder.clean
+    FactoryGirl.reload
+  end
 end

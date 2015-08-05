@@ -1,22 +1,22 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.3'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# gem 'sqlite3'
 
 ### for Google Analytics ###
 gem 'google-analytics-rails'
 
 ### for JavaScript runtime ###
-gem 'therubyracer', :platforms => :ruby
+gem 'therubyracer', platforms: :ruby
 
 ### for session ###
 gem 'bcrypt', '~> 3.1.2'
 
 ### for routine work ###
-gem 'whenever', :require => false
+gem 'whenever', require: false
 
 ### for Notification ###
 gem 'toastr-rails'
@@ -24,17 +24,14 @@ gem 'toastr-rails'
 ### for database ###
 gem 'mysql2', '>= 0.3.12b4'
 
-### adopter from SQLite3 to MySQL
-#gem 'yaml_db'
-
 ### for scraping
 gem 'nokogiri'
 
 ### for soft-delete
-gem "paranoia", "~> 2.0"
+gem 'paranoia', '~> 2.0'
 
 ### for fewer string Active Record
-gem "squeel"
+gem 'squeel'
 
 ### for using helper-method in js.erb
 gem 'sprockets'
@@ -71,20 +68,17 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
   gem 'guard-rails'
-  gem 'factory_girl_rails'
   ### for coverage
-  gem 'coveralls', :require => false
+  gem 'coveralls', require: false
   gem 'simplecov'
-  ### for checking formula of .travis.yml
-  gem 'travis-lint'
-  ### for encrypt key
-  gem 'travis', '~> 1.7.2'
-end
-
-group :test do
   ### for rspec one-liner
   gem 'shoulda-matchers'
   gem 'timecop'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'poltergeist'
+  gem 'factory_girl_rails'
+  gem 'database_rewinder'
 end
 
 # Use SCSS for stylesheets
@@ -96,14 +90,11 @@ gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.1.0'
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-#gem 'turbolinks'
+# gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.2'
