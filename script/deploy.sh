@@ -1,7 +1,12 @@
-#!/usr/local/bin/zsh
+#!/bin/bash
+FILENAME='deploy/cold'
 
-curl -i -H "Accept: application/json" \
- -H "Content-Type:application/json" \
- -X POST --data '{"name":"showwin", "branch":"master"}' \
- http://deploy.fc2play.com
-echo 'throwing Webhook...'
+if [ -f "${FILENAME}" ]; then
+  echo "----- bundle exec cap production deploy:stop ----- "
+  bundle exec cap production deploy:stop
+  echo "----- bundle exec cap production deploy BRANCH=master ----- "
+  bundle exec cap production deploy BRANCH=master
+else
+  echo "----- bundle exec cap production deploy BRANCH=master ----- "
+  bundle exec cap production deploy BRANCH=master
+fi
