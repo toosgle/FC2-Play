@@ -1,4 +1,4 @@
-Host stg-macms01
+Host fc2play
   User showwin
   HostName fc2play.com
   IdentityFile /home/ubuntu/.ssh/id_fc2play
