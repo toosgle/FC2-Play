@@ -1,14 +1,14 @@
 FactoryGirl.define do
-  factory :history4wrank, class: History do
-    sequence(:id) { |n| n + 10_001_000 }
-    sequence(:video_id) { |n| n + 10_002_000 }
+  factory :history, class: History do
+    sequence(:id) { |n| n  }
+    sequence(:video_id) { |n| n }
     sequence(:keyword) { |n| "hogehoge#{n}" }
     sequence(:user_id) { |n| n }
   end
 
-  factory :history, class: History do
-    sequence(:id) { |n| n + 20_001_000 }
-    sequence(:video_id) { |n| n + 20_001_000 }
+  factory :history4wrank, class: History do
+    sequence(:id) { |n| n + 10_001_000 }
+    sequence(:video_id) { |n| n + 10_002_000 }
     sequence(:keyword) { |n| "hogehoge#{n}" }
     sequence(:user_id) { |n| n }
   end

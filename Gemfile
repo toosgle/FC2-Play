@@ -65,7 +65,6 @@ group :development, :test do
   gem 'awesome_print'
   gem 'byebug'
 
-  gem 'rspec'
   gem 'rspec-rails'
   gem 'guard-rails'
   ### for coverage
