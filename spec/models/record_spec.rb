@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Record do
+RSpec.describe Record do
   describe '#create_all_his' do
     it 'create many records' do
       start = Date.new(2014, 10, 8)

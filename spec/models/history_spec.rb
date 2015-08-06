@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe History do
+RSpec.describe History do
   describe 'Association' do
     it { should belong_to(:user) }
     it { should belong_to(:video) }

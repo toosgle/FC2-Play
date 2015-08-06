@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe FavsController, type: :controller do
+RSpec.describe FavsController, type: :controller do
   let(:user) { create(:user) }
   let(:fav) { create(:fav1, user_id: user.id) }
 

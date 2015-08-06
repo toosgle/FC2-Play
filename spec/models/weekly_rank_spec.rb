@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe WeeklyRank do
+RSpec.describe WeeklyRank do
   describe 'Association' do
     it { should belong_to(:video) }
   end

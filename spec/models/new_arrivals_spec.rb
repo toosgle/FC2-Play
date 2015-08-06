@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe NewArrival do
+RSpec.describe NewArrival do
   describe '#update' do
     it 'should make ranks' do
       50.times { create(:video4newarrival) }

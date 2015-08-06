@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Fav do
+RSpec.describe Fav do
   let(:user) { create(:user) }
   let(:fav) { create(:fav) }
 

@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe BugReportsController, type: :controller do
+RSpec.describe BugReportsController, type: :controller do
   describe '#create' do
     let(:params) do
       {

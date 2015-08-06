@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe MonthlyRank do
+RSpec.describe MonthlyRank do
   before(:each) do
     700.times do |i|
       create(:video4his, id: 20_002_000 + i)

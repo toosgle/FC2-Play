@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe User do
+RSpec.describe User do
   describe 'Association' do
     it { should have_many(:favs) }
     it { should have_many(:histories) }

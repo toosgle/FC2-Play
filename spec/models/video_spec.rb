@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Video do
+RSpec.describe Video do
   describe 'Association' do
     it { should have_many(:favs) }
     it { should have_many(:histories) }

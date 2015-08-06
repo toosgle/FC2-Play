@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Survey do
+RSpec.describe Survey do
   describe 'Validation' do
     it { should validate_presence_of(:result) }
   end
