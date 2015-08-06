@@ -16,7 +16,7 @@ class Fav < ActiveRecord::Base
     Fav.where(user_id: user_id).where(video_id: video_id).size >= 1
   end
 
-  def cannot_create?
+  def more_than_100?
     Fav.where(user_id: user_id).size >= 100
   end
 end
