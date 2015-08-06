@@ -7,8 +7,8 @@
 <!--  プレイヤー  -->
 <% if @video %>
 	<center>
-		<div id="player" style="width: 100%; height: <%= @height %>px; max-width: <%= @width %>px; max-height: <%= @height %>px;">
-			<embed src="http://video.fc2.com/flv2.swf?t=201407280507" flashvars="i=<%= @shorten_url %>&amp;d=<%= @duration %>otag=1&amp;sj=0&amp;rel=1&amp;lang=en&amp;tk=TXpVM01EWTJOa9&amp;tl=<%= @title %>&amp;loop=0&amp;t=201407280507" quality="high" bgcolor="#000000" wmode="direct" width="100%" height="100%" name="flv2" align="middle" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" allowfullscreen="true">
+		<div id="player" style="width: 100%; height: <%= @window.height %>px; max-width: <%= @window.width %>px; max-height: <%= @window.height %>px;">
+			<embed src="http://video.fc2.com/flv2.swf?t=201407280507" flashvars="i=<%= @video.ref_url %>&amp;d=<%= @duration %>otag=1&amp;sj=0&amp;rel=1&amp;lang=en&amp;tk=TXpVM01EWTJOa9&amp;tl=<%= @title %>&amp;loop=0&amp;t=201407280507" quality="high" bgcolor="#000000" wmode="direct" width="100%" height="100%" name="flv2" align="middle" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" allowfullscreen="true">
 		</div>
 	</center>
 <% end %>

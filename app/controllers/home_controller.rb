@@ -1,12 +1,13 @@
 class HomeController < ApplicationController
   require 'open-uri'
+  include InitializeAction
   include Fc2Action
-  include WindowAction
 
   # You can login admin page !!!
   http_basic_authenticate_with name:  'admin',
                                password: 'fc2play',
                                only: [:admin]
+  before_action :save_current_url, only: [:play, :search]
   after_filter :flash_clear, only: [:search, :change_player_size]
 
   def index
@@ -37,7 +38,7 @@ class HomeController < ApplicationController
 
     set_ranking
     set_user_info
-    set_player
+    @window = Window.new(window_size)
     create_watch_history
     render :index
   end
@@ -49,19 +50,17 @@ class HomeController < ApplicationController
 
     create_search_history
     set_previous_search_condition
-    set_request_from
     @user = User.new unless current_user
   end
 
   def change_player_size
-    size = params[:size].to_i
-    if valid_window?(size)
-      session[:size] = size
-      toast :success, "ウィンドウサイズを #{window_category(size)} に変更しました。"
+    @window = Window.new(params[:size])
+    if @window.valid?
+      session[:size] = @window.size
+      toast :success, "ウィンドウサイズを #{@window.category} に変更しました。"
     else
       toast :error, 'サイズ変更に失敗しました。もう一度試してみてください'
     end
-    set_window_size
   end
 
   def report

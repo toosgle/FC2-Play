@@ -215,4 +215,9 @@ class Video < ActiveRecord::Base
     end
     ids
   end
+
+  # プレイヤーで参照するURL
+  def ref_url
+    url.split('/').last
+  end
 end

@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  include WindowAction
 
   before_action :set_user, only: [:update, :destroy]
   after_filter :flash_clear, only: [:update]
@@ -29,13 +28,12 @@ class UsersController < ApplicationController
 
   # Ajax for updating window size
   def update
-    size = window_params[:size].to_i
-    if valid_window?(size) && @user.update(window_params)
-      toast :success, "ウィンドウサイズを #{window_category(size)} に変更しました。"
+    @window = Window.new(window_params[:size])
+    if @window.valid? && @user.update(window_params)
+      toast :success, "ウィンドウサイズを #{@window.category} に変更しました。"
     else
       toast :error, 'サイズ変更に失敗しました。もう一度試してみてください'
     end
-    set_window_size
   end
 
   private
