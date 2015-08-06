@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   require 'open-uri'
+  include Fc2Action
   include WindowAction
 
   # You can login admin page !!!
@@ -9,15 +10,12 @@ class HomeController < ApplicationController
   after_filter :flash_clear, only: [:search, :change_player_size]
 
   def index
-    set_basic_info
+    set_user_info
+    set_ranking
   end
 
   def coming_soon
     render layout: false
-  end
-
-  def test
-    @user = User.new unless current_user
   end
 
   def log
@@ -25,11 +23,6 @@ class HomeController < ApplicationController
   end
 
   def play
-    # if out_of_limit?
-    #  redirect_to root_url
-    #  return
-    # end
-
     # if got_to_survey?
     #  @survey = Survey.new
     #  render :survey
@@ -37,26 +30,15 @@ class HomeController < ApplicationController
     # end
 
     @video = Video.find_by_title(params[:title])
-    if @video.present?
-      @url = @video.url
-      @shorten_url = @url.split('/').last
-    else
-      toast :error, 'タイトルに何か問題があるようです'
-      delete_video_by_title(params[:title])
+    unless prepare_video
       redirect_to root_url
       return
     end
-    unless set_fc2_info
-      # handle 404 error
-      delete_video(@video.id)
-      @video.destroy
-      toast :error, 'この動画はFC2で既に削除されているようです　FC*FC Playからも削除しました'
-      redirect_to root_url
-      return
-    end
-    set_play_info
-    create_history
-    session[:video_url] = @url
+
+    set_ranking
+    set_user_info
+    set_player
+    create_watch_history
     render :index
   end
 
@@ -84,13 +66,12 @@ class HomeController < ApplicationController
 
   def report
     video = Video.find_by_title(params[:title])
-    if video.destroy
+    if Video.delete_all_by_id(video.id)
       toast :success, '報告を受け取りました。ご協力ありがとうございます!'
     else
       toast :error, '報告に失敗しました。もう一度試してみてください。'
     end
-    delete_video(video.id)
-    redirect_to session[:referer_url] || root_path
+    redirect_to previous_page
   end
 
   def admin
@@ -100,66 +81,32 @@ class HomeController < ApplicationController
 
   private
 
-  def delete_video(vid)
-    MonthlyRank.find_by_video_id(vid).delete if MonthlyRank.find_by_video_id(vid)
-    WeeklyRank.find_by_video_id(vid).delete if WeeklyRank.find_by_video_id(vid)
-    NewArrival.find_by_video_id(vid).delete if NewArrival.find_by_video_id(vid) && NewArrival.all.size > 10
-  end
-
-  def delete_video_by_title(title)
-    # MonthlyRank.find_by_video_id(vid).delete if MonthlyRank.find_by_video_id(vid)
-    # WeeklyRank.find_by_video_id(vid).delete if WeeklyRank.find_by_video_id(vid)
-    NewArrival.find_by_title(title).delete if NewArrival.find_by_title(title) && NewArrival.all.size > 10
-  end
-
-=begin
-  def out_of_limit?
-    case cause_of_limit
-    when "hourly"
-      toast :error, "只今、サイト全体で視聴制限をしています　もうしばらくしてから再度アクセスしてみてください"
-    when "personal"
-      toast :error, "本日30回視聴したため制限を行っています　24時を過ぎてから再びお楽しみください"
-    else
-      add_play_count
-      false
+  def prepare_video
+    if @video.blank?
+      toast :error, 'タイトルに何か問題があるようです'
+      Video.delete_all_by_title(params[:title])
+      return false
+    elsif !get_video_from_fc2
+      toast :error, 'この動画はFC2で既に削除されているようです　FC*FC Playからも削除しました'
+      Video.delete_all_by_id(@video.id)
+      return false
     end
+    true
   end
 
-  def cause_of_limit
-    hour_ago = DateTime.now - Rational(1, 24)
-    if History.where("created_at > ?", hour_ago).size > 1000
-      return "hourly"
-    elsif session[:pcount] && session[:pcount] >= 30 && session[:today] == Date.today
-      return "personal"
-    end
-  end
-
-  def add_play_count
-    if !session[:today] || session[:today] != Date.today
-      session[:today] = Date.today
-      session[:pcount] = 1
-    else
-      session[:pcount] += 1
-    end
-  end
-
-  def go_to_survey?
-    rand(200)==0
-  end
-=end
-
-  def create_history
-    if current_user && (session[:video_url] != @url)
+  def create_watch_history
+    if current_user && (session[:previous_video_url] != @video.url)
       History.create_record(current_user.id, session[:keyword_re], @video.id)
-    elsif session[:video_url] != @url
+    elsif session[:previous_video_url] != @video.url
       History.create_record(session[:temp_id], session[:keyword_re], @video.id)
     end
+    session[:previous_video_url] = @video.url
   end
 
   def get_search_conditions
     search_keyword = params[:keyword] || ''
-    @keyword = (search_keyword.gsub(/(　)+/, '\s'))
-    @keywords_array = @keyword.split('\s')
+    @keyword = (search_keyword.gsub(/(　)+/, "\s"))
+    @keywords_array = @keyword.split("\s")
     @bookmarks = params[:bookmarks] || 'no'
     @duration = params[:duration] || 'no'
   end

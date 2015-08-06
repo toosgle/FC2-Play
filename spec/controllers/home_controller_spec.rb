@@ -64,13 +64,6 @@ RSpec.describe HomeController, type: :controller do
     end
   end
 
-  describe '#test' do
-    it 'has a 200 status code' do
-      get :test
-      expect(response.code).to eq('200')
-    end
-  end
-
   describe '#log' do
     it 'has a 200 status code' do
       get :log

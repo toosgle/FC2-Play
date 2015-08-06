@@ -159,4 +159,60 @@ class Video < ActiveRecord::Base
           elm.xpath(AUTHORITY_PATH)[0].content == 'All')
     end
   end
+
+  def self.delete_all_by_title(title)
+    NewArrival.find_by_title(title).delete \
+      if NewArrival.find_by_title(title) && NewArrival.all.size > 10
+  end
+
+  def self.delete_all_by_id(id)
+    ActiveRecord::Base.transaction do
+      Video.find(id).delete
+      MonthlyRank.find_by_video_id(id).delete if MonthlyRank.find_by_video_id(id)
+      WeeklyRank.find_by_video_id(id).delete if WeeklyRank.find_by_video_id(id)
+      NewArrival.find_by_video_id(id).delete if NewArrival.find_by_video_id(id) && NewArrival.all.size > 10
+    end
+    true
+  rescue
+    false
+  end
+
+  def self.weekly_rank
+    m_ids = get_video_ids(MonthlyRank.all.limit(100))
+    m_query = ActiveRecord::Base.send(:sanitize_sql_array,
+                                      ['field(id ,?)', m_ids])
+    Video.where(id: m_ids).order(m_query)
+  end
+
+  def self.monthly_rank
+    w_ids = get_video_ids(WeeklyRank.all.limit(100))
+    w_query = ActiveRecord::Base.send(:sanitize_sql_array,
+                                      ['field(id ,?)', w_ids])
+    Video.where(id: w_ids).order(w_query)
+  end
+
+  def self.new_arrivals_list
+    videos = []
+    rcmd_videos_size = NewArrival.order('recommend desc').limit(20).size - 1
+    (0..rcmd_videos_size).to_a.sample(10).each do |i|
+      videos << NewArrival.order('recommend desc')[i]
+    end
+    videos
+  end
+
+  def self.user_histories(user_id)
+    his = History.list(user_id)
+    his_ids = get_video_ids(his)
+    his_query = ActiveRecord::Base.send(:sanitize_sql_array,
+                                        ['field(id ,?)', his_ids])
+    Video.where(id: his_ids).order(his_query)
+  end
+
+  def self.get_video_ids(records)
+    ids = []
+    records.each do |r|
+      ids << r.video_id
+    end
+    ids
+  end
 end

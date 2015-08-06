@@ -1,11 +1,11 @@
 <!--   広告    -->
-<% if @url %>
+<% if @video %>
 <!-- admax -->
 <center><script language="javascript" type="text/javascript">var addeluxue_conf = {site:315037759,frame:17,width:728,height:90,color:["999999","FFFFFF","2200CC","F25D5D","671F28"],host:'adv.addeluxe.jp',ver:1.5};</script><script language="javascript" type="text/javascript" src="http://img.addeluxe.jp/js/iframe/adv.js" charset="utf-8"></script></center>
 <% end %>
 
 <!--  プレイヤー  -->
-<% if @url %>
+<% if @video %>
 	<center>
 		<div id="player" style="width: 100%; height: <%= @height %>px; max-width: <%= @width %>px; max-height: <%= @height %>px;">
 			<embed src="http://video.fc2.com/flv2.swf?t=201407280507" flashvars="i=<%= @shorten_url %>&amp;d=<%= @duration %>otag=1&amp;sj=0&amp;rel=1&amp;lang=en&amp;tk=TXpVM01EWTJOa9&amp;tl=<%= @title %>&amp;loop=0&amp;t=201407280507" quality="high" bgcolor="#000000" wmode="direct" width="100%" height="100%" name="flv2" align="middle" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" allowfullscreen="true">
@@ -26,7 +26,7 @@
 <% end %>
 
 <!-- 動画見れない報告-->
-<% if @url %>
+<% if @video %>
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
 	<%= form_tag report_path, method: :delete do %>

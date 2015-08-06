@@ -1,5 +1,5 @@
 <!-- 動画検索部分 start -->
-<% if @url || @results %>
+<% if @video || @results %>
 	<%= form_tag({action: "search", controller: "home"}, {method: "get"}) do %>
 		<div class="row">
 			<div class="col-md-12 well well-sm">

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include WindowAction
-  include InitializeAction
+  include Fc2Action
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -41,93 +41,44 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_fc2_info
-    page = Nokogiri::HTML(open(@url))
-    @title = page.css('meta[@itemprop="name"]').attr('content').value
-    @duration = page.css('meta[@property="video:duration"]')
-                .attr('content').value
-    @title.include?('Removed') ? false : true
-  rescue
-    false
-  end
-
-  def set_basic_info
-    if current_user
-      @favs = current_user.fav_list
-      his = current_user.history_list
-    else
-      session[:temp_id] ||= make_tmp_id
-      @user = User.new
-      his = History.list(session[:temp_id])
-    end
-    @week = get_weekly_rank
-    @month = get_monthly_rank
-    @histories = get_user_histories(his)
-    @new_arrivals = get_new_arrivals
-    set_request_from
-  end
-
-  def make_tmp_id
-    while 1 do
-      tmp_id = rand(8_999_999) + 1_000_000
-      p tmp_id
-      break if History.find_by(user_id: tmp_id).nil?
-    end
-    tmp_id
-  end
-
-  def get_weekly_rank
-    m_ids = get_video_ids(MonthlyRank.all.limit(100))
-    m_query = ActiveRecord::Base.send(:sanitize_sql_array,
-                                      ['field(id ,?)', m_ids])
-    Video.where(id: m_ids).order(m_query)
-  end
-
-  def get_monthly_rank
-    w_ids = get_video_ids(WeeklyRank.all.limit(100))
-    w_query = ActiveRecord::Base.send(:sanitize_sql_array,
-                                      ['field(id ,?)', w_ids])
-    Video.where(id: w_ids).order(w_query)
-  end
-
-  def get_user_histories(his)
-    his_ids = get_video_ids(his)
-    his_query = ActiveRecord::Base.send(:sanitize_sql_array,
-                                        ['field(id ,?)', his_ids])
-    Video.where(id: his_ids).order(his_query)
-  end
-
-  def get_new_arrivals
-    videos = []
-    rcmd_videos_size = NewArrival.order('recommend desc').limit(20).size - 1
-    (0..rcmd_videos_size).to_a.sample(10).each do |i|
-      videos << NewArrival.order('recommend desc')[i]
-    end
-    videos
-  end
-
-  def get_video_ids(records)
-    ids = []
-    records.each do |r|
-      ids << r.video_id
-    end
-    ids
-  end
-
   def set_request_from
     @request_from = session[:request_from] if session[:request_from]
     # 現在のURLを保存しておく
     session[:request_from] = request.original_url
   end
 
-  def set_play_info
-    set_basic_info
-    set_window_size
-    @adult = session[:adult]
-    @bug_report = BugReport.new
+  def set_ranking
+    @week = Video.weekly_rank
+    @month = Video.monthly_rank
+    @new_arrivals = Video.new_arrivals_list
+  end
 
-    # 再生できない報告後のリンク先のため
-    session[:referer_url] = request.env['HTTP_REFERER']
+  def set_user_info
+    if current_user
+      @favs = current_user.fav_list
+    else
+      session[:temp_id] ||= make_tmp_user_id
+      @user = User.new
+    end
+    @histories = Video.user_histories(user_id)
+    @bug_report = BugReport.new
+    set_request_from
+  end
+
+  def make_tmp_user_id
+    loop do
+      tmp_id = rand(8_999_999) + 1_000_000
+      return tmp_id if History.find_by(user_id: tmp_id).blank?
+    end
+  end
+
+  def user_id
+    current_user ? current_user.id : session[:temp_id]
+  end
+
+  def set_player
+    set_window_size
+    @shorten_url = @video.url.split('/').last
   end
 
   def current_user
