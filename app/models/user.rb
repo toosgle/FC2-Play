@@ -6,11 +6,14 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :name
 
   def save_and_rewrite_his(tmp_user_id)
-    save
-    if tmp_user_id.present?
-      History.rename_user_history(tmp_user_id, id)
-      SearchHis.rename_user_hsitory(tmp_user_id, id)
+    ActiveRecord::Base.transaction do
+      save
+      if tmp_user_id.present?
+        History.rename_user_history(tmp_user_id, id)
+        SearchHis.rename_user_history(tmp_user_id, id)
+      end
     end
+    true
   rescue
     false
   end

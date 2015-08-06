@@ -13,10 +13,10 @@ RSpec.describe BugReport, type: :feature do
       click_button('バグ報告')
       fill_in 'content', with: '重大なバグがありました'
       click_button('送信')
-      save_and_open_page
 
-      expect(page).to have_content('ご報告ありがとうございました')
+      sleep 1
 
+      expect(page).to have_content('ご報告ありがとうございます')
       expect(BugReport.count - pre_count).to eq 1
       expect(BugReport.last.content).to eq '重大なバグがありました'
     end
