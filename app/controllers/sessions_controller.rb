@@ -18,10 +18,4 @@ class SessionsController < ApplicationController
     toast :success, 'ログアウトしました'
     redirect_to previous_page
   end
-
-  private
-
-  def previous_page
-    session[:request_from] || root_path
-  end
 end

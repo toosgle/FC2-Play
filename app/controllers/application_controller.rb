@@ -128,33 +128,6 @@ class ApplicationController < ActionController::Base
     session[:referer_url] = request.env['HTTP_REFERER']
   end
 
-  def set_player_size
-    if current_user
-      @fav = Fav.new
-      @height = (current_user.size * 0.6125).round
-      @width = current_user.size
-    elsif session[:size]
-      @height = (session[:size] * 0.6125).round
-      @width = session[:size]
-    else
-      @height = 446
-      @width = 728
-    end
-  end
-
-  def window_size(size)
-    case size
-    when 590
-      '小'
-    when 750
-      '中'
-    when 900
-      '大'
-    else
-      false
-    end
-  end
-
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
@@ -166,5 +139,9 @@ class ApplicationController < ActionController::Base
 
   def flash_clear
     flash[:toastr] = nil
+  end
+
+  def previous_page
+    session[:request_from] || root_path
   end
 end

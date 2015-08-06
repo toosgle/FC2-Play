@@ -1,5 +1,8 @@
 class HomeController < ApplicationController
   require 'open-uri'
+  include WindowAction
+
+  # You can login admin page !!!
   http_basic_authenticate_with name:  'admin',
                                password: 'fc2play',
                                only: [:admin]
@@ -69,14 +72,14 @@ class HomeController < ApplicationController
   end
 
   def change_player_size
-    @size = window_size(params[:size].to_i)
-    if @size
-      session[:size] = params[:size].to_i
-      toast :success, "ウィンドウサイズを #{@size} に変更しました。"
+    size = params[:size].to_i
+    if valid_window?(size)
+      session[:size] = size
+      toast :success, "ウィンドウサイズを #{window_category(size)} に変更しました。"
     else
       toast :error, 'サイズ変更に失敗しました。もう一度試してみてください'
     end
-    set_player_size
+    set_window_size
   end
 
   def report

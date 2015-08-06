@@ -1,20 +1,21 @@
 class UsersController < ApplicationController
+  include WindowAction
+  include InitializeAction
+
   before_action :set_user, only: [:update, :destroy]
   after_filter :flash_clear, only: [:update]
 
   def create
     @user = User.new(user_params)
     @user.size = 750
-    if !@user.unique?
-      toast :error, 'そのID名は既に使われています'
-    elsif user_params[:password] != user_params[:password_confirmation]
-      toast :error, 'パスワードが異なっています'
-    elsif @user.save_and_rewrite_his(session[:user_id])
-      toast :success, '登録しました'
-    else
-      toast :error, '登録に失敗しました。もう一度試してみてください'
+    if valid_user?
+      if @user.save_and_rewrite_his(session[:user_id])
+        toast :success, '登録しました'
+      else
+        toast :error, '登録に失敗しました。もう一度試してみてください'
+      end
     end
-    redirect_to session[:request_from] || root_path
+    redirect_to previous_page
   end
 
   def destroy
@@ -28,13 +29,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    @size = window_size(user_size_params[:size].to_i)
-    if @size && @user.update(user_size_params)
-      toast :success, 'ウィンドウサイズを #{@size} に変更しました。'
+    size = window_params[:size].to_i
+    if valid_window?(size) && @user.update(window_params)
+      toast :success, "ウィンドウサイズを #{window_category(size)} に変更しました。"
     else
       toast :error, 'サイズ変更に失敗しました。もう一度試してみてください'
     end
-    set_player_size
+    set_window_size
+    set_new_fav
   end
 
   private
@@ -44,13 +46,26 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name,
-                                 :password,
-                                 :password_confirmation,
-                                 :password_digest)
+    params.require(:user)
+      .permit(:name,
+              :password,
+              :password_confirmation,
+              :password_digest)
   end
 
-  def user_size_params
+  def window_params
     params.require(:user).permit(:size)
+  end
+
+  def valid_user?
+    if !@user.unique?
+      toast :error, 'そのID名は既に使われています'
+      false
+    elsif user_params[:password] != user_params[:password_confirmation]
+      toast :error, 'パスワードが異なっています'
+      false
+    else
+      true
+    end
   end
 end
