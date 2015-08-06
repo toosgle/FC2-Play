@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  include WindowAction
+  include InitializeAction
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
@@ -120,7 +122,7 @@ class ApplicationController < ActionController::Base
 
   def set_play_info
     set_basic_info
-    set_player_size
+    set_window_size
     @adult = session[:adult]
     @bug_report = BugReport.new
 

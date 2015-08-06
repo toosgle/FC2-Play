@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   include WindowAction
-  include InitializeAction
 
   before_action :set_user, only: [:update, :destroy]
   after_filter :flash_clear, only: [:update]
@@ -28,6 +27,7 @@ class UsersController < ApplicationController
     redirect_to root_url
   end
 
+  # Ajax for updating window size
   def update
     size = window_params[:size].to_i
     if valid_window?(size) && @user.update(window_params)
@@ -36,7 +36,6 @@ class UsersController < ApplicationController
       toast :error, 'サイズ変更に失敗しました。もう一度試してみてください'
     end
     set_window_size
-    set_new_fav
   end
 
   private
