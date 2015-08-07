@@ -4,13 +4,9 @@ class HomeController < ApplicationController
   include InitializeAction
   include Fc2Action
 
-  # You can login admin page !!!
-  http_basic_authenticate_with name:  'admin',
-                               password: 'fc2play',
-                               only: [:admin]
   before_action :save_current_url, only: [:play, :search]
-  before_action :set_new_user, only: [:index, :log, :play, :search, :admin]
-  after_filter :flash_clear, only: [:search, :change_player_size]
+  before_action :set_new_user, only: [:index, :log, :play, :search]
+  after_filter :flash_clear, only: [:search]
 
   def index
     set_user_info
@@ -53,16 +49,6 @@ class HomeController < ApplicationController
     set_previous_search_condition
   end
 
-  def change_player_size
-    @window = Window.new(params[:size])
-    if @window.valid?
-      session[:size] = @window.size
-      toast :success, "ウィンドウサイズを #{@window.category} に変更しました。"
-    else
-      toast :error, 'サイズ変更に失敗しました。もう一度試してみてください'
-    end
-  end
-
   def report
     video = Video.find_by_title(params[:title])
     if Video.delete_all_by_id(video.id)
@@ -73,20 +59,7 @@ class HomeController < ApplicationController
     redirect_to previous_page
   end
 
-  def admin
-    @reports = Record.create_reports
-    @weeks = @reports[:weeks]
-
-    @playweek = History.weekly_info_for_analyzer
-    @survey_result = Survey.info_for_analyzer
-    @bugreports = BugReport.all
-  end
-
   private
-
-  def set_new_user
-    @user = User.new unless current_user
-  end
 
   def prepare_video
     if @video.blank?

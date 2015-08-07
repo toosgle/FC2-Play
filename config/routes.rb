@@ -8,11 +8,11 @@ Fc2play::Application.routes.draw do
 
   get 'test' => 'home#test'
   get 'log' => 'home#log', as: :log
-  get 'admin' => 'home#admin', as: :admin
+  get 'admin' => 'admin#index', as: :admin
   get 'play' => 'home#play', as: :play
   get 'search' => 'home#search', as: :search
   post 'bug_report' => 'bug_reports#create', as: :bug_report
-  post 'change_player_size' => 'home#change_player_size', as: :change_player_size
+  post 'change_window_size' => 'windows#change_size', as: :change_window_size
   delete 'report' => 'home#report', as: :report
 
   resources :sessions
@@ -24,8 +24,6 @@ Fc2play::Application.routes.draw do
   resources :surveys
 
   get '*path', controller: 'application', action: 'render_404'
-
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
