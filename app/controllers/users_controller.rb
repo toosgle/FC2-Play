@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_action :set_user, only: [:update, :destroy]
   after_filter :flash_clear, only: [:update]
 

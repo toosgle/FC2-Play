@@ -12,7 +12,6 @@ module InitializeAction
       @favs = current_user.fav_list
     else
       session[:temp_id] ||= make_tmp_user_id
-      @user = User.new
     end
     @histories = Video.user_histories(user_id)
     @bug_report = BugReport.new

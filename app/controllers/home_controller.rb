@@ -1,3 +1,4 @@
+# Home Controller
 class HomeController < ApplicationController
   require 'open-uri'
   include InitializeAction
@@ -8,6 +9,7 @@ class HomeController < ApplicationController
                                password: 'fc2play',
                                only: [:admin]
   before_action :save_current_url, only: [:play, :search]
+  before_action :set_new_user, only: [:index, :log, :play, :search, :admin]
   after_filter :flash_clear, only: [:search, :change_player_size]
 
   def index
@@ -20,7 +22,6 @@ class HomeController < ApplicationController
   end
 
   def log
-    @user = User.new unless current_user
   end
 
   def play
@@ -48,9 +49,8 @@ class HomeController < ApplicationController
     @results = Video.search(@keywords_array, @bookmarks, @duration)
     toast :warning, '検索結果が多すぎるため、一部のみ表示しています' if @results.size == 200
 
-    create_search_history
+    SearchHis.create_record(@keyword, @bookmarks, @duration, user_id)
     set_previous_search_condition
-    @user = User.new unless current_user
   end
 
   def change_player_size
@@ -74,11 +74,19 @@ class HomeController < ApplicationController
   end
 
   def admin
-    @user = User.new unless current_user
-    set_reports_result
+    @reports = Record.create_reports
+    @weeks = @reports[:weeks]
+
+    @playweek = History.weekly_info_for_analyzer
+    @survey_result = Survey.info_for_analyzer
+    @bugreports = BugReport.all
   end
 
   private
+
+  def set_new_user
+    @user = User.new unless current_user
+  end
 
   def prepare_video
     if @video.blank?
@@ -94,10 +102,8 @@ class HomeController < ApplicationController
   end
 
   def create_watch_history
-    if current_user && (session[:previous_video_url] != @video.url)
-      History.create_record(current_user.id, session[:keyword_re], @video.id)
-    elsif session[:previous_video_url] != @video.url
-      History.create_record(session[:temp_id], session[:keyword_re], @video.id)
+    if session[:previous_video_url] != @video.url
+      History.create_record(user_id, session[:keyword_re], @video.id)
     end
     session[:previous_video_url] = @video.url
   end
@@ -114,29 +120,5 @@ class HomeController < ApplicationController
     session[:keyword_pre] = @keyword
     session[:bookmarks_pre] = @bookmarks
     session[:duration_pre] = @duration
-  end
-
-  def create_search_history
-    if current_user
-      SearchHis.create_record(@keyword, @bookmarks, @duration, current_user.id)
-    else
-      SearchHis.create_record(@keyword, @bookmarks, @duration, session[:temp_id])
-    end
-  end
-
-  def set_reports_result
-    reports = Record.create_reports
-    @weeks = reports[:weeks]
-    @reg_users = reports[:reg_users]
-    @users = reports[:users]
-    @playall = reports[:playall]
-    @playall_adult = reports[:playall_adult]
-    @favs = reports[:favs]
-    @videos = reports[:videos]
-    @updated_videos = reports[:updated_videos]
-
-    @playweek = History.weekly_info_for_analyzer
-    @survey_result = Survey.info_for_analyzer
-    @bugreports = BugReport.all
   end
 end
