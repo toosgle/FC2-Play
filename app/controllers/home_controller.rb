@@ -43,8 +43,7 @@ class HomeController < ApplicationController
   end
 
   def report
-    video = Video.find_by_title(params[:title])
-    if Video.delete_all_by_id(video.id)
+    if Video.find_by_title(params[:title]).destroy
       toast :success, '報告を受け取りました。ご協力ありがとうございます!'
     else
       toast :error, '報告に失敗しました。もう一度試してみてください。'
@@ -57,11 +56,10 @@ class HomeController < ApplicationController
   def prepare_video
     if @video.blank?
       toast :error, 'タイトルに何か問題があるようです'
-      Video.delete_all_by_title(params[:title])
       return false
     elsif !get_video_from_fc2
       toast :error, 'この動画はFC2で既に削除されているようです　FC*FC Playからも削除しました'
-      Video.delete_all_by_id(@video.id)
+      @video.destroy
       return false
     end
     true
@@ -69,7 +67,9 @@ class HomeController < ApplicationController
 
   def create_watch_history
     if session[:previous_video_url] != @video.url
-      History.create_record(user_id, session[:keyword_re], @video.id)
+      History.create(user_id: user_id,
+                     keyword: session[:keyword_re],
+                     video_id: @video.id)
     end
     session[:previous_video_url] = @video.url
   end

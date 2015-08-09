@@ -31,12 +31,12 @@ class Record < ActiveRecord::Base
     # 総再生回数(一般)
     record = Record.new(day: day)
     record.kind = 'total_play_his'
-    record.value = History.normal.play_count(day)
+    record.value = History.normal.joins(:video).before(day).count
     record.save
     # 総再生回数(アダルト)
     record = Record.new(day: day)
     record.kind = 'total_play_his_a'
-    record.value = History.adult.play_count(day)
+    record.value = History.adult.joins(:video).before(day).count
     record.save
     # お気に入り総数
     record = Record.new(day: day)

@@ -2,10 +2,11 @@ class Video < ActiveRecord::Base
   require 'open-uri'
   acts_as_paranoid
 
-  has_many :favs
+  has_many :favs, dependent: :destroy
   has_many :histories
-  has_many :monthly_ranks
-  has_many :weekly_ranks
+  has_many :monthly_ranks, dependent: :destroy
+  has_many :weekly_ranks, dependent: :destroy
+  has_many :new_arrival, dependent: :destroy
   validates_presence_of :title
   validates_presence_of :url
   validates_presence_of :views
@@ -69,10 +70,6 @@ class Video < ActiveRecord::Base
     false
   end
 
-  def self.delete_unavailable
-    Video.only_deleted.delete_all
-  end
-
   # FC2からのスクレイピングのパス
   ADULT_SEARCH_URL = 'http://video.fc2.com/en/a/movie_search.php?perpage=50&page='
   NORMAL_SEARCH_URL = 'http://video.fc2.com/en/movie_search.php?perpage=50&page='
@@ -98,7 +95,7 @@ class Video < ActiveRecord::Base
   end
 
   def self.start_scrape(kinds, adult_from, adult_to, normal_from, normal_to)
-    Video.delete_all if kinds == 'init'
+    Video.destroy_all if kinds == 'init'
 
     # アダルト
     adult_from.upto(adult_to) do |i|
@@ -160,23 +157,6 @@ class Video < ActiveRecord::Base
     end
   end
 
-  def self.delete_all_by_title(title)
-    NewArrival.find_by_title(title).delete \
-      if NewArrival.find_by_title(title) && NewArrival.all.size > 10
-  end
-
-  def self.delete_all_by_id(id)
-    ActiveRecord::Base.transaction do
-      Video.find(id).delete
-      MonthlyRank.find_by_video_id(id).delete if MonthlyRank.find_by_video_id(id)
-      WeeklyRank.find_by_video_id(id).delete if WeeklyRank.find_by_video_id(id)
-      NewArrival.find_by_video_id(id).delete if NewArrival.find_by_video_id(id) && NewArrival.all.size > 10
-    end
-    true
-  rescue
-    false
-  end
-
   def self.weekly_rank
     m_ids = get_video_ids(MonthlyRank.all.limit(100))
     m_query = ActiveRecord::Base.send(:sanitize_sql_array,
@@ -219,5 +199,18 @@ class Video < ActiveRecord::Base
   # プレイヤーで参照するURL
   def ref_url
     url.split('/').last
+  end
+
+  def recommend
+    recommend = (views >= 10_000) ? 2 : 1
+    case bookmarks * 10_000 / views
+    when 150..1000
+      recommend += 3
+    when 125..150 - 1
+      recommend += 2
+    when 100..125 - 1
+      recommend += 1
+    end
+    recommend
   end
 end

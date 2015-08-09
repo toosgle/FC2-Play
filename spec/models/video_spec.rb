@@ -46,19 +46,6 @@ RSpec.describe Video do
     end
   end
 
-  describe '#delete_unavailable' do
-    it 'should delete destroyed video' do
-      Video.check_available
-      Video.delete_unavailable
-      5.times { create(:video) }
-      Video.check_available
-      destroyed = Video.only_deleted.all.size
-      Video.delete_unavailable
-      expect(destroyed).to eq 5
-      expect(Video.only_deleted.all.size).to eq 0
-    end
-  end
-
   describe '#scrape' do
     it 'should scrape/create more than 1 videos' do
       Video.start_scrape('update', 10_000, 10_003, 4500, 4501)
@@ -107,8 +94,7 @@ RSpec.describe Video do
     context '[]-l-l condition' do
       it 'should make expected sql' do
         expect(Video.search([], 'l', 'l').to_sql).to eq \
-          Video.where('1=1')
-          .where { bookmarks >= 2000 }
+          Video.where('1=1').where { bookmarks >= 2000 }
           .where(duration: '30:00'..'60:00')
           .where(morethan100min: 0)
           .order('bookmarks DESC')
@@ -125,6 +111,33 @@ RSpec.describe Video do
           .order('bookmarks DESC')
           .limit(200).to_sql
       end
+    end
+  end
+
+  describe '#recommend' do
+    it 'should return 1' do
+      video = create(:video, views: 5000, bookmarks: 20)
+      expect(video.recommend).to eq 1
+    end
+
+    it 'should return 2' do
+      video = create(:video, views: 5000, bookmarks: 62)
+      expect(video.recommend).to eq 2
+    end
+
+    it 'should return 3' do
+      video = create(:video, views: 8_000, bookmarks: 100)
+      expect(video.recommend).to eq 3
+    end
+
+    it 'should return 4' do
+      video = create(:video, views: 10_000, bookmarks: 125)
+      expect(video.recommend).to eq 4
+    end
+
+    it 'should return 5' do
+      video = create(:video, views: 50_000, bookmarks: 1000)
+      expect(video.recommend).to eq 5
     end
   end
 end

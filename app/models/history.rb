@@ -9,10 +9,12 @@ class History < ActiveRecord::Base
       .limit(100)
   }
 
-  scope :play_count, ->(day) {
-    joins(:video)
-      .where('histories.created_at < ?', day)
-      .size
+  scope :before, ->(day) {
+    where('histories.created_at < ?', day)
+  }
+
+  scope :between, ->(from, to) {
+    where('created_at between ? and ?', from, to)
   }
 
   scope :adult, ->{
@@ -23,12 +25,7 @@ class History < ActiveRecord::Base
     where("videos.url NOT LIKE '%/a/%'")
   }
 
-  def self.create_record(uid, keyword, video_id)
-    history = History.new(user_id: uid, keyword: keyword, video_id: video_id)
-    history.save
-  end
-
-  # FCFCPlayののランキング更新
+  # FCFCPlayのランキング更新
   def self.rank_update
     WeeklyRank.update
     MonthlyRank.update
@@ -40,16 +37,12 @@ class History < ActiveRecord::Base
   end
 
   # 管理者用(admin)
-  def self.weekly_info_for_analyzer
+  def self.weekly_report
     result = []
-    days = 20 - (6 - Date.today.wday)
-    days.times do |i|
+    days = 21 - (7 - Date.today.wday)
+    21.times do |i|
       day = Date.today + i - days
-      nextday = Date.today + i - days + 1
-      result[i] = History.where('created_at between ? and ?', day, nextday).size
-    end
-    days.upto(20) do |i|
-      result[i] = 0
+      result << (i < days) ? History.between(day, day + 1).count : 0
     end
     result
   end

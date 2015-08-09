@@ -56,9 +56,8 @@ class WeeklyRank < ActiveRecord::Base
 
   def self.create_dummy
     WeeklyRank.delete_all
-    videos = []
-    Video.all.limit(500).each do |v|
-      videos << WeeklyRank.new(video_id: v.id)
+    videos = Video.all.limit(500).each_with_object([]) do |v, arr|
+      arr << WeeklyRank.new(video_id: v.id)
     end
     WeeklyRank.import videos
     MonthlyRank.create_dummy if MonthlyRank.all.size != 500
