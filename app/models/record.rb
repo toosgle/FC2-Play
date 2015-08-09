@@ -5,95 +5,102 @@ class Record < ActiveRecord::Base
       .first
   }
 
-  def self.create_all_his
-    Record.delete_all
-    start = Date.new(2014, 10, 8)
-    days = (Date.today - start).to_i
-    rest_days = (Date.today - start).to_i % 7
-    weeks = ((days - rest_days) / 7) + 1
-    # 2014-10-08 から7日に1回
-    weeks.times do |i|
-      day = (start + (i * 7)).strftime('%Y-%m-%d')
-      week_ago = (start + (i * 7) - 7).strftime('%Y-%m-%d')
-      create_a_record_of(day, week_ago)
+  class << self
+    module Constants
+      REPORT_LIST = %w( total_play_his total_play_his_a total_favs total_users
+                        total_reg_users total_videos total_updated_videos )
     end
-  end
+    include Constants
 
-  def self.create_yesterday_his
-    start = Date.new(2014, 10, 8)
-    # 2014-10-08から7の倍数日経っていた場合
-    if (Date.today - start).to_i % 7 == 0
-      create_a_record_of(Date.today, Date.today - 7)
+    def create_all_his
+      Record.delete_all
+      # 2014-10-08 から7日に1回
+      weeks_to_calc.times do |i|
+        day = (start_day + (i * 7))
+        create_a_record_of(day)
+      end
     end
-  end
 
-  def self.create_a_record_of(day, week_ago)
+    def create_yesterday_his
+      # 2014-10-08から7の倍数日経っていた場合
+      create_a_record_of(Date.today) if days_to_calc % 7 == 0
+    end
+
+    def start_day
+      Date.new(2014, 10, 8)
+    end
+
+    def days_to_calc
+      (Date.today - start_day).to_i
+    end
+
+    def weeks_to_calc
+      # 計算すべき日数から計算すべき週数を計算する
+      (days_to_calc - (days_to_calc % 7)) / 7 + 1
+    end
+
+    def create_a_record_of(day)
+      REPORT_LIST.each do |kind|
+        Record.create(day: day,
+                      kind: kind,
+                      value: eval(kind + '_value(day)'))
+      end
+    end
+
     # 総再生回数(一般)
-    record = Record.new(day: day)
-    record.kind = 'total_play_his'
-    record.value = History.normal.joins(:video).before(day).count
-    record.save
-    # 総再生回数(アダルト)
-    record = Record.new(day: day)
-    record.kind = 'total_play_his_a'
-    record.value = History.adult.joins(:video).before(day).count
-    record.save
-    # お気に入り総数
-    record = Record.new(day: day)
-    record.kind = 'total_fav'
-    record.value = Fav.where("created_at < '#{day}'").size
-    record.save
-    # 登録ユーザ数総数
-    record = Record.new(day: day)
-    record.kind = 'total_reg_user'
-    record.value = User.where("created_at < '#{day}'").size
-    record.save
-    # ユーザ数総数
-    record = Record.new(day: day)
-    record.kind = 'total_user'
-    record.value = History.where("created_at < '#{day}'").group('user_id').length
-    record.save
-    # 動画総数
-    record = Record.new(day: day)
-    record.kind = 'total_video'
-    record.value = Video.where("created_at < '#{day}'").size
-    record.save
-    # 動画情報更新総数
-    record = Record.new(day: day)
-    record.kind = 'total_updated_video'
-    record.value =
-      Video.where('created_at <> updated_at')
-      .where("created_at >= '#{week_ago}'")
-      .where("created_at < '#{day}'").size
-    record.save
-  end
-
-  def self.create_reports
-    start = Date.new(2014, 10, 8)
-    days = (Date.today - start).to_i
-    rest_days = (Date.today - start).to_i % 7
-    weeks = ((days - rest_days) / 7) + 1
-    result = {}
-    videos, updated_videos, reg_users = [], [], []
-    users, his, adult_his, favs = [], [], [], []
-    weeks.times do |i|
-      day = start + i * 7
-      videos[i] = Record.of('total_video', day).value
-      updated_videos[i] = Record.of('total_updated_video', day).value
-      reg_users[i] = Record.of('total_reg_user', day).value
-      users[i] = Record.of('total_user', day).value
-      his[i] = Record.of('total_play_his', day).value
-      adult_his[i] = Record.of('total_play_his_a', day).value
-      favs[i] = Record.of('total_fav', day).value
+    def total_play_his_value(day)
+      History.normal.joins(:video).before(day).count
     end
-    result[:weeks] = weeks
-    result[:videos] = videos
-    result[:updated_videos] = updated_videos
-    result[:reg_users] = reg_users
-    result[:users] = users
-    result[:playall] = his
-    result[:playall_adult] = adult_his
-    result[:favs] = favs
-    result
+
+    # 総再生回数(アダルト)
+    def total_play_his_a_value(day)
+      History.adult.joins(:video).before(day).count
+    end
+
+    # お気に入り総数
+    def total_favs_value(day)
+      Fav.where("created_at < '#{day}'").count
+    end
+
+    # 登録ユーザ数総数
+    def total_reg_users_value(day)
+      User.where("created_at < '#{day}'").count
+    end
+
+    # ユーザ数総数
+    def total_users_value(day)
+      History.where("created_at < '#{day}'").group('user_id').count
+    end
+
+    # 動画総数
+    def total_videos_value(day)
+      Video.where("created_at < '#{day}'").count
+    end
+
+    # 動画情報更新総数
+    def total_updated_videos_value(day)
+      week_ago = day - 7
+      Video.where('created_at <> updated_at')
+        .where("created_at >= '#{week_ago}'")
+        .where("created_at < '#{day}'").count
+    end
+
+    def create_reports
+      result = initialize_report
+      result[:weeks] = weeks_to_calc
+      weeks_to_calc.times do |i|
+        day = start_day + i * 7
+        REPORT_LIST.each do |kind|
+          result[kind.to_sym] << Record.of(kind, day).value
+        end
+      end
+      result
+    end
+
+    def initialize_report
+      REPORT_LIST.each_with_object({}) do |kind, hash|
+        hash[kind.to_sym] = []
+      end
+    end
   end
 end
