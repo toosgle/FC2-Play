@@ -7,7 +7,7 @@ class AdminController < ApplicationController
     @weeks = @reports[:weeks]
 
     @playweek = History.weekly_report
-    @survey_result = Survey.info_for_analyzer
+    @survey_result = Survey.report
     @bugreports = BugReport.all
   end
 end

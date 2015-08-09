@@ -4,51 +4,77 @@ class MonthlyRank < ActiveRecord::Base
   class << self
     # FC*FC Playの総合ランキング
     def update
-      point = {}
-      # 過去1ヶ月に再生された動画は1回につき1ポイント
-      month_ago = DateTime.now - 30
-      last_month_his = History.where("created_at > '#{month_ago}'")
-                       .group('video_id')
-                       .order('count(*) desc').limit(500)
-                       .select('video_id, count(*) as count')
-      last_month_his.each do |his|
-        point[his.video_id] = his.count
-      end
-      # 過去1週間に再生された動画は1回につき8ポイント
-      week_ago = DateTime.now - 7
-      last_week_his = History.where("created_at > '#{week_ago}'")
-                      .group('video_id')
-                      .order('count(*) desc')
-                      .limit(500)
-                      .select('video_id, count(*) as count')
-      last_week_his.each do |his|
-        if point[his.video_id].blank?
-          point[his.video_id] = his.count * 8
-        else
-          point[his.video_id] += his.count * 4
+      hot_videos = []
+      videos_order_by_point.each do |video_id|
+        if hot_videos.size >= 300
+          break
+        elsif Video.where(id: video_id).present?
+          hot_videos << MonthlyRank.new(video_id: video_id)
         end
       end
-      # 過去3ヶ月にお気に入りされた動画は1つにつき100ポイント
-      three_month_ago = DateTime.now - 90
-      Fav.where("created_at > '#{three_month_ago}'").each do |fav|
+      MonthlyRank.delete_all
+      MonthlyRank.import hot_videos
+    end
+
+    def videos_order_by_point
+      point = calc_last_month_point
+      point = calc_last_week_point(point)
+      point = calc_therr_month_favs_point(point)
+
+      # ポイントが高い順にソート
+      point.sort { |(_, v1), (_, v2)| v2 <=> v1 }
+
+      # video_idの配列を返す
+      point.each_with_object([]) do |pt, video_ids|
+        video_ids << pt[0]
+      end
+    end
+
+    # 過去1ヶ月に再生された動画は1回につき1ポイント
+    def calc_last_month_point
+      last_month_his.each_with_object({}) do |his, point|
+        point[his.video_id] = his.count
+      end
+    end
+
+    def last_month_his
+      History.where("created_at > '#{DateTime.now - 30}'")
+        .group('video_id')
+        .order('count(*) desc').limit(500)
+        .select('video_id, count(*) as count')
+    end
+
+    # 過去1週間に再生された動画は1回につき8ポイント
+    def calc_last_week_point(point)
+      last_week_his.each do |his|
+        point[his.video_id] ||= 0 # 初期化 if needed
+        point[his.video_id] += his.count * 8
+      end
+      point
+    end
+
+    def last_week_his
+      History.where("created_at > '#{DateTime.now - 7}'")
+        .group('video_id')
+        .order('count(*) desc')
+        .limit(500)
+        .select('video_id, count(*) as count')
+    end
+
+    # 過去3ヶ月にお気に入りされた動画は1つにつき100ポイント
+    def calc_therr_month_favs_point(point)
+      three_month_favs.each do |fav|
         if point[fav.video_id].blank?
           point[fav.video_id] = 100
         else
           point[fav.video_id] += 100
         end
       end
-      point = point.sort { |(_, v1), (_, v2)| v2 <=> v1 }
+      point
+    end
 
-      MonthlyRank.delete_all
-      hot_videos = []
-      point.each do |pv|
-        if hot_videos.size >= 300
-          break
-        elsif Video.where(id: pv[0]).present?
-          hot_videos << MonthlyRank.new(video_id: pv[0])
-        end
-      end
-      MonthlyRank.import hot_videos
+    def three_month_favs
+      Fav.where("created_at > '#{DateTime.now - 90}'")
     end
 
     def create_dummy

@@ -14,6 +14,6 @@ FactoryGirl.define do
   factory :fav4his, class: Fav do
     user_id 1
     comment 'foocommendbar'
-    sequence(:video_id) { |n| n + 20_001_000 }
+    sequence(:video_id) { |n| n + 20_002_000 }
   end
 end
