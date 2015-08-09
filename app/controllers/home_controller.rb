@@ -38,7 +38,10 @@ class HomeController < ApplicationController
     @results = Video.search(@keywords_array, @bookmarks, @duration)
     toast :warning, '検索結果が多すぎるため、一部のみ表示しています' if @results.size == 200
 
-    SearchHis.create_record(@keyword, @bookmarks, @duration, user_id)
+    SearchHis.create(keyword: @keyword,
+                     favs: @bookmarks,
+                     duration: @duration,
+                     user_id: user_id)
     set_previous_search_condition
   end
 

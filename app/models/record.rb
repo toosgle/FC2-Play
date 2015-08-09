@@ -69,7 +69,7 @@ class Record < ActiveRecord::Base
 
     # ユーザ数総数
     def total_users_value(day)
-      History.where("created_at < '#{day}'").group('user_id').count
+      History.where("created_at < '#{day}'").group('user_id').length
     end
 
     # 動画総数
