@@ -5,7 +5,6 @@ class HomeController < ApplicationController
   include Fc2Action
 
   before_action :save_current_url, only: [:play, :search]
-  before_action :set_new_user, only: [:index, :log, :play, :search]
   after_filter :flash_clear, only: [:search]
 
   def index
@@ -21,12 +20,6 @@ class HomeController < ApplicationController
   end
 
   def play
-    # if got_to_survey?
-    #  @survey = Survey.new
-    #  render :survey
-    #  return
-    # end
-
     @video = Video.find_by_title(params[:title])
     unless prepare_video
       redirect_to root_url

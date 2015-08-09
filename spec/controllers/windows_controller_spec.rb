@@ -26,5 +26,4 @@ RSpec.describe WindowsController, type: :controller do
       end
     end
   end
-
 end

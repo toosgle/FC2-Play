@@ -44,10 +44,6 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
-  def set_new_user
-    @user = User.new unless current_user
-  end
-
   def user_id
     current_user ? current_user.id : session[:temp_id]
   end
