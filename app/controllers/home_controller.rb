@@ -1,6 +1,5 @@
 # Home Controller
 class HomeController < ApplicationController
-  require 'open-uri'
   include InitializeAction
   include Fc2Action
 

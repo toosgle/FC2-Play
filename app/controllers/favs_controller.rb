@@ -1,6 +1,4 @@
 class FavsController < ApplicationController
-  require 'open-uri'
-
   before_action :set_fav, only: [:update, :destroy]
   before_action :set_user_fav_list
   after_filter :flash_clear

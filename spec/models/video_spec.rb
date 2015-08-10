@@ -6,6 +6,7 @@ RSpec.describe Video do
     it { should have_many(:histories) }
     it { should have_many(:monthly_ranks) }
     it { should have_many(:weekly_ranks) }
+    it { should have_many(:new_arrivals) }
   end
 
   describe 'Validation' do
@@ -19,40 +20,27 @@ RSpec.describe Video do
     it { should validate_inclusion_of(:morethan100min).in_array([true, false]) }
   end
 
-  describe '#check_available' do
-    it 'should delete videos not in fc2' do
-      Video.start_scrape('update', 10_000, 10_001, 1, 0)
-      availables = Video.all.size
-      5.times { create(:video) }
-      all = Video.all.size
-      Video.check_available
-      expect(all - 5).to eq availables
-    end
-  end
-
-  describe '#available?' do
+  describe '#available_on_fc2?' do
     context 'url of the video is not valid' do
       it 'should return false' do
         v = create(:video1)
-        expect(v.available?).to be_falsey
+        expect(v.available_on_fc2?).to be_falsey
       end
     end
 
     context 'the video is available on FC2Video' do
       it 'should return true' do
-        Video.start_scrape('update', 10_000, 10_001, 1, 0)
-        expect(Video.order(:updated_at).last.available?).to be_truthy
+        Video.start_scrape('adult', 10_000, 10_001)
+        expect(Video.last.available_on_fc2?).to be_truthy
       end
     end
   end
 
   describe '#scrape' do
-    it 'should scrape/create more than 1 videos' do
-      Video.start_scrape('update', 10_000, 10_003, 4500, 4501)
-      Video.start_scrape('update', 10_000, 10_001, 1, 0)
-      expect(
-        Video.where('updated_at > ?', Time.now - 60).count
-      ).to be_between(1, 250)
+    it 'should scrape videos' do
+      Video.start_scrape('adult', 10_000, 10_001)
+      Video.start_scrape('adult', 10_000, 10_001)
+      expect(Video.last.updated_at != Video.last.created_at).to be_truthy
     end
   end
 
@@ -114,30 +102,32 @@ RSpec.describe Video do
     end
   end
 
-  describe '#recommend' do
-    it 'should return 1' do
-      video = create(:video, views: 5000, bookmarks: 20)
-      expect(video.recommend).to eq 1
-    end
+  describe '#ref_url' do
+  end
 
-    it 'should return 2' do
-      video = create(:video, views: 5000, bookmarks: 62)
-      expect(video.recommend).to eq 2
-    end
+  describe '#weekly_rank' do
+  end
 
-    it 'should return 3' do
-      video = create(:video, views: 8_000, bookmarks: 100)
-      expect(video.recommend).to eq 3
-    end
+  describe '#monthly_rank' do
+  end
 
-    it 'should return 4' do
-      video = create(:video, views: 10_000, bookmarks: 125)
-      expect(video.recommend).to eq 4
-    end
+  describe '#user_histories' do
+  end
 
-    it 'should return 5' do
-      video = create(:video, views: 50_000, bookmarks: 1000)
-      expect(video.recommend).to eq 5
+  describe '#list_of' do
+  end
+
+  describe '#new_arrivals_list' do
+  end
+
+  describe '#check_available' do
+    it 'should delete videos not in fc2' do
+      Video.scrape('adult', 10_000, 10_001)
+      availables = Video.count
+      5.times { create(:video) }
+      all = Video.count
+      Video.check_available
+      expect(all - 5).to eq availables
     end
   end
 end
