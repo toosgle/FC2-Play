@@ -34,7 +34,6 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', '
 
 set :shell, '/bin/bash'
 
-
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
