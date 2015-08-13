@@ -3,7 +3,6 @@ class SurveysController < ApplicationController
 
   def new
     @survey = Survey.new
-    @user = User.new unless current_user
   end
 
   def create

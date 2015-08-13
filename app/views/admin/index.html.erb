@@ -135,9 +135,9 @@ new Morris.Area({
 
   data: [
 		<% (@weeks-1).times do |i| %>
-    	{ year: '<%= i+10000 %>', value: <%=@reports[:playall][i]%>, value_a: <%=@reports[:playall_adult][i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@reports[:total_play_his][i]%>, value_a: <%=@reports[:total_play_his_a][i]%> },
 		<% end %>
-    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:playall][@weeks-1]%>, value_a: <%=@reports[:playall_adult][@weeks-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:total_play_his][@weeks-1]%>, value_a: <%=@reports[:total_play_his_a][@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value', 'value_a'],
@@ -150,9 +150,9 @@ new Morris.Area({
 
   data: [
 		<% (@weeks-1).times do |i| %>
-    	{ year: '<%= i+10000 %>', value: <%=@reports[:reg_users][i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@reports[:total_reg_users][i]%> },
 		<% end %>
-    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:reg_users][@weeks-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:total_reg_users][@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -164,9 +164,9 @@ new Morris.Area({
 
   data: [
 		<% (@weeks-1).times do |i| %>
-    	{ year: '<%= i+10000 %>', value: <%=@reports[:users][i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@reports[:total_users][i]%> },
 		<% end %>
-    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:users][@weeks-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:total_users][@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -178,9 +178,9 @@ new Morris.Area({
 
   data: [
 		<% (@weeks-1).times do |i| %>
-    	{ year: '<%= i+10000 %>', value: <%=@reports[:favs][i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@reports[:total_favs][i]%> },
 		<% end %>
-    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:favs][@weeks-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:total_favs][@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -193,9 +193,9 @@ new Morris.Area({
 
   data: [
 		<% (@weeks-1).times do |i| %>
-    	{ year: '<%= i+10000 %>', value: <%=@reports[:videos][i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@reports[:total_videos][i]%> },
 		<% end %>
-    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:videos][@weeks-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:total_videos][@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],
@@ -208,9 +208,9 @@ new Morris.Area({
 
   data: [
 		<% (@weeks-1).times do |i| %>
-    	{ year: '<%= i+10000 %>', value: <%=@reports[:updated_videos][i]%> },
+    	{ year: '<%= i+10000 %>', value: <%=@reports[:total_updated_videos][i]%> },
 		<% end %>
-    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:updated_videos][@weeks-1]%> }
+    { year: '<%= @weeks-1+10000 %>', value: <%=@reports[:total_updated_videos][@weeks-1]%> }
   ],
   xkey: 'year',
   ykeys: ['value'],

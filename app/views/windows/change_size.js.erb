@@ -1,10 +1,10 @@
 <!-- update player size -->
 var $player = $("#player");
-$player.css('width', "<%= @width %>");
-$player.css('height', "<%= @height %>");
+$player.css('width', "<%= @window.width %>");
+$player.css('height', "<%= @window.height %>");
 var $player = document.getElementById("player");
-$player.style.maxWidth="<%= @width %>px";
-$player.style.maxHeight="<%= @height %>px";
+$player.style.maxWidth="<%= @window.width %>px";
+$player.style.maxHeight="<%= @window.height %>px";
 
 <!-- notification -->
 <% if flash[:toastr] %>

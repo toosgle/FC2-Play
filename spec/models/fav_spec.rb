@@ -33,11 +33,11 @@ RSpec.describe Fav do
     end
   end
 
-  describe '#cannot_create?' do
+  describe '#more_than_100?' do
     context 'number of favs is less than 100' do
       it 'should can create new fav' do
         f = Fav.new(user_id: 10_001_000, video_id: 10_001_000)
-        expect(f.cannot_create?).to be_falsey
+        expect(f.more_than_100?).to be_falsey
       end
     end
 
@@ -45,7 +45,7 @@ RSpec.describe Fav do
       it 'should cannot create new fav' do
         100.times { create(:fav) }
         f = Fav.new(user_id: 1, video_id: 99_999_998)
-        expect(f.cannot_create?).to be_truthy
+        expect(f.more_than_100?).to be_truthy
       end
     end
   end

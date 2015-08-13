@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:id) { |n| n  }
     sequence(:video_id) { |n| n }
     sequence(:keyword) { |n| "hogehoge#{n}" }
-    sequence(:user_id) { |n| n }
+    user_id 1
   end
 
   factory :history4wrank, class: History do
