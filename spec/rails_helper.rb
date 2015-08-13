@@ -1,5 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
+require 'open-uri'
+
 require 'spec_helper'
 require 'factory_girl_rails'
 require 'database_rewinder'

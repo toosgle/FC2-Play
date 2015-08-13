@@ -30,17 +30,9 @@ RSpec.describe Video do
 
     context 'the video is available on FC2Video' do
       it 'should return true' do
-        Video.start_scrape('adult', 10_000, 10_001)
+        Fc2.scrape('adult', 10_000, 10_001)
         expect(Video.last.available_on_fc2?).to be_truthy
       end
-    end
-  end
-
-  describe '#scrape' do
-    it 'should scrape videos' do
-      Video.start_scrape('adult', 10_000, 10_001)
-      Video.start_scrape('adult', 10_000, 10_001)
-      expect(Video.last.updated_at != Video.last.created_at).to be_truthy
     end
   end
 
@@ -103,26 +95,55 @@ RSpec.describe Video do
   end
 
   describe '#ref_url' do
+    it 'should return the last part of URL' do
+      v = Video.new(url: 'http://video.fc2.com/a/content/201505149BdT5mY0&t_holder')
+      expect(v.ref_url).to eq('201505149BdT5mY0&t_holder')
+    end
   end
 
   describe '#weekly_rank' do
+    it 'same videos as WeeklyRanking' do
+      150.times do |i|
+        create(:video, id: i + 1)
+        create(:weekly_rank, video_id: i + 1)
+      end
+      expect(Video.weekly_rank[0].id).to eq(WeeklyRank.first.video_id)
+      expect(Video.weekly_rank.size).to eq(100)
+    end
   end
 
   describe '#monthly_rank' do
+    it 'same videos as MonthlyRank' do
+      150.times do |i|
+        create(:video, id: i + 1)
+        create(:monthly_rank, video_id: i + 1)
+      end
+      expect(Video.monthly_rank.first.id).to eq(MonthlyRank.first.video_id)
+      expect(Video.monthly_rank.size).to eq(100)
+    end
   end
 
   describe '#user_histories' do
+    it 'should be history list of the user' do
+      create(:video, id: 1)
+      create(:video, id: 2)
+      create(:history, user_id: 1, video_id: 1)
+      create(:history, user_id: 1, video_id: 2)
+      expect(Video.user_histories(1).size).to eq(2)
+    end
   end
 
+  # weekly_rank と monthly_rank で担保しているので一旦パス
   describe '#list_of' do
   end
 
+  # パス
   describe '#new_arrivals_list' do
   end
 
   describe '#check_available' do
     it 'should delete videos not in fc2' do
-      Video.scrape('adult', 10_000, 10_001)
+      Fc2.scrape('adult', 10_000, 10_001)
       availables = Video.count
       5.times { create(:video) }
       all = Video.count

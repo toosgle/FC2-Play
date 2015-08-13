@@ -39,7 +39,7 @@ class Fc2
 
     def create_50_records(page, adult_flg)
       50.times do |j|
-        next unless video_exists_on_fc2?(page.xpath(VIDEO_PATH)[j], kinds)
+        next unless video_exists_on_fc2?(page.xpath(VIDEO_PATH)[j], adult_flg)
         params = scrape_params(page.xpath(VIDEO_PATH)[j], adult_flg)
 
         video = Video.find_by_title(params[:title])
@@ -60,12 +60,12 @@ class Fc2
       params[:views] = elm.xpath(VIEWS_PATH)[1].content.to_i
       params[:bookmarks] = elm.xpath(FAVS_PATH)[2].content.to_i
       params[:morethan100min] = (params[:duration].length == 6)
-      params[:adult_flg] = adult_flg
+      params[:adult] = adult_flg
       params
     end
 
-    def video_exists_on_fc2?(elm, kind)
-      min_favs = (kind == 'adult') ? 30 : 2
+    def video_exists_on_fc2?(elm, adult_flg)
+      min_favs = adult_flg ? 30 : 2
       (elm.xpath(FAVS_PATH)[2] &&
         elm.xpath(FAVS_PATH)[2].content.to_i >= min_favs &&
           elm.xpath(AUTHORITY_PATH)[0].content == 'All')

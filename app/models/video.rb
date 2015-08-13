@@ -16,8 +16,8 @@ class Video < ActiveRecord::Base
   validates_inclusion_of :morethan100min, in: [true, false]
 
   scope :title_is, ->(keywords) {
-    sql = keywords.inject('') do |_, words|
-      + "(title LIKE '%#{words}%') AND "
+    sql = keywords.inject('') do |str, words|
+      str + "(title LIKE '%#{words}%') AND "
     end + '(1=1'
     where(sql[1..sql.length])
   }
@@ -72,11 +72,11 @@ class Video < ActiveRecord::Base
     end
 
     def weekly_rank
-      list_of(MonthlyRank.all.limit(100))
+      list_of(WeeklyRank.all.limit(100))
     end
 
     def monthly_rank
-      list_of(WeeklyRank.all.limit(100))
+      list_of(MonthlyRank.all.limit(100))
     end
 
     def user_histories(user_id)
@@ -87,6 +87,7 @@ class Video < ActiveRecord::Base
       video_ids = records.each_with_object([]) do |r, ids|
         ids << r.video_id
       end
+      p video_ids
       query = ActiveRecord::Base.send(:sanitize_sql_array,
                                       ['field(id ,?)', video_ids])
       Video.where(id: video_ids).order(query)
