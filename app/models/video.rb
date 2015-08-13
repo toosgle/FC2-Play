@@ -87,7 +87,6 @@ class Video < ActiveRecord::Base
       video_ids = records.each_with_object([]) do |r, ids|
         ids << r.video_id
       end
-      p video_ids
       query = ActiveRecord::Base.send(:sanitize_sql_array,
                                       ['field(id ,?)', video_ids])
       Video.where(id: video_ids).order(query)
