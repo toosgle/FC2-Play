@@ -8,11 +8,12 @@ class WeeklyRank < ActiveRecord::Base
       videos_with_iku_point = sort_by_iku_per_play(iku_point_in_three_month)
 
       # 保存
-      hot_videos = videos_with_iku_point.each_with_object([]) do |v, arr|
-        if arr.size >= 300
+      hot_videos = []
+      videos_with_iku_point.each do |v|
+        if hot_videos.size >= 300
           break
         elsif Video.where(id: v[0]).present?
-          arr << WeeklyRank.new(video_id: v[0])
+          hot_videos << WeeklyRank.new(video_id: v[0])
         end
       end
       WeeklyRank.delete_all
@@ -49,11 +50,12 @@ class WeeklyRank < ActiveRecord::Base
 
     # イクのに使われた回数/再生された回数 を計算してソーティング
     def sort_by_iku_per_play(iku_point)
+      times = playtimes
       iku_point.each do |v_id, t|
-        if playtimes[v_id] <= 3
+        if times[v_id] <= 3
           iku_point[v_id] = 0
         else
-          iku_point[v_id] = (t * 1.0) / playtimes[v_id]
+          iku_point[v_id] = (t * 1.0) / times[v_id]
         end
       end
       iku_point.sort { |(_, v1), (_, v2)| v2 <=> v1 }
