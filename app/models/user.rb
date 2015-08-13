@@ -25,8 +25,4 @@ class User < ActiveRecord::Base
   def fav_list
     Fav.list(id)
   end
-
-  def history_list
-    History.list(id)
-  end
 end

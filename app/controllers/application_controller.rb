@@ -39,126 +39,14 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_fc2_info
-    page = Nokogiri::HTML(open(@url))
-    @title = page.css('meta[@itemprop="name"]').attr('content').value
-    @duration = page.css('meta[@property="video:duration"]')
-                .attr('content').value
-    @title.include?('Removed') ? false : true
-  rescue
-    false
-  end
-
-  def set_basic_info
-    if current_user
-      @favs = current_user.fav_list
-      his = current_user.history_list
-    else
-      session[:temp_id] ||= make_tmp_id
-      @user = User.new
-      his = History.list(session[:temp_id])
-    end
-    @week = get_weekly_rank
-    @month = get_monthly_rank
-    @histories = get_user_histories(his)
-    @new_arrivals = get_new_arrivals
-    set_request_from
-  end
-
-  def make_tmp_id
-    while 1 do
-      tmp_id = rand(8_999_999) + 1_000_000
-      p tmp_id
-      break if History.find_by(user_id: tmp_id).nil?
-    end
-    tmp_id
-  end
-
-  def get_weekly_rank
-    m_ids = get_video_ids(MonthlyRank.all.limit(100))
-    m_query = ActiveRecord::Base.send(:sanitize_sql_array,
-                                      ['field(id ,?)', m_ids])
-    Video.where(id: m_ids).order(m_query)
-  end
-
-  def get_monthly_rank
-    w_ids = get_video_ids(WeeklyRank.all.limit(100))
-    w_query = ActiveRecord::Base.send(:sanitize_sql_array,
-                                      ['field(id ,?)', w_ids])
-    Video.where(id: w_ids).order(w_query)
-  end
-
-  def get_user_histories(his)
-    his_ids = get_video_ids(his)
-    his_query = ActiveRecord::Base.send(:sanitize_sql_array,
-                                        ['field(id ,?)', his_ids])
-    Video.where(id: his_ids).order(his_query)
-  end
-
-  def get_new_arrivals
-    videos = []
-    rcmd_videos_size = NewArrival.order('recommend desc').limit(20).size - 1
-    (0..rcmd_videos_size).to_a.sample(10).each do |i|
-      videos << NewArrival.order('recommend desc')[i]
-    end
-    videos
-  end
-
-  def get_video_ids(records)
-    ids = []
-    records.each do |r|
-      ids << r.video_id
-    end
-    ids
-  end
-
-  def set_request_from
-    @request_from = session[:request_from] if session[:request_from]
-    # 現在のURLを保存しておく
-    session[:request_from] = request.original_url
-  end
-
-  def set_play_info
-    set_basic_info
-    set_player_size
-    @adult = session[:adult]
-    @bug_report = BugReport.new
-
-    # 再生できない報告後のリンク先のため
-    session[:referer_url] = request.env['HTTP_REFERER']
-  end
-
-  def set_player_size
-    if current_user
-      @fav = Fav.new
-      @height = (current_user.size * 0.6125).round
-      @width = current_user.size
-    elsif session[:size]
-      @height = (session[:size] * 0.6125).round
-      @width = session[:size]
-    else
-      @height = 446
-      @width = 728
-    end
-  end
-
-  def window_size(size)
-    case size
-    when 590
-      '小'
-    when 750
-      '中'
-    when 900
-      '大'
-    else
-      false
-    end
-  end
-
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
   helper_method :current_user
+
+  def user_id
+    current_user ? current_user.id : session[:temp_id]
+  end
 
   def toast(type, text)
     flash[:toastr] = { type => text }
@@ -166,5 +54,18 @@ class ApplicationController < ActionController::Base
 
   def flash_clear
     flash[:toastr] = nil
+  end
+
+  # 現在のURLを保存しておく
+  def save_current_url
+    session[:request_from] = request.original_url
+  end
+
+  def previous_page
+    session[:request_from] || root_path
+  end
+
+  def window_size
+    current_user ? current_user.size : session[:size]
   end
 end

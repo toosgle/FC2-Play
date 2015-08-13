@@ -6,6 +6,7 @@ RSpec.describe Video do
     it { should have_many(:histories) }
     it { should have_many(:monthly_ranks) }
     it { should have_many(:weekly_ranks) }
+    it { should have_many(:new_arrivals) }
   end
 
   describe 'Validation' do
@@ -19,53 +20,19 @@ RSpec.describe Video do
     it { should validate_inclusion_of(:morethan100min).in_array([true, false]) }
   end
 
-  describe '#check_available' do
-    it 'should delete videos not in fc2' do
-      Video.start_scrape('update', 10_000, 10_001, 1, 0)
-      availables = Video.all.size
-      5.times { create(:video) }
-      all = Video.all.size
-      Video.check_available
-      expect(all - 5).to eq availables
-    end
-  end
-
-  describe '#available?' do
+  describe '#available_on_fc2?' do
     context 'url of the video is not valid' do
       it 'should return false' do
         v = create(:video1)
-        expect(v.available?).to be_falsey
+        expect(v.available_on_fc2?).to be_falsey
       end
     end
 
     context 'the video is available on FC2Video' do
       it 'should return true' do
-        Video.start_scrape('update', 10_000, 10_001, 1, 0)
-        expect(Video.order(:updated_at).last.available?).to be_truthy
+        Fc2.scrape('adult', 10_000, 10_001)
+        expect(Video.last.available_on_fc2?).to be_truthy
       end
-    end
-  end
-
-  describe '#delete_unavailable' do
-    it 'should delete destroyed video' do
-      Video.check_available
-      Video.delete_unavailable
-      5.times { create(:video) }
-      Video.check_available
-      destroyed = Video.only_deleted.all.size
-      Video.delete_unavailable
-      expect(destroyed).to eq 5
-      expect(Video.only_deleted.all.size).to eq 0
-    end
-  end
-
-  describe '#scrape' do
-    it 'should scrape/create more than 1 videos' do
-      Video.start_scrape('update', 10_000, 10_003, 4500, 4501)
-      Video.start_scrape('update', 10_000, 10_001, 1, 0)
-      expect(
-        Video.where('updated_at > ?', Time.now - 60).count
-      ).to be_between(1, 250)
     end
   end
 
@@ -107,8 +74,7 @@ RSpec.describe Video do
     context '[]-l-l condition' do
       it 'should make expected sql' do
         expect(Video.search([], 'l', 'l').to_sql).to eq \
-          Video.where('1=1')
-          .where { bookmarks >= 2000 }
+          Video.where('1=1').where { bookmarks >= 2000 }
           .where(duration: '30:00'..'60:00')
           .where(morethan100min: 0)
           .order('bookmarks DESC')
@@ -125,6 +91,64 @@ RSpec.describe Video do
           .order('bookmarks DESC')
           .limit(200).to_sql
       end
+    end
+  end
+
+  describe '#ref_url' do
+    it 'should return the last part of URL' do
+      v = Video.new(url: 'http://video.fc2.com/a/content/201505149BdT5mY0&t_holder')
+      expect(v.ref_url).to eq('201505149BdT5mY0&t_holder')
+    end
+  end
+
+  describe '#weekly_rank' do
+    it 'same videos as WeeklyRanking' do
+      150.times do |i|
+        create(:video, id: i + 1)
+        create(:weekly_rank, video_id: i + 1)
+      end
+      expect(Video.weekly_rank[0].id).to eq(WeeklyRank.first.video_id)
+      expect(Video.weekly_rank.size).to eq(100)
+    end
+  end
+
+  describe '#monthly_rank' do
+    it 'same videos as MonthlyRank' do
+      150.times do |i|
+        create(:video, id: i + 1)
+        create(:monthly_rank, video_id: i + 1)
+      end
+      expect(Video.monthly_rank.first.id).to eq(MonthlyRank.first.video_id)
+      expect(Video.monthly_rank.size).to eq(100)
+    end
+  end
+
+  describe '#user_histories' do
+    it 'should be history list of the user' do
+      create(:video, id: 1)
+      create(:video, id: 2)
+      create(:history, user_id: 1, video_id: 1)
+      create(:history, user_id: 1, video_id: 2)
+      expect(Video.user_histories(1).size).to eq(2)
+    end
+  end
+
+  # weekly_rank と monthly_rank で担保しているので一旦パス
+  describe '#list_of' do
+  end
+
+  # パス
+  describe '#new_arrivals_list' do
+  end
+
+  describe '#check_available' do
+    it 'should delete videos not in fc2' do
+      Fc2.scrape('adult', 10_000, 10_001)
+      availables = Video.count
+      5.times { create(:video) }
+      all = Video.count
+      Video.check_available
+      expect(all - 5).to eq availables
     end
   end
 end
