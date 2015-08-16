@@ -1,7 +1,6 @@
 # Home Controller
 class HomeController < ApplicationController
   include InitializeAction
-  include Fc2Action
 
   before_action :save_current_url, only: [:play, :search]
   after_filter :flash_clear, only: [:search]
@@ -65,6 +64,11 @@ class HomeController < ApplicationController
       return false
     end
     true
+  end
+
+  def get_video_from_fc2
+    @fc2 = Fc2.new(@video.url)
+    @fc2.available
   end
 
   def create_watch_history

@@ -14,6 +14,7 @@
 				</thead>
 				<tbody>
 					<% for i in 0..49 do%>
+						<% next if @week[i].nil? || @month[i].nil? %>
 						<tr>
 							<td><%= i+1 %></td>
 							<td>

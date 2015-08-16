@@ -8,19 +8,19 @@
 <% if @video %>
 	<center>
 		<div id="player" style="width: 100%; height: <%= @window.height %>px; max-width: <%= @window.width %>px; max-height: <%= @window.height %>px;">
-			<embed src="http://video.fc2.com/flv2.swf?t=201407280507" flashvars="i=<%= @video.ref_url %>&amp;d=<%= @duration %>otag=1&amp;sj=0&amp;rel=1&amp;lang=en&amp;tk=TXpVM01EWTJOa9&amp;tl=<%= @title %>&amp;loop=0&amp;t=201407280507" quality="high" bgcolor="#000000" wmode="direct" width="100%" height="100%" name="flv2" align="middle" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" allowfullscreen="true">
+			<embed src="http://video.fc2.com/flv2.swf?t=201407280507" flashvars="i=<%= @video.ref_url %>&amp;d=<%= @fc2.duration %>otag=1&amp;sj=0&amp;rel=1&amp;lang=en&amp;tk=TXpVM01EWTJOa9&amp;tl=<%= @fc2.title %>&amp;loop=0&amp;t=201407280507" quality="high" bgcolor="#000000" wmode="direct" width="100%" height="100%" name="flv2" align="middle" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" allowfullscreen="true">
 		</div>
 	</center>
 <% end %>
 <p></p>
 
 <!-- お気に入り登録 -->
-<% if current_user && @fav %>
+<% if current_user %>
 <center>
-	<%= form_for(@fav, remote: true) do |f| %>
-		<%= f.hidden_field :video_id, value: @video.id %>
-		<%= f.text_field :comment, :placeholder => "お気に入りのコメントを入力　46文字以内", :class => "form-control-url", :maxlength => 46 %>
-		<%= f.submit 'お気に入り登録', :class => "btn btn-outline btn-default" %>
+	<%= form_tag(favs_path, method: :post,  remote: true) do %>
+		<%= hidden_field_tag 'fav[video_id]', @video.id %>
+		<%= text_field_tag 'fav[comment]', nil, :placeholder => "お気に入りのコメントを入力　46文字以内", :class => "form-control-url", :maxlength => 46 %>
+		<%= submit_tag 'お気に入り登録', :class => "btn btn-outline btn-default" %>
 	<% end %>
 </center><br>
 <% end %>

@@ -55,7 +55,7 @@ class Video < ActiveRecord::Base
   }
 
   def available_on_fc2?
-    Fc2.available?(url)
+    Fc2.new(url).available
   end
 
   # プレイヤーで参照するURL
@@ -103,7 +103,7 @@ class Video < ActiveRecord::Base
 
     # FC2に存在しない動画を削除
     def check_available
-      Video.all.each do |video|
+      Video.find_each do |video|
         video.destroy unless video.available_on_fc2?
       end
     end

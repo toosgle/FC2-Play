@@ -1,6 +1,20 @@
 class Fc2
   require 'open-uri'
 
+  attr_reader :title
+  attr_reader :duration
+  attr_reader :available
+
+  def initialize(url)
+    page = Nokogiri::HTML(open(url))
+    @title = page.css('meta[@itemprop="name"]').attr('content').value
+    @duration = page.css('meta[@property="video:duration"]')
+                .attr('content').value
+    @available = @title.include?('Removed') ? false : true
+  rescue
+    @available = false
+  end
+
   class << self
     module Constants
       # FC2からのスクレイピングのパス
@@ -16,14 +30,6 @@ class Fc2
       AUTHORITY_PATH = './div[@class="video_info_right"]/ul/li'
     end
     include Constants
-
-    def available?(url)
-      page = Nokogiri::HTML(open(url))
-      title = page.css('meta[@itemprop="name"]').attr('content').value
-      title.include?('Removed') ? false : true
-    rescue
-      false
-    end
 
     def scrape(kind, from, to)
       adult_flg = (kind == 'adult')
