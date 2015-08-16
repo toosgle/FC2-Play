@@ -16,22 +16,20 @@ RSpec.describe Video do
     it { should validate_presence_of(:duration) }
     it { should validate_presence_of(:image_url) }
     it { should validate_presence_of(:bookmarks) }
-    it { should validate_inclusion_of(:adult).in_array([true, false]) }
-    it { should validate_inclusion_of(:morethan100min).in_array([true, false]) }
   end
 
   describe '#available_on_fc2?' do
     context 'url of the video is not valid' do
       it 'should return false' do
         v = create(:video1)
-        expect(v.available_on_fc2?).to be_falsey
+        expect(Fc2.new(v.url).available).to be_falsey
       end
     end
 
     context 'the video is available on FC2Video' do
       it 'should return true' do
         Fc2.scrape('adult', 10_000, 10_001)
-        expect(Video.last.available_on_fc2?).to be_truthy
+        expect(Fc2.new(Video.last.url).available).to be_truthy
       end
     end
   end
