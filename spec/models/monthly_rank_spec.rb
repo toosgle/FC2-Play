@@ -30,7 +30,7 @@ RSpec.describe MonthlyRank do
   describe '#calc_last_month_point' do
     it 'should correctly calculate' do
       expect(MonthlyRank.calc_last_month_point[20_002_100]).to eq 2
-      expect(MonthlyRank.calc_last_month_point[20_002_000]).to eq 1
+      expect(MonthlyRank.calc_last_month_point[20_002_001]).to eq 1
     end
   end
 
