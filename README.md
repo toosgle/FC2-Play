@@ -1,7 +1,7 @@
 FC*FC Play (+18)
 =======
 [![build status](https://circleci.com/gh/showwin/FC2-Play.svg?style=shield&circle-token=7a1281e0e2902a34e464d8a15921b448188b5536)](https://circleci.com/gh/showwin/FC2-Play)
-[![Coverage Status](https://coveralls.io/repos/showwin/FC2-Play/badge.png)](https://coveralls.io/r/showwin/FC2-Play)
+[![Coverage Status](https://coveralls.io/repos/showwin/FC2-Play/badge.svg?branch=master&service=github)](https://coveralls.io/github/showwin/FC2-Play?branch=master)
 [![Dependency Status](https://gemnasium.com/showwin/FC2-Play.svg)](https://gemnasium.com/showwin/FC2-Play)
 [![Code Climate](https://codeclimate.com/github/showwin/FC2-Play/badges/gpa.svg)](https://codeclimate.com/github/showwin/FC2-Play)
 
