@@ -38,7 +38,7 @@ RSpec.describe Video do
     context 'no condition' do
       it 'should make expected sql' do
         expect(Video.search([], 'no', 'no').to_sql).to eq \
-          Video.where('1=1').order('bookmarks DESC').limit(200).to_sql
+          Video.order('bookmarks DESC').limit(200).to_sql
       end
     end
 
@@ -46,7 +46,6 @@ RSpec.describe Video do
       it 'should make expected sql' do
         expect(Video.search(['a'], 's', 's').to_sql).to eq \
           Video.where("title LIKE '%a%'")
-          .where('1=1')
           .where(bookmarks: 30..500)
           .where(duration: '00:00'..'10:00')
           .where(morethan100min: 0)
@@ -60,7 +59,6 @@ RSpec.describe Video do
         expect(Video.search(%w(a b), 'm', 'm').to_sql).to eq \
           Video.where("title LIKE '%a%'")
           .where("title LIKE '%b%'")
-          .where('1=1') \
           .where(bookmarks: 500..2000)
           .where(duration: '10:00'..'30:00')
           .where(morethan100min: 0)
@@ -72,7 +70,7 @@ RSpec.describe Video do
     context '[]-l-l condition' do
       it 'should make expected sql' do
         expect(Video.search([], 'l', 'l').to_sql).to eq \
-          Video.where('1=1').where { bookmarks >= 2000 }
+          Video.where { bookmarks >= 2000 }
           .where(duration: '30:00'..'60:00')
           .where(morethan100min: 0)
           .order('bookmarks DESC')
@@ -84,7 +82,6 @@ RSpec.describe Video do
       it 'should make expected sql' do
         expect(Video.search(['a'], 'no', 'xl').to_sql).to eq \
           Video.where("title LIKE '%a%'")
-          .where('1=1')
           .where("duration >= '60:00' or morethan100min = 1")
           .order('bookmarks DESC')
           .limit(200).to_sql

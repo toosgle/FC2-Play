@@ -6,6 +6,8 @@ RSpec.describe MonthlyRank do
       create(:video4his, id: 20_002_000 + i)
       create(:history, id: 20_002_000 + i, video_id: 20_002_000 + i)
     end
+    create(:history, id: 20_002_997, video_id: 20_002_000)
+    create(:history, id: 20_002_998, video_id: 20_002_100)
     create(:history, id: 20_002_999, video_id: 20_002_100)
     create_list(:fav4his, 10)
   end
@@ -29,8 +31,8 @@ RSpec.describe MonthlyRank do
 
   describe '#calc_last_month_point' do
     it 'should correctly calculate' do
-      expect(MonthlyRank.calc_last_month_point[20_002_100]).to eq 2
-      expect(MonthlyRank.calc_last_month_point[20_002_000]).to eq 1
+      expect(MonthlyRank.calc_last_month_point[20_002_100]).to eq 3
+      expect(MonthlyRank.calc_last_month_point[20_002_000]).to eq 2
     end
   end
 
@@ -40,17 +42,17 @@ RSpec.describe MonthlyRank do
     end
 
     it 'should have correct value' do
-      expect(MonthlyRank.last_month_his.first[:count]).to eq 2
+      expect(MonthlyRank.last_month_his.first[:count]).to eq 3
     end
   end
 
   describe '#calc_last_week_point' do
     it 'should correctly calculate' do
-      expect(MonthlyRank.calc_last_week_point([])[20_002_100]).to eq 16
-      expect(MonthlyRank.calc_last_week_point({})[20_002_000]).to eq 8
+      expect(MonthlyRank.calc_last_week_point([])[20_002_100]).to eq 24
+      expect(MonthlyRank.calc_last_week_point({})[20_002_000]).to eq 16
       point = {}
       point[20_002_100] = 4
-      expect(MonthlyRank.calc_last_week_point(point)[20_002_100]).to eq 20
+      expect(MonthlyRank.calc_last_week_point(point)[20_002_100]).to eq 28
     end
   end
 
@@ -60,7 +62,7 @@ RSpec.describe MonthlyRank do
     end
 
     it 'should have correct value' do
-      expect(MonthlyRank.last_week_his.first[:count]).to eq 2
+      expect(MonthlyRank.last_week_his.first[:count]).to eq 3
     end
   end
 
