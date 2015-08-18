@@ -16,10 +16,8 @@ class Video < ActiveRecord::Base
   validates_inclusion_of :morethan100min, in: [true, false]
 
   scope :title_is, ->(keywords) {
-    sql = keywords.inject('') do |str, words|
-      str + "(title LIKE '%#{words}%') AND "
-    end + '(1=1'
-    where(sql[1..sql.length])
+    sql = (['(title LIKE ?)'] * keywords.length).join(' AND ')
+    where(sql[1..sql.length - 2], *keywords.map { |k| "%#{k}%" })
   }
 
   scope :bookmarks_is, ->(condition) {
